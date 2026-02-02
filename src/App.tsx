@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { BrowserRouter, Link, Route, Routes, useLocation } from "react-router-dom";
+import { LifePage } from "./pages/LifePage";
+import { ArcadePage } from "./pages/ArcadePage";
+import { MapPage } from "./pages/MapPage";
+import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+
+function BottomNav() {
+  const loc = useLocation();
+  const onLife = loc.pathname === "/";
+  const onArcade = loc.pathname.startsWith("/arcade");
+  const onMap = loc.pathname.startsWith("/map");
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <nav className="bottomnav">
+      <Link className={`tab ${onLife ? "active" : ""}`} to="/">
+        💗 Life
+      </Link>
+      <Link className={`tab ${onArcade ? "active" : ""}`} to="/arcade">
+        🕹️ Arcade
+      </Link>
+      <Link className={`tab ${onMap ? "active" : ""}`} to="/map">
+        🗺️ Map
+      </Link>
+    </nav>
+  );
+}
+function PageShell({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  const [flip, setFlip] = useState(false);
+
+  useEffect(() => {
+    setFlip(true);
+    const t = window.setTimeout(() => setFlip(false), 240);
+    return () => window.clearTimeout(t);
+  }, [pathname]);
+
+  return <div className={`page ${flip ? "flip" : ""}`}>{children}</div>;
 }
 
-export default App
+export default function App() {
+  return (
+    <BrowserRouter>
+      <div className="app">
+      <PageShell>
+        <Routes>
+          <Route path="/" element={<LifePage />} />
+          <Route path="/arcade" element={<ArcadePage />} />
+          <Route path="/map" element={<MapPage />} />
+        </Routes>
+      </PageShell>
+
+        <BottomNav />
+      </div>
+    </BrowserRouter>
+  );
+}

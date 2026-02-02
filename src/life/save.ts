@@ -1,0 +1,39 @@
+const KEY = "our_little_life_save"; // match whatever key you're using everywhere
+
+export function defaultSave() {
+  return {
+    version: 1,
+    stats: { love: 0, happiness: 0, memories: 0 },
+    currentEventId: "start",
+    log: [],
+    placesUnlocked: [],
+  };
+}
+
+export function loadSave() {
+  const fresh = defaultSave();
+
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return fresh;
+    const parsed = JSON.parse(raw);
+
+    return {
+      ...fresh,
+      ...parsed,
+      stats: { ...fresh.stats, ...(parsed.stats ?? {}) },
+      log: Array.isArray(parsed.log) ? parsed.log : [],
+      placesUnlocked: Array.isArray(parsed.placesUnlocked) ? parsed.placesUnlocked : [],
+    };
+  } catch {
+    return fresh;
+  }
+}
+
+export function persistSave(save: any) {
+  localStorage.setItem(KEY, JSON.stringify(save));
+}
+
+export function resetSave() {
+  localStorage.removeItem(KEY);
+}
