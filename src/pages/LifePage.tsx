@@ -12,6 +12,7 @@ import { ReflectionGate } from "../life/ReflectionGate";
 import type { ReflectionEntry } from "../life/types";
 import { ReflectionReview } from "../life/ReflectionReview";
 import { EndCreditsOverlay } from "../life/EndCreditsOverlay";
+import "./StoryMode.css";
 
 
 
@@ -312,54 +313,67 @@ function finishReflectionSave(text: string) {
 }
 
   const ev: any = event;
+  const [journalOpen, setJournalOpen] = useState(false);
+
+  // Generate particles for background
+  const particles = useMemo(() =>
+    Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      delay: Math.random() * 5,
+    })), []
+  );
 
   return (
-    <div className="screen">
-      {toast && <div className="toast">{toast}</div>}
+    <div className="story-page">
+      {/* Cozy background */}
+      <div className="story-bg">
+        <div className="story-bg-gradient" />
+        <div className="story-particles">
+          {particles.map((p) => (
+            <div
+              key={p.id}
+              className="story-particle"
+              style={{
+                left: `${p.x}%`,
+                top: `${p.y}%`,
+                animationDelay: `${p.delay}s`,
+              }}
+            />
+          ))}
+        </div>
+        <div className="story-bg-room">
+          <div className="story-bg-floor" />
+          <div className="story-bg-window" />
+        </div>
+      </div>
 
-      <header className="topbar">
-        <div>
-          <div className="kicker">Our Little Life</div>
-          <h1 className="title">{ev?.title ?? "…"}</h1>
-
-          {restarting && (
-            <div className="overlay">
-              <div className="overlay-card">
-                <div className="overlay-title">Restarting…</div>
-                <div className="overlay-sub">{toast}</div>
-
-                <div className="overlay-bar">
-                  <div className="overlay-fill" style={{ width: `${progress}%` }} />
-                </div>
-
-                <div className="overlay-hint">{progress}%</div>
-              </div>
+      {/* Top bar with stats */}
+      <header className="story-topbar">
+        <div className="story-stats">
+          <div className="story-stat">
+            <span className="story-stat-icon">💕</span>
+            <div className="story-stat-bar">
+              <div className="story-stat-fill love" style={{ width: `${save.stats.love}%` }} />
             </div>
-          )}
-
-          {reward && (
-            <div className="overlay" role="dialog" aria-modal="true">
-              <div className="overlay-card reward-card">
-                <div className="overlay-title">{reward.title}</div>
-
-                <ul className="reward-list">
-                  {reward.lines.map((l, i) => (
-                    <li key={i} className="reward-line">
-                      {l}
-                    </li>
-                  ))}
-                </ul>
-
-                <button className="btn" onClick={() => setReward(null)}>
-                  Continue
-                </button>
-              </div>
+            <span className="story-stat-val">{save.stats.love}</span>
+          </div>
+          <div className="story-stat">
+            <span className="story-stat-icon">😊</span>
+            <div className="story-stat-bar">
+              <div className="story-stat-fill happy" style={{ width: `${save.stats.happiness}%` }} />
             </div>
-          )}
+            <span className="story-stat-val">{save.stats.happiness}</span>
+          </div>
+          <div className="story-stat">
+            <span className="story-stat-icon">📸</span>
+            <span className="story-stat-val">{save.stats.memories}</span>
+          </div>
         </div>
 
         <button
-          className="ghost"
+          className="story-reset-btn"
           onClick={() => {
             resetSave();
             const fresh = defaultSave();
@@ -372,54 +386,105 @@ function finishReflectionSave(text: string) {
         </button>
       </header>
 
-      <section className="stats">
-        <div className="stat">
-          <div className="stat-label">Love</div>
-          <div className="bar">
-            <div className="fill" style={{ width: `${save.stats.love}%` }} />
+      {/* Main story area */}
+      <main className="story-main">
+        {/* Character stage */}
+        <div className="story-stage">
+          <div className="story-character">
+            <div className="story-avatar p1">
+              <div className="avatar-head" />
+              <div className="avatar-body" />
+            </div>
+            <span className="story-char-name">You</span>
           </div>
-          <div className="stat-val">{save.stats.love}</div>
-        </div>
 
-        <div className="stat">
-          <div className="stat-label">Happiness</div>
-          <div className="bar">
-            <div className="fill" style={{ width: `${save.stats.happiness}%` }} />
+          <span className="story-heart">💕</span>
+
+          <div className="story-character">
+            <div className="story-avatar p2">
+              <div className="avatar-head" />
+              <div className="avatar-body" />
+            </div>
+            <span className="story-char-name">Her</span>
           </div>
-          <div className="stat-val">{save.stats.happiness}</div>
         </div>
 
-        <div className="stat">
-          <div className="stat-label">Memories</div>
-          <div className="stat-val">{save.stats.memories}</div>
-        </div>
-      </section>
+        {/* Dialogue bubble */}
+        <div className="story-dialogue" key={save.currentEventId}>
+          <div className="story-bubble">
+            <div className="story-title">{ev?.title ?? "…"}</div>
+            <p className="story-text">{ev?.text ?? ""}</p>
+          </div>
 
-      <section className="card">
-        <p className="story">{ev?.text ?? ""}</p>
-
-        <div className="choices">
-          {(ev?.choices ?? []).map((c: any) => (
-            <button key={c.id} className="choice" onClick={() => choose(c.id)}>
-              {c.label}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="card">
-        <div className="card-title">Recent moments</div>
-        {save.log.length === 0 ? (
-          <div className="muted">Your story will appear here as you play.</div>
-        ) : (
-          <ul className="log">
-            {save.log.slice(0, 8).map((l: { t: number; text: string }) => (
-              <li key={l.t}>{l.text}</li>
+          {/* Choice buttons */}
+          <div className="story-choices">
+            {(ev?.choices ?? []).map((c: any) => (
+              <button key={c.id} className="story-choice" onClick={() => choose(c.id)}>
+                {c.label}
+              </button>
             ))}
-          </ul>
-        )}
-      </section>
+          </div>
+        </div>
 
+        {/* Journal (Recent moments) */}
+        <div className={`story-journal ${journalOpen ? "expanded" : ""}`}>
+          <div className="story-journal-header" onClick={() => setJournalOpen(!journalOpen)}>
+            <span className="story-journal-title">
+              📖 Our Story
+            </span>
+            <span className="story-journal-toggle">▼</span>
+          </div>
+          <div className="story-journal-content">
+            {save.log.length === 0 ? (
+              <div className="story-journal-empty">
+                Your journey will unfold here...
+              </div>
+            ) : (
+              <ul className="story-journal-list">
+                {save.log.slice(0, 8).map((l: { t: number; text: string }) => (
+                  <li key={l.t} className="story-journal-item">{l.text}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      </main>
+
+      {/* Toast notification */}
+      {toast && <div className="toast">{toast}</div>}
+
+      {/* Restarting overlay */}
+      {restarting && (
+        <div className="story-overlay">
+          <div className="story-overlay-card">
+            <div className="story-overlay-title">Restarting… 💫</div>
+            <p style={{ color: "var(--story-muted)", marginBottom: "12px" }}>{toast}</p>
+            <div className="story-progress-bar">
+              <div className="story-progress-fill" style={{ width: `${progress}%` }} />
+            </div>
+            <span style={{ fontSize: "0.9rem", color: "var(--story-muted)" }}>{progress}%</span>
+          </div>
+        </div>
+      )}
+
+      {/* Rewards overlay */}
+      {reward && (
+        <div className="story-overlay" role="dialog" aria-modal="true">
+          <div className="story-overlay-card">
+            <div className="story-overlay-title">{reward.title}</div>
+            <ul className="story-reward-list">
+              {reward.lines.map((l, i) => (
+                <li key={i} className="story-reward-item">{l}</li>
+              ))}
+            </ul>
+            <button className="story-btn" onClick={() => setReward(null)}>
+              Continue 💕
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Gates and overlays */}
       {burst && <MemoryBurst deck={burst.deck} pick={burst.pick} onDone={finishBurst} />}
 
       {puzzle && (
@@ -450,46 +515,44 @@ function finishReflectionSave(text: string) {
       )}
 
       {foodGate && (() => {
-  console.log("foodGate:", foodGate);
-  const game = FOOD_GAMES[foodGate.gameId];
-  console.log("foodGame found?", !!game, "keys:", Object.keys(FOOD_GAMES));
-  if (!game) return null;
+        const game = FOOD_GAMES[foodGate.gameId];
+        if (!game) return null;
 
-  return (
-    <FoodOrderGate
-      game={game}
-      title={foodGate.title}
-      subtitle={foodGate.subtitle}
-      onDone={finishFoodGate}
-    />
-  );
-})()}
+        return (
+          <FoodOrderGate
+            game={game}
+            title={foodGate.title}
+            subtitle={foodGate.subtitle}
+            onDone={finishFoodGate}
+          />
+        );
+      })()}
 
-{reflectionGate && (
-  <ReflectionGate
-    title={reflectionGate.title}
-    subtitle={reflectionGate.subtitle}
-    prompt={reflectionGate.prompt}
-    onSkip={finishReflectionSkip}
-    onSave={finishReflectionSave}
-  />
-)}
-{reviewGate && (
-  <ReflectionReview
-    reflections={save.reflections ?? []}
-    title={reviewGate.title}
-    closingLine={reviewGate.closingLine}
-    onClose={finishReviewGate}
-  />
-)}
+      {reflectionGate && (
+        <ReflectionGate
+          title={reflectionGate.title}
+          subtitle={reflectionGate.subtitle}
+          prompt={reflectionGate.prompt}
+          onSkip={finishReflectionSkip}
+          onSave={finishReflectionSave}
+        />
+      )}
 
-{showFinale && (
-  <EndCreditsOverlay
-    line={`Somewhere along the way, this trip changed “me” into “us.”`}
-    onDone={() => setShowFinale(false)}
-  />
-)}
+      {reviewGate && (
+        <ReflectionReview
+          reflections={save.reflections ?? []}
+          title={reviewGate.title}
+          closingLine={reviewGate.closingLine}
+          onClose={finishReviewGate}
+        />
+      )}
 
+      {showFinale && (
+        <EndCreditsOverlay
+          line={`Somewhere along the way, this trip changed "me" into "us."`}
+          onDone={() => setShowFinale(false)}
+        />
+      )}
     </div>
   );
   

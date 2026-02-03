@@ -1,0 +1,967 @@
+/* ============================================
+   HOME HUB - Cozy Pixel Art Room
+   ============================================ */
+
+/* CSS Custom Properties for the hub */
+.hub-wrapper {
+  --hub-floor: #f5e6d3;
+  --hub-wall: #fff5f8;
+  --hub-wall-accent: #ffe4ec;
+  --hub-wood: #d4a574;
+  --hub-wood-dark: #b8956a;
+  --hub-pink: #ffb5c5;
+  --hub-pink-soft: #ffd6e0;
+  --hub-pink-deep: #ff8fa3;
+  --hub-cream: #fff8f0;
+  --hub-lavender: #e8d5f2;
+  --hub-mint: #d5f0e8;
+  --hub-peach: #ffe5d0;
+  --hub-shadow: rgba(180, 140, 160, 0.15);
+  --hub-glow: rgba(255, 180, 200, 0.4);
+
+  /* Pixel art effect */
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hub-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(180deg, var(--hub-wall) 0%, var(--hub-wall-accent) 60%, var(--hub-floor) 60%);
+  box-shadow:
+    0 8px 32px var(--hub-shadow),
+    inset 0 0 80px rgba(255, 200, 220, 0.1);
+}
+
+/* ============================================
+   AMBIENT PARTICLES
+   ============================================ */
+
+.hub-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hub-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--hub-pink-soft);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: particleFloat 8s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+/* ============================================
+   ROOM LAYOUT
+   ============================================ */
+
+.hub-room {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr;
+  gap: 8px;
+  padding: 16px;
+}
+
+/* ============================================
+   WINDOW
+   ============================================ */
+
+.hub-window {
+  position: absolute;
+  top: 8%;
+  left: 12%;
+  width: 120px;
+  height: 80px;
+  background: linear-gradient(180deg, #a8d8ff 0%, #ffe4b5 100%);
+  border: 6px solid var(--hub-wood);
+  border-radius: 4px;
+  box-shadow:
+    inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 4px 12px var(--hub-shadow);
+  overflow: hidden;
+}
+
+.hub-window-frame {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--hub-wood);
+}
+
+.hub-window-frame::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 200%;
+  background: var(--hub-wood);
+}
+
+.hub-window-curtain {
+  position: absolute;
+  top: -4px;
+  width: 20px;
+  height: 90px;
+  background: var(--hub-pink-soft);
+  border-radius: 0 0 8px 8px;
+}
+
+.hub-window-curtain.left {
+  left: -8px;
+}
+
+.hub-window-curtain.right {
+  right: -8px;
+}
+
+/* ============================================
+   PHOTO WALL (decorative)
+   ============================================ */
+
+.hub-photos {
+  position: absolute;
+  top: 12%;
+  right: 10%;
+  display: flex;
+  gap: 6px;
+}
+
+.hub-photo-frame {
+  width: 24px;
+  height: 28px;
+  background: var(--hub-cream);
+  border: 3px solid var(--hub-wood);
+  border-radius: 2px;
+  box-shadow: 0 2px 6px var(--hub-shadow);
+}
+
+.hub-photo-frame:nth-child(2) {
+  transform: rotate(-5deg) translateY(4px);
+}
+
+.hub-photo-frame:nth-child(3) {
+  transform: rotate(3deg) translateY(-2px);
+}
+
+/* ============================================
+   INTERACTIVE ZONES - Base Styles
+   ============================================ */
+
+.hub-zone {
+  position: absolute;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  z-index: 10;
+}
+
+.hub-zone:hover,
+.hub-zone.hovered {
+  transform: scale(1.05) translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.hub-zone:active {
+  transform: scale(0.98);
+}
+
+.hub-zone-label {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--hub-pink);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #5a4050;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.hub-zone:hover .hub-zone-label,
+.hub-zone.hovered .hub-zone-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.hub-zone-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  padding: 2px 6px;
+  background: var(--hub-pink-deep);
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 2px 6px rgba(255, 100, 150, 0.3);
+}
+
+/* ============================================
+   TV
+   ============================================ */
+
+.hub-tv {
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 70px;
+}
+
+.hub-tv:hover,
+.hub-tv.hovered {
+  transform: translateX(-50%) scale(1.05) translateY(-2px);
+}
+
+.hub-tv-screen {
+  width: 80px;
+  height: 55px;
+  background: #2a2a35;
+  border: 6px solid #3a3a45;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 20px rgba(100, 200, 255, 0.1),
+    0 4px 12px var(--hub-shadow);
+}
+
+.hub-tv-static {
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.03) 50%),
+    linear-gradient(rgba(100, 180, 255, 0.1) 0%, rgba(255, 150, 200, 0.1) 100%);
+  background-size: 4px 4px, 100% 100%;
+  animation: tvGlow 3s ease-in-out infinite;
+}
+
+@keyframes tvGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.9; }
+}
+
+.hub-tv-stand {
+  width: 30px;
+  height: 8px;
+  margin: 0 auto;
+  background: #3a3a45;
+  border-radius: 0 0 4px 4px;
+}
+
+/* ============================================
+   FIREPLACE
+   ============================================ */
+
+.hub-fireplace {
+  position: absolute;
+  bottom: 42%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 60px;
+  background: var(--hub-wood-dark);
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 4px 12px var(--hub-shadow);
+  z-index: 5;
+}
+
+.hub-fireplace::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 0;
+  background: #1a1a20;
+  border-radius: 4px 4px 0 0;
+}
+
+.hub-fire {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.hub-flame {
+  width: 12px;
+  background: linear-gradient(180deg, #ff6b35 0%, #ffcc02 50%, #fff 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: flicker 0.5s ease-in-out infinite alternate;
+}
+
+.hub-flame.f1 {
+  height: 24px;
+  animation-delay: 0s;
+}
+
+.hub-flame.f2 {
+  height: 30px;
+  animation-delay: 0.1s;
+}
+
+.hub-flame.f3 {
+  height: 20px;
+  animation-delay: 0.2s;
+}
+
+@keyframes flicker {
+  0% {
+    transform: scaleY(1) scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1.1) scaleX(0.9);
+    opacity: 0.9;
+  }
+}
+
+.hub-fireplace-glow {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 100px;
+  background: radial-gradient(ellipse at center, rgba(255, 150, 50, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* ============================================
+   COUCH WITH COUPLE
+   ============================================ */
+
+.hub-couch {
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 70px;
+}
+
+.hub-couch:hover,
+.hub-couch.hovered {
+  transform: translateX(-50%) scale(1.05) translateY(-2px);
+}
+
+.hub-couch-base {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45px;
+  background: linear-gradient(180deg, var(--hub-pink) 0%, var(--hub-pink-deep) 100%);
+  border-radius: 12px 12px 8px 8px;
+  box-shadow:
+    inset 0 -8px 0 rgba(0, 0, 0, 0.1),
+    0 4px 12px var(--hub-shadow);
+}
+
+.hub-couch-base::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 25px;
+  height: 40px;
+  background: var(--hub-pink);
+  border-radius: 8px 0 0 8px;
+}
+
+.hub-couch-base::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: 25px;
+  height: 40px;
+  background: var(--hub-pink);
+  border-radius: 0 8px 8px 0;
+}
+
+.hub-couple {
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.hub-person {
+  width: 28px;
+  height: 36px;
+  border-radius: 14px 14px 8px 8px;
+  box-shadow: 0 2px 6px var(--hub-shadow);
+}
+
+.hub-person.p1 {
+  background: linear-gradient(180deg, var(--hub-lavender) 0%, #c9b8d9 100%);
+}
+
+.hub-person.p2 {
+  background: linear-gradient(180deg, var(--hub-mint) 0%, #a8d9c8 100%);
+  transform: translateY(2px);
+}
+
+.hub-person::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background: var(--hub-peach);
+  border-radius: 50%;
+}
+
+.hub-person.p1::before {
+  left: 25%;
+}
+
+.hub-person.p2::before {
+  left: 75%;
+}
+
+.hub-heart-float {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  animation: heartFloat 2s ease-in-out infinite;
+}
+
+@keyframes heartFloat {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(-50%) translateY(-8px);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   SUITCASE
+   ============================================ */
+
+.hub-suitcase {
+  bottom: 8%;
+  left: 8%;
+  width: 50px;
+  height: 40px;
+}
+
+.hub-suitcase-body {
+  width: 45px;
+  height: 32px;
+  background: linear-gradient(180deg, var(--hub-peach) 0%, #e8c8a8 100%);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 -4px 0 rgba(0, 0, 0, 0.1),
+    0 3px 8px var(--hub-shadow);
+  position: relative;
+}
+
+.hub-suitcase-stripe {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--hub-pink-soft);
+  transform: translateY(-50%);
+}
+
+.hub-suitcase-handle {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 8px;
+  border: 3px solid var(--hub-wood);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+}
+
+/* ============================================
+   DINING TABLE
+   ============================================ */
+
+.hub-table {
+  bottom: 8%;
+  right: 8%;
+  width: 70px;
+  height: 50px;
+}
+
+.hub-table-top {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: var(--hub-wood);
+  border-radius: 4px;
+  box-shadow: 0 3px 8px var(--hub-shadow);
+}
+
+.hub-table-leg {
+  position: absolute;
+  bottom: 0;
+  width: 8px;
+  height: 18px;
+  background: var(--hub-wood-dark);
+  border-radius: 2px;
+}
+
+.hub-table-leg.l1 {
+  left: 8px;
+}
+
+.hub-table-leg.l2 {
+  right: 8px;
+}
+
+.hub-food-items {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.hub-food {
+  animation: foodBob 2s ease-in-out infinite;
+}
+
+.hub-food:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+@keyframes foodBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+/* ============================================
+   PHONE ON SIDE TABLE
+   ============================================ */
+
+.hub-phone {
+  bottom: 25%;
+  right: 10%;
+  width: 40px;
+  height: 50px;
+}
+
+.hub-side-table {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 25px;
+  background: var(--hub-wood);
+  border-radius: 4px;
+  box-shadow: 0 2px 6px var(--hub-shadow);
+}
+
+.hub-phone-device {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 28px;
+  background: #2a2a35;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px var(--hub-shadow);
+}
+
+.hub-phone-screen {
+  position: absolute;
+  top: 3px;
+  left: 2px;
+  right: 2px;
+  bottom: 5px;
+  background: linear-gradient(180deg, #4a6080 0%, #3a4a60 100%);
+  border-radius: 2px;
+}
+
+.hub-phone-notif {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  background: var(--hub-pink-deep);
+  border-radius: 50%;
+  animation: notifPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes notifPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* ============================================
+   RUG
+   ============================================ */
+
+.hub-rug {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 20%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--hub-pink-soft) 0px,
+      var(--hub-pink-soft) 8px,
+      var(--hub-cream) 8px,
+      var(--hub-cream) 16px
+    );
+  border-radius: 8px;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+/* ============================================
+   STATS BAR
+   ============================================ */
+
+.hub-stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 143, 177, 0.25);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.hub-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid var(--hub-pink-soft);
+  border-radius: 20px;
+  box-shadow: 0 2px 8px var(--hub-shadow);
+}
+
+.hub-stat-icon {
+  font-size: 14px;
+}
+
+.hub-stat-bar {
+  width: 60px;
+  height: 8px;
+  background: rgba(255, 200, 220, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.hub-stat-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.hub-stat-fill.love {
+  background: linear-gradient(90deg, #ff8fa3, #ff6b8a);
+}
+
+.hub-stat-fill.happy {
+  background: linear-gradient(90deg, #ffcc70, #ffaa50);
+}
+
+.hub-stat-val {
+  font-size: 12px;
+  font-weight: 800;
+  color: #5a4050;
+  min-width: 20px;
+}
+
+.hub-stat-val.memories {
+  font-size: 14px;
+}
+
+/* ============================================
+   RANDOM EVENT POPUP
+   ============================================ */
+
+.hub-event-popup {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid var(--hub-pink);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 24px var(--hub-shadow),
+    0 0 0 4px rgba(255, 180, 200, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.hub-event-popup.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.hub-event-emoji {
+  font-size: 24px;
+  animation: eventBounce 0.6s ease-in-out infinite;
+}
+
+@keyframes eventBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.hub-event-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #3a2a31;
+}
+
+.hub-event-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.hub-event-btn {
+  padding: 6px 14px;
+  border-radius: 12px;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.hub-event-btn:hover {
+  transform: scale(1.05);
+}
+
+.hub-event-btn.accept {
+  background: linear-gradient(180deg, var(--hub-pink) 0%, var(--hub-pink-deep) 100%);
+  color: white;
+}
+
+.hub-event-btn.dismiss {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--hub-pink-soft);
+  color: #5a4050;
+}
+
+/* ============================================
+   MOBILE-FIRST: Always show labels on touch devices
+   ============================================ */
+
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices - always show labels */
+  .hub-zone-label {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Slightly smaller labels on mobile */
+  .hub-zone-label {
+    font-size: 10px;
+    padding: 3px 8px;
+    bottom: -18px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 480px) {
+  .hub-wrapper {
+    gap: 10px;
+  }
+
+  .hub-container {
+    border-radius: 18px;
+    /* Taller aspect ratio on mobile to show more of the room */
+    aspect-ratio: 3 / 4;
+  }
+
+  .hub-stats-bar {
+    gap: 6px;
+    padding: 10px 12px;
+    border-radius: 16px;
+  }
+
+  .hub-stat {
+    padding: 4px 8px;
+    gap: 4px;
+  }
+
+  .hub-stat-bar {
+    width: 36px;
+  }
+
+  .hub-stat-icon {
+    font-size: 12px;
+  }
+
+  .hub-stat-val {
+    font-size: 11px;
+  }
+
+  .hub-event-popup {
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 90%;
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .hub-event-emoji {
+    font-size: 20px;
+  }
+
+  .hub-event-text {
+    font-size: 13px;
+  }
+
+  /* Adjust room elements for taller aspect ratio */
+  .hub-window {
+    top: 5%;
+    left: 8%;
+    width: 100px;
+    height: 70px;
+  }
+
+  .hub-tv {
+    top: 18%;
+  }
+
+  .hub-fireplace {
+    bottom: 38%;
+  }
+
+  .hub-couch {
+    bottom: 24%;
+  }
+
+  .hub-suitcase {
+    bottom: 10%;
+  }
+
+  .hub-table {
+    bottom: 10%;
+  }
+
+  .hub-phone {
+    bottom: 28%;
+  }
+
+  .hub-rug {
+    bottom: 10%;
+    height: 18%;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-particle,
+  .hub-flame,
+  .hub-heart-float,
+  .hub-food,
+  .hub-phone-notif,
+  .hub-event-emoji,
+  .hub-fireplace-glow,
+  .hub-tv-static {
+    animation: none !important;
+  }
+
+  .hub-zone,
+  .hub-zone-label,
+  .hub-event-popup,
+  .hub-stat-fill {
+    transition: none !important;
+  }
+}
