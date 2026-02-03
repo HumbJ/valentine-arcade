@@ -29,7 +29,6 @@ type Props = {
 export function HomeHub({ stats, onZoneClick, unlockedTrips = 1, totalTrips = 5 }: Props) {
   const [randomEvent, setRandomEvent] = useState<RandomEvent | null>(null);
   const [showEvent, setShowEvent] = useState(false);
-  const [hoveredZone, setHoveredZone] = useState<HubZone | null>(null);
   const [particles, setParticles] = useState<{ id: number; x: number; y: number; delay: number }[]>([]);
 
   // Generate floating particles on mount
@@ -82,135 +81,143 @@ export function HomeHub({ stats, onZoneClick, unlockedTrips = 1, totalTrips = 5 
   };
 
   return (
-    <div className="hub-container">
-      {/* Ambient particles */}
-      <div className="hub-particles">
-        {particles.map((p) => (
-          <div
-            key={p.id}
-            className="hub-particle"
-            style={{
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-              animationDelay: `${p.delay}s`,
-            }}
-          />
-        ))}
+    <div className="hub-wrapper">
+      <div className="hub-container">
+        {/* Ambient particles */}
+        <div className="hub-particles">
+          {particles.map((p) => (
+            <div
+              key={p.id}
+              className="hub-particle"
+              style={{
+                left: `${p.x}%`,
+                top: `${p.y}%`,
+                animationDelay: `${p.delay}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Room scene */}
+        <div className="hub-room">
+          {/* Window with day/night gradient */}
+          <div className="hub-window">
+            <div className="hub-window-frame" />
+            <div className="hub-window-curtain left" />
+            <div className="hub-window-curtain right" />
+          </div>
+
+          {/* Photo wall (decorative) */}
+          <div className="hub-photos">
+            <div className="hub-photo-frame" />
+            <div className="hub-photo-frame" />
+            <div className="hub-photo-frame" />
+          </div>
+
+          {/* TV Area */}
+          <button
+            className="hub-zone hub-tv"
+            onClick={() => handleZoneClick("tv")}
+            aria-label="Watch something together (Date Nights)"
+          >
+            <div className="hub-tv-screen">
+              <div className="hub-tv-static" />
+            </div>
+            <div className="hub-tv-stand" />
+            <span className="hub-zone-label">Date Nights</span>
+          </button>
+
+          {/* Fireplace */}
+          <div className="hub-fireplace">
+            <div className="hub-fire">
+              <div className="hub-flame f1" />
+              <div className="hub-flame f2" />
+              <div className="hub-flame f3" />
+            </div>
+            <div className="hub-fireplace-glow" />
+          </div>
+
+          {/* Couch with couple */}
+          <button
+            className="hub-zone hub-couch"
+            onClick={() => handleZoneClick("couch")}
+            aria-label="Spend time together"
+          >
+            <div className="hub-couch-base" />
+            <div className="hub-couple">
+              <div className="hub-person p1" />
+              <div className="hub-person p2" />
+              <div className="hub-heart-float">💕</div>
+            </div>
+            <span className="hub-zone-label">Story</span>
+          </button>
+
+          {/* Suitcase */}
+          <button
+            className="hub-zone hub-suitcase"
+            onClick={() => handleZoneClick("suitcase")}
+            aria-label="Go on a trip"
+          >
+            <div className="hub-suitcase-body">
+              <div className="hub-suitcase-stripe" />
+              <div className="hub-suitcase-handle" />
+            </div>
+            <span className="hub-zone-label">Trips</span>
+            <span className="hub-zone-badge">{unlockedTrips}/{totalTrips}</span>
+          </button>
+
+          {/* Dining table */}
+          <button
+            className="hub-zone hub-table"
+            onClick={() => handleZoneClick("table")}
+            aria-label="Have a meal together"
+          >
+            <div className="hub-table-top" />
+            <div className="hub-table-leg l1" />
+            <div className="hub-table-leg l2" />
+            <div className="hub-food-items">
+              <span className="hub-food">🍜</span>
+              <span className="hub-food">🥡</span>
+            </div>
+            <span className="hub-zone-label">Food</span>
+          </button>
+
+          {/* Phone on side table */}
+          <button
+            className="hub-zone hub-phone"
+            onClick={() => handleZoneClick("phone")}
+            aria-label="Check phone"
+          >
+            <div className="hub-side-table" />
+            <div className="hub-phone-device">
+              <div className="hub-phone-screen" />
+              <div className="hub-phone-notif" />
+            </div>
+            <span className="hub-zone-label">Friends</span>
+          </button>
+
+          {/* Floor rug */}
+          <div className="hub-rug" />
+        </div>
+
+        {/* Random event popup */}
+        {randomEvent && (
+          <div className={`hub-event-popup ${showEvent ? "show" : ""}`}>
+            <span className="hub-event-emoji">{randomEvent.emoji}</span>
+            <span className="hub-event-text">{randomEvent.text}</span>
+            <div className="hub-event-actions">
+              <button className="hub-event-btn accept" onClick={acceptEvent}>
+                Yes!
+              </button>
+              <button className="hub-event-btn dismiss" onClick={dismissEvent}>
+                Later
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Room scene */}
-      <div className="hub-room">
-        {/* Window with day/night gradient */}
-        <div className="hub-window">
-          <div className="hub-window-frame" />
-          <div className="hub-window-curtain left" />
-          <div className="hub-window-curtain right" />
-        </div>
-
-        {/* Photo wall (decorative) */}
-        <div className="hub-photos">
-          <div className="hub-photo-frame" />
-          <div className="hub-photo-frame" />
-          <div className="hub-photo-frame" />
-        </div>
-
-        {/* TV Area */}
-        <button
-          className={`hub-zone hub-tv ${hoveredZone === "tv" ? "hovered" : ""}`}
-          onClick={() => handleZoneClick("tv")}
-          onMouseEnter={() => setHoveredZone("tv")}
-          onMouseLeave={() => setHoveredZone(null)}
-          aria-label="Watch something together (Date Nights)"
-        >
-          <div className="hub-tv-screen">
-            <div className="hub-tv-static" />
-          </div>
-          <div className="hub-tv-stand" />
-          <span className="hub-zone-label">Date Nights</span>
-        </button>
-
-        {/* Fireplace */}
-        <div className="hub-fireplace">
-          <div className="hub-fire">
-            <div className="hub-flame f1" />
-            <div className="hub-flame f2" />
-            <div className="hub-flame f3" />
-          </div>
-          <div className="hub-fireplace-glow" />
-        </div>
-
-        {/* Couch with couple */}
-        <button
-          className={`hub-zone hub-couch ${hoveredZone === "couch" ? "hovered" : ""}`}
-          onClick={() => handleZoneClick("couch")}
-          onMouseEnter={() => setHoveredZone("couch")}
-          onMouseLeave={() => setHoveredZone(null)}
-          aria-label="Spend time together"
-        >
-          <div className="hub-couch-base" />
-          <div className="hub-couple">
-            <div className="hub-person p1" />
-            <div className="hub-person p2" />
-            <div className="hub-heart-float">💕</div>
-          </div>
-          <span className="hub-zone-label">Story</span>
-        </button>
-
-        {/* Suitcase */}
-        <button
-          className={`hub-zone hub-suitcase ${hoveredZone === "suitcase" ? "hovered" : ""}`}
-          onClick={() => handleZoneClick("suitcase")}
-          onMouseEnter={() => setHoveredZone("suitcase")}
-          onMouseLeave={() => setHoveredZone(null)}
-          aria-label="Go on a trip"
-        >
-          <div className="hub-suitcase-body">
-            <div className="hub-suitcase-stripe" />
-            <div className="hub-suitcase-handle" />
-          </div>
-          <span className="hub-zone-label">Trips</span>
-          <span className="hub-zone-badge">{unlockedTrips}/{totalTrips}</span>
-        </button>
-
-        {/* Dining table */}
-        <button
-          className={`hub-zone hub-table ${hoveredZone === "table" ? "hovered" : ""}`}
-          onClick={() => handleZoneClick("table")}
-          onMouseEnter={() => setHoveredZone("table")}
-          onMouseLeave={() => setHoveredZone(null)}
-          aria-label="Have a meal together"
-        >
-          <div className="hub-table-top" />
-          <div className="hub-table-leg l1" />
-          <div className="hub-table-leg l2" />
-          <div className="hub-food-items">
-            <span className="hub-food">🍜</span>
-            <span className="hub-food">🥡</span>
-          </div>
-          <span className="hub-zone-label">Food</span>
-        </button>
-
-        {/* Phone on side table */}
-        <button
-          className={`hub-zone hub-phone ${hoveredZone === "phone" ? "hovered" : ""}`}
-          onClick={() => handleZoneClick("phone")}
-          onMouseEnter={() => setHoveredZone("phone")}
-          onMouseLeave={() => setHoveredZone(null)}
-          aria-label="Check phone"
-        >
-          <div className="hub-side-table" />
-          <div className="hub-phone-device">
-            <div className="hub-phone-screen" />
-            <div className="hub-phone-notif" />
-          </div>
-          <span className="hub-zone-label">Friends</span>
-        </button>
-
-        {/* Floor rug */}
-        <div className="hub-rug" />
-      </div>
-
-      {/* Stats bar */}
+      {/* Stats bar - outside room container */}
       <div className="hub-stats-bar">
         <div className="hub-stat">
           <span className="hub-stat-icon">💕</span>
@@ -231,22 +238,6 @@ export function HomeHub({ stats, onZoneClick, unlockedTrips = 1, totalTrips = 5 
           <span className="hub-stat-val memories">{stats.memories}</span>
         </div>
       </div>
-
-      {/* Random event popup */}
-      {randomEvent && (
-        <div className={`hub-event-popup ${showEvent ? "show" : ""}`}>
-          <span className="hub-event-emoji">{randomEvent.emoji}</span>
-          <span className="hub-event-text">{randomEvent.text}</span>
-          <div className="hub-event-actions">
-            <button className="hub-event-btn accept" onClick={acceptEvent}>
-              Yes!
-            </button>
-            <button className="hub-event-btn dismiss" onClick={dismissEvent}>
-              Later
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

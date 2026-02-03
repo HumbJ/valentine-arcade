@@ -3,7 +3,7 @@
    ============================================ */
 
 /* CSS Custom Properties for the hub */
-.hub-container {
+.hub-wrapper {
   --hub-floor: #f5e6d3;
   --hub-wall: #fff5f8;
   --hub-wall-accent: #ffe4ec;
@@ -22,13 +22,18 @@
   /* Pixel art effect */
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .hub-container {
   position: relative;
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
   aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 24px;
@@ -235,10 +240,16 @@
    ============================================ */
 
 .hub-tv {
-  top: 25%;
-  left: 15%;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
   width: 90px;
   height: 70px;
+}
+
+.hub-tv:hover,
+.hub-tv.hovered {
+  transform: translateX(-50%) scale(1.05) translateY(-2px);
 }
 
 .hub-tv-screen {
@@ -663,11 +674,11 @@
 
 .hub-rug {
   position: absolute;
-  bottom: 5%;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
   width: 70%;
-  height: 25%;
+  height: 20%;
   background:
     repeating-linear-gradient(
       90deg,
@@ -686,15 +697,13 @@
    ============================================ */
 
 .hub-stats-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   padding: 12px 16px;
-  background: linear-gradient(180deg, transparent 0%, rgba(255, 230, 240, 0.95) 30%);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 143, 177, 0.25);
+  border-radius: 20px;
   backdrop-filter: blur(8px);
 }
 
@@ -824,18 +833,43 @@
 }
 
 /* ============================================
+   MOBILE-FIRST: Always show labels on touch devices
+   ============================================ */
+
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices - always show labels */
+  .hub-zone-label {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Slightly smaller labels on mobile */
+  .hub-zone-label {
+    font-size: 10px;
+    padding: 3px 8px;
+    bottom: -18px;
+  }
+}
+
+/* ============================================
    RESPONSIVE ADJUSTMENTS
    ============================================ */
 
 @media (max-width: 480px) {
+  .hub-wrapper {
+    gap: 10px;
+  }
+
   .hub-container {
-    border-radius: 16px;
+    border-radius: 18px;
+    /* Taller aspect ratio on mobile to show more of the room */
     aspect-ratio: 3 / 4;
   }
 
   .hub-stats-bar {
-    gap: 8px;
+    gap: 6px;
     padding: 10px 12px;
+    border-radius: 16px;
   }
 
   .hub-stat {
@@ -844,18 +878,67 @@
   }
 
   .hub-stat-bar {
-    width: 40px;
+    width: 36px;
   }
 
-  .hub-zone-label {
-    font-size: 10px;
-    padding: 3px 8px;
+  .hub-stat-icon {
+    font-size: 12px;
+  }
+
+  .hub-stat-val {
+    font-size: 11px;
   }
 
   .hub-event-popup {
     flex-wrap: wrap;
     justify-content: center;
     max-width: 90%;
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .hub-event-emoji {
+    font-size: 20px;
+  }
+
+  .hub-event-text {
+    font-size: 13px;
+  }
+
+  /* Adjust room elements for taller aspect ratio */
+  .hub-window {
+    top: 5%;
+    width: 100px;
+    height: 70px;
+  }
+
+  .hub-tv {
+    top: 18%;
+  }
+
+  .hub-fireplace {
+    bottom: 38%;
+  }
+
+  .hub-couch {
+    bottom: 24%;
+  }
+
+  .hub-suitcase {
+    bottom: 10%;
+  }
+
+  .hub-table {
+    bottom: 10%;
+  }
+
+  .hub-phone {
+    bottom: 28%;
+  }
+
+  .hub-rug {
+    bottom: 10%;
+    height: 18%;
   }
 }
 

@@ -3,12 +3,15 @@
    ============================================ */
 
 .home-page {
-  min-height: 100vh;
+  min-height: 100dvh; /* Use dynamic viewport height for mobile */
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 16px 100px;
+  justify-content: center;
+  padding: 16px;
+  padding-bottom: 80px; /* Space for bottom nav */
   background: linear-gradient(180deg, #fff5f8 0%, #ffe4ec 50%, #fff8f0 100%);
+  box-sizing: border-box;
 }
 
 .home-header {
@@ -67,14 +70,30 @@
 
 @media (max-width: 480px) {
   .home-page {
-    padding: 16px 12px 90px;
+    padding: 12px;
+    padding-bottom: 76px; /* Space for bottom nav */
+    justify-content: flex-start;
+    padding-top: 16px;
+  }
+
+  .home-header {
+    margin-bottom: 12px;
   }
 
   .home-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .home-subtitle {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .home-hint {
+    margin-top: 12px;
+    padding: 8px 16px;
+  }
+
+  .home-hint p {
+    font-size: 0.8rem;
   }
 }
