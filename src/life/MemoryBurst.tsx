@@ -9,6 +9,22 @@ function shuffle<T>(arr: T[]) {
   }
   return a;
 }
+function titleForDeck(deck: string) {
+  const map: Record<string, string> = {
+    disneyland: "Disneyland ✨",
+
+    seattle1_threshold: "Seattle Trip I 🌲",
+    seattle1_arrival: "Seattle Trip I — Arrival",
+    seattle1_explore: "Seattle Trip I — Exploring",
+    seattle1_food: "Seattle Trip I — Food Break",
+    seattle1_quiet: "Seattle Trip I — The Museum",
+    seattle1_reflect: "Seattle Trip I — Afterglow",
+    seattle1_closing: "Seattle Trip I — What we’ll remember",
+
+  };
+
+  return map[deck] ?? "Memory ✨";
+}
 
 export function MemoryBurst({
   deck,
@@ -66,7 +82,8 @@ export function MemoryBurst({
   return (
     <div className="mem-overlay" onClick={onDone}>
       <div className="mem-stage" onClick={(e) => e.stopPropagation()}>
-        <div className="mem-title">Disneyland ✨</div>
+        <div className="mem-title">{titleForDeck(deck)}
+</div>
 
         <div className="mem-frame">
           {current.type === "photo" ? (

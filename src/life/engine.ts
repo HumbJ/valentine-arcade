@@ -20,10 +20,17 @@ export function applyEffects(save: SaveData, effects: Effect[]): SaveData {
     continue;
   }
 
-  if (eff.type === "burst") {
-    // UI handles this effect (visual only). Nothing to save here.
-    continue;
-  }
+if (
+  eff.type === "burst" ||
+  eff.type === "puzzle" ||
+  eff.type === "mapDiscover" ||
+  eff.type === "foodOrder" ||
+  eff.type === "reflectionPrompt" ||
+  eff.type === "reflectionReview"
+) {
+  continue;
+}
+
 
   if (eff.type === "unlockPlace") {
     // Defensive: older saves might not have this field yet

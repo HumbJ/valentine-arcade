@@ -55,6 +55,78 @@ export const MEMORIES: Record<string, MemoryItem[]> = {
     },
   ],
 };
+// --- Auto-deck loader (Vite) ----------------------------------------------
+
+function filenameNoExt(path: string) {
+  const file = path.split("/").pop() ?? path;
+  return file.replace(/\.[^.]+$/, "");
+}
+
+function isVideoFile(path: string) {
+  return /\.(mp4|mov|webm|m4v)$/i.test(path);
+}
+
+/**
+ * Convert a Vite glob() result into a sorted MemoryItem[].
+ * Sorting is by file path, so name files like s1_arrival_01.jpg, s1_arrival_02.jpg, etc.
+ */
+function deckFromGlob(globResult: Record<string, any>): MemoryItem[] {
+  const entries = Object.entries(globResult).sort(([a], [b]) => a.localeCompare(b));
+
+  return entries.map(([path, mod]) => {
+    const src: string = typeof mod === "string" ? mod : mod.default;
+    const id = filenameNoExt(path);
+
+    if (isVideoFile(path)) {
+      return {
+        id,
+        type: "video",
+        src,
+        loop: true,
+        muted: true,
+      };
+    }
+
+    return {
+      id,
+      type: "photo",
+      src,
+    };
+  });
+}
+
+// --- Seattle Trip 1 decks --------------------------------------------------
+// Folder layout: src/photos/trips/seattle1/{threshold,arrival,explore,food,quiet,reflect}
+
+const seattle1Threshold = import.meta.glob("../assets/photos/trips/seattle1/threshold/*", { eager: true });
+const seattle1Arrival   = import.meta.glob("../assets/photos/trips/seattle1/arrival/*", { eager: true });
+const seattle1Explore   = import.meta.glob("../assets/photos/trips/seattle1/explore/*", { eager: true });
+const seattle1Food      = import.meta.glob("../assets/photos/trips/seattle1/food/*", { eager: true });
+const seattle1Quiet     = import.meta.glob("../assets/photos/trips/seattle1/quiet/*", { eager: true });
+const seattle1Reflect   = import.meta.glob("../assets/photos/trips/seattle1/reflect/*", { eager: true });
+
+MEMORIES["seattle1_threshold"] = deckFromGlob(seattle1Threshold);
+MEMORIES["seattle1_arrival"]   = deckFromGlob(seattle1Arrival);
+MEMORIES["seattle1_explore"]   = deckFromGlob(seattle1Explore);
+MEMORIES["seattle1_food"]      = deckFromGlob(seattle1Food);
+MEMORIES["seattle1_quiet"]     = deckFromGlob(seattle1Quiet);
+MEMORIES["seattle1_reflect"]   = deckFromGlob(seattle1Reflect);
+// Seattle Trip 1 outro deck (same assets as reflect, but used as the "closing beat")
+MEMORIES["seattle1_closing"] = MEMORIES["seattle1_reflect"];
+
+
+// --- Seattle Trip 1 combined "scrapbook" deck (for Map replay) -------------
+
+MEMORIES["seattle1"] = [
+  ...(MEMORIES["seattle1_threshold"] ?? []),
+  ...(MEMORIES["seattle1_arrival"] ?? []),
+  ...(MEMORIES["seattle1_explore"] ?? []),
+  ...(MEMORIES["seattle1_food"] ?? []),
+  ...(MEMORIES["seattle1_quiet"] ?? []),
+  ...(MEMORIES["seattle1_reflect"] ?? []),
+];
+
+
 
 export function getMemorySrc(deck: string, id: string): string | null {
   const arr = MEMORIES[deck] ?? [];

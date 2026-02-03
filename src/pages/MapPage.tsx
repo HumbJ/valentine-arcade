@@ -41,7 +41,7 @@ const [burst, setBurst] = useState<null | { deck: string; pick?: number }>(null)
               type="button"
               className={`map-card ${isUnlocked ? "unlocked" : "locked"}`}
               disabled={!isUnlocked}
-              onClick={() => setBurst({ deck: p.id })}
+              onClick={() => setBurst({ deck: (p as any).deck ?? p.id })}
               title={isUnlocked ? "Tap to relive" : "Locked"}
             >
               <div className="map-emoji">{p.emoji}</div>

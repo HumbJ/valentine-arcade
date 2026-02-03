@@ -2,13 +2,15 @@ const KEY = "our_little_life_save"; // match whatever key you're using everywher
 
 export function defaultSave() {
   return {
-    version: 1,
+    version: 2,
     stats: { love: 0, happiness: 0, memories: 0 },
     currentEventId: "start",
     log: [],
     placesUnlocked: [],
+    reflections: [], // NEW
   };
 }
+
 
 export function loadSave() {
   const fresh = defaultSave();
@@ -19,12 +21,14 @@ export function loadSave() {
     const parsed = JSON.parse(raw);
 
     return {
-      ...fresh,
-      ...parsed,
-      stats: { ...fresh.stats, ...(parsed.stats ?? {}) },
-      log: Array.isArray(parsed.log) ? parsed.log : [],
-      placesUnlocked: Array.isArray(parsed.placesUnlocked) ? parsed.placesUnlocked : [],
-    };
+  ...fresh,
+  ...parsed,
+  stats: { ...fresh.stats, ...(parsed.stats ?? {}) },
+  log: Array.isArray(parsed.log) ? parsed.log : [],
+  placesUnlocked: Array.isArray(parsed.placesUnlocked) ? parsed.placesUnlocked : [],
+  reflections: Array.isArray(parsed.reflections) ? parsed.reflections : [], // ✅ add this
+};
+
   } catch {
     return fresh;
   }

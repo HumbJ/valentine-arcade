@@ -2,6 +2,163 @@ import type { LifeEvent } from "./types";
 import { getMemorySrc } from "./memories"; // add at top of events.ts
 
 const earsSrc = getMemorySrc("disneyland", "ears-together") ?? "";
+
+export const SEATTLE_1_EVENT: LifeEvent = {
+  id: "seattle_1",
+  title: "Seattle Trip I 🌲",
+  text:
+    "Your first big trip together. New city air, new routines, and that quiet excitement of doing life side-by-side.",
+  choices: [
+    {
+      id: "on_our_way",
+      label: "On our way ✈️",
+      effects: [
+        { type: "burst", deck: "seattle1_threshold" },
+        { type: "goto", eventId: "seattle_1_arrival" },
+      ],
+    },
+  ],
+};
+
+export const SEATTLE_1_ARRIVAL: LifeEvent = {
+  id: "seattle_1_arrival",
+  title: "Arrival",
+  text: "The first little moments: landing, settling in, and letting the trip begin.",
+  choices: [
+    {
+      id: "continue",
+      label: "Keep going →",
+      effects: [
+        { type: "burst", deck: "seattle1_arrival" },
+        { type: "goto", eventId: "seattle_1_explore" },
+        {
+  type: "reflectionPrompt",
+  id: "test_reflection",
+  arc: "test",
+  title: "Stay here a moment",
+  subtitle: "Only if you want to.",
+  prompt: "Just testing — what are you feeling right now?",
+}
+      ],
+    },
+  ],
+};
+
+export const SEATTLE_1_EXPLORE: LifeEvent = {
+  id: "seattle_1_explore",
+  title: "Exploring",
+  text: "Wandering until the trip finds its rhythm. Streets, views, fresh air, and that feeling of discovery.",
+  choices: [
+    {
+      id: "continue",
+      label: "One more chapter →",
+      effects: [
+  {
+    type: "mapDiscover",
+    mapId: "seattle1",
+    title: "Seattle Trip I — Exploring",
+    subtitle: "What four main areas did we explore on this trip? Tap to reveal them.",
+  },
+  { type: "burst", deck: "seattle1_explore" },
+  { type: "goto", eventId: "seattle_1_food" },
+],
+
+    },
+  ],
+};
+
+export const SEATTLE_1_FOOD: LifeEvent = {
+  id: "seattle_1_food",
+  title: "Food Break",
+  text: "A small ritual: trying things, sharing bites, making the city feel like ours.",
+  choices: [
+    {
+      id: "continue",
+      label: "Back out we go →",
+      effects: [
+  { type: "foodOrder", gameId: "seattle1_food", title: "A little food timeline", subtitle: "Put our bites in the order we tried them." },
+  { type: "burst", deck: "seattle1_food" },
+  { type: "goto", eventId: "seattle_1_museum" }
+
+]
+    },
+  ],
+};
+
+export const SEATTLE_1_MUSEUM: LifeEvent = {
+  id: "seattle_1_museum",
+  title: "The Museum",
+  text: "A slower kind of adventure — wandering quietly, noticing details, and feeling close without needing many words.",
+  choices: [
+    {
+      id: "continue",
+      label: "Stay in this moment →",
+      effects: [
+  { type: "burst", deck: "seattle1_closing" },
+  { type: "goto", eventId: "seattle_1_thread" },
+]
+    },
+  ],
+};
+
+export const SEATTLE_1_THREAD: LifeEvent = {
+  id: "seattle_1_thread",
+  title: "Looking back",
+  text: "Some trips end when you get home.\n\nThis one didn’t.",
+  choices: [
+    {
+      id: "continue",
+      label: "Continue",
+      effects: [{ type: "goto", eventId: "seattle_1_reflection_prompt" }],
+    },
+  ],
+};
+
+export const SEATTLE_1_REFLECTION_PROMPT: LifeEvent = {
+  id: "seattle_1_reflection_prompt",
+  title: "One last thing",
+  text: "Before we move on…",
+  choices: [
+    {
+      id: "reflect",
+      label: "Take a moment",
+     effects: [
+  {
+    type: "reflectionPrompt",
+    id: "seattle1_overall",
+    arc: "seattle1",
+    title: "Seattle",
+    subtitle: "Our first trip together",
+    prompt: "How did you feel about our first trip together?",
+  },
+
+  // Rewards happen once, at the end of the arc
+  { type: "stat", key: "love", delta: 14 },
+  { type: "stat", key: "happiness", delta: 10 },
+  { type: "stat", key: "memories", delta: 12 },
+
+  { type: "unlockPlace", placeId: "seattle1" },
+  {
+    type: "log",
+    text:
+      "Seattle Trip I: our first big adventure — exploring the world and learning how easy it can feel to be together.",
+  },
+
+  { type: "goto", eventId: "end_demo" }, // later you can change to post_seattle
+],
+
+    },
+    {
+      id: "skip",
+      label: "Maybe later",
+      effects: [{ type: "goto", eventId: "end_demo" }],
+    },
+  ],
+};
+
+
+
+
 export const LIFE_EVENTS: LifeEvent[] = [
   {
     id: "start",
@@ -104,6 +261,14 @@ export const LIFE_EVENTS: LifeEvent[] = [
     { type: "goto", eventId: "disneyland_trip" },
   ],
 },
+{
+  id: "seattle1",
+  label: "Seattle Trip I 🌲 (our first big trip)",
+  effects: [
+    { type: "log", text: "We talked about Seattle… and suddenly we were packing." },
+    { type: "goto", eventId: "seattle_1" },
+  ],
+},
       {
         id: "cozy",
         label: "Cozy cabin 🏔 (quiet + warm + slow mornings)",
@@ -145,6 +310,31 @@ export const LIFE_EVENTS: LifeEvent[] = [
       ],
     },
   ],
+  
+},
+
+{
+  id: "end",
+  title: "The end (for now)",
+  text: "Thank you for playing. If you want, we can read your reflections together one more time.",
+  choices: [
+    {
+      id: "read_reflections",
+      label: "Read our reflections",
+      effects: [
+        {
+          type: "reflectionReview",
+          title: "A Thousand Feelings",
+          closingLine: "These feelings that we hold dear will last a lifetime.",
+        },
+      ],
+    },
+    {
+      id: "restart",
+      label: "Relive it again",
+      effects: [{ type: "goto", eventId: "start" }],
+    },
+  ],
 },
 
  {
@@ -157,10 +347,21 @@ export const LIFE_EVENTS: LifeEvent[] = [
       id: "restart",
       label: "Start over 🔁",
       effects: [
-        { type: "log", text: "We decided to relive it from the start." },
-        { type: "goto", eventId: "start" }
-      ],
+  {
+    type: "reflectionReview",
+    title: "A note from us",
+    closingLine: "Somewhere along the way, these memories changed “me” into “us.”",
+  },
+  { type: "goto", eventId: "end" },
+],
     },
   ],
 },
+SEATTLE_1_EVENT,
+SEATTLE_1_ARRIVAL,
+SEATTLE_1_EXPLORE,
+SEATTLE_1_FOOD,
+SEATTLE_1_MUSEUM,
+SEATTLE_1_THREAD,
+SEATTLE_1_REFLECTION_PROMPT,
 ];

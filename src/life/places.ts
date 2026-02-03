@@ -3,10 +3,25 @@ export type Place = {
   title: string;
   subtitle?: string;
   emoji: string;
+  deck: string; // 👈 add this
 };
 
+
 export const PLACES: Place[] = [
-  { id: "disneyland", title: "Disneyland", subtitle: "snacks + rides + fireworks", emoji: "🏰" },
+{ 
+  id: "disneyland", 
+  title: "Disneyland", 
+  subtitle: "snacks + rides + fireworks", 
+  emoji: "🏰",
+  deck: "disneyland",
+},
+{
+  id: "seattle1",
+  title: "Seattle Trip I",
+  emoji: "🌲",
+  deck: "seattle1",
+},
+
 
   // Add more later:
   // { id: "las_vegas", title: "Las Vegas", subtitle: "late-night lights", emoji: "🎰" },
