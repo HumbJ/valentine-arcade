@@ -1,0 +1,65 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { HomeHub, type HubZone } from "../components/HomeHub";
+import { loadSave } from "../life/save";
+import type { SaveData } from "../life/types";
+import "./HomePage.css";
+
+export function HomePage() {
+  const navigate = useNavigate();
+  const [save, setSave] = useState<SaveData>(() => loadSave());
+
+  // Refresh save data when returning to the hub
+  useEffect(() => {
+    setSave(loadSave());
+  }, []);
+
+  const handleZoneClick = (zone: HubZone) => {
+    switch (zone) {
+      case "couch":
+        // Main story mode
+        navigate("/story");
+        break;
+      case "suitcase":
+        // Trips / Map page
+        navigate("/map");
+        break;
+      case "tv":
+        // Date nights (could be a filtered story or mini-game selection)
+        navigate("/dates");
+        break;
+      case "table":
+        // Food mini-games
+        navigate("/food");
+        break;
+      case "phone":
+        // Friends / random events
+        navigate("/friends");
+        break;
+    }
+  };
+
+  // Count unlocked trips (places that are trips)
+  const unlockedTrips = save.placesUnlocked.length;
+  const totalTrips = 5; // Seattle, Road Trip, Hawaii, Seattle 2, New York
+
+  return (
+    <div className="home-page">
+      <header className="home-header">
+        <h1 className="home-title">Our Little Life</h1>
+        <p className="home-subtitle">Welcome home 💕</p>
+      </header>
+
+      <HomeHub
+        stats={save.stats}
+        onZoneClick={handleZoneClick}
+        unlockedTrips={unlockedTrips}
+        totalTrips={totalTrips}
+      />
+
+      <div className="home-hint">
+        <p>Tap around the room to explore</p>
+      </div>
+    </div>
+  );
+}
