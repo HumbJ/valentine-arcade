@@ -96,8 +96,7 @@
 .hub-window {
   position: absolute;
   top: 8%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 12%;
   width: 120px;
   height: 80px;
   background: linear-gradient(180deg, #a8d8ff 0%, #ffe4b5 100%);
@@ -908,6 +907,7 @@
   /* Adjust room elements for taller aspect ratio */
   .hub-window {
     top: 5%;
+    left: 8%;
     width: 100px;
     height: 70px;
   }
