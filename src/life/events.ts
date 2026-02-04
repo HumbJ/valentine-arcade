@@ -183,6 +183,26 @@ export const PICNIC_DATE: LifeEvent = {
   ],
 };
 
+export const JULIAN_DAY_TRIP: LifeEvent = {
+  id: "julian_trip",
+  title: "Day Trip to Julian",
+  text: "A little mountain town famous for apple pie and gold mines. Sounded like the perfect excuse to get out of the city for a day.",
+  choices: [
+    {
+      id: "go",
+      label: "Let's see what Julian has in store →",
+      effects: [
+        { type: "burst", deck: "julian_trip" },
+        { type: "stat", key: "love", delta: 3 },
+        { type: "stat", key: "happiness", delta: 4 },
+        { type: "stat", key: "memories", delta: 6 },
+        { type: "log", text: "Julian day trip: pie, mines, and questionable ciders." },
+        { type: "gotoHome" },
+      ],
+    },
+  ],
+};
+
 export const COZY_NEXT_DAY: LifeEvent = {
   id: "cozy_next_day",
   title: "The Next Day",
@@ -191,8 +211,13 @@ export const COZY_NEXT_DAY: LifeEvent = {
   choices: [
     {
       id: "picnic",
-      label: "Let’s go on a picnic date! →",
+      label: "Let's go on a picnic date! →",
       effects: [{ type: "goto", eventId: "picnic_date" }],
+    },
+    {
+      id: "julian",
+      label: "Day trip to Julian? →",
+      effects: [{ type: "goto", eventId: "julian_trip" }],
     },
     {
       id: "stay",
@@ -410,6 +435,7 @@ SEATTLE_1_EVENT,
 SEATTLE_1_ARRIVAL,
 SEATTLE_1_EXPLORE,
 PICNIC_DATE,
+JULIAN_DAY_TRIP,
 SEATTLE_1_FOOD,
 SEATTLE_1_MUSEUM,
 COZY_NEXT_DAY,

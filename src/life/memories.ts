@@ -120,6 +120,10 @@ MEMORIES["seattle1_closing"] = MEMORIES["seattle1_reflect"];
 const cozyStay = import.meta.glob("../assets/photos/dates/cozy_stay/*", { eager: true });
 MEMORIES["cozy_stay"] = deckFromGlob(cozyStay);
 
+// --- Julian Day Trip deck ---------------------------------------------------
+const julianTrip = import.meta.glob("../assets/photos/dates/julian/*", { eager: true });
+MEMORIES["julian_trip"] = deckFromGlob(julianTrip);
+
 // --- Seattle Trip 1 combined "scrapbook" deck (for Map replay) -------------
 
 MEMORIES["seattle1"] = [
