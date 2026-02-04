@@ -13,6 +13,7 @@ export type Effect =
   | { type: "unlockPlace"; placeId: string }
   | { type: "mapDiscover"; mapId: string; title?: string; subtitle?: string }
   | { type: "foodOrder"; gameId: string; title?: string; subtitle?: string }
+  | { type: "picnicDate"; title: string; subtitle?: string }
   | {
       type: "reflectionPrompt";
       id: string;          // stable prompt id e.g. "seattle_close"
@@ -25,6 +26,7 @@ export type Effect =
       type: "reflectionReview";
       title?: string;
       closingLine?: string;
+
   };
 
 
@@ -59,5 +61,12 @@ export type ReflectionEntry = {
   prompt: string;    // the question shown
   text: string;      // her response
 };
+
+export type PicnicDateEffect = {
+  type: "picnicDate";
+  title: string;
+  subtitle?: string;
+};
+
 
 

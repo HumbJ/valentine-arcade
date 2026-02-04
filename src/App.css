@@ -283,6 +283,19 @@ html, body {
   animation: overlayIn 180ms ease-out;
 }
 
+.mem-frame {
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+
+  /* 🔥 important */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+
+
 .mem-stage {
   width: min(520px, 100%);
   text-align: center;
@@ -307,9 +320,24 @@ html, body {
 .mem-frame video {
   width: 100%;
   height: min(60vh, 420px);
-  object-fit: cover;
+  object-fit: contain;
   display: block;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      #fff6fa 0%,
+      #ffdbe9 55%,
+      #ffc3db 100%
+    );
 }
+
+.mem-frame img {
+  box-shadow: inset 0 0 60px rgba(255, 175, 205, 0.35);
+}
+
+
+
 
 .mem-caption {
   margin-top: 10px;
@@ -402,13 +430,28 @@ html, body {
   background: white;
 }
 
-.mem-media img,
-.mem-media video {
+.mem-media img, .mem-media video {
   width: 100%;
   height: 240px;
-  object-fit: cover;
+  object-fit: contain;
+  display: block;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(245, 238, 225, 0.95) 60%,
+      rgba(235, 226, 210, 0.95) 100%
+    );
+}
+
+
+.media-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
 }
+
 
 .mem-caption {
   margin-top: 10px;

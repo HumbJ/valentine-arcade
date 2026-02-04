@@ -104,6 +104,10 @@ const seattle1Explore   = import.meta.glob("../assets/photos/trips/seattle1/expl
 const seattle1Food      = import.meta.glob("../assets/photos/trips/seattle1/food/*", { eager: true });
 const seattle1Quiet     = import.meta.glob("../assets/photos/trips/seattle1/quiet/*", { eager: true });
 const seattle1Reflect   = import.meta.glob("../assets/photos/trips/seattle1/reflect/*", { eager: true });
+// --- Date decks -------------------------------------------------------------
+const picnicDate = import.meta.glob("../assets/photos/dates/picnic/*", { eager: true });
+MEMORIES["picnic_date"] = deckFromGlob(picnicDate);
+
 
 MEMORIES["seattle1_threshold"] = deckFromGlob(seattle1Threshold);
 MEMORIES["seattle1_arrival"]   = deckFromGlob(seattle1Arrival);
@@ -113,7 +117,8 @@ MEMORIES["seattle1_quiet"]     = deckFromGlob(seattle1Quiet);
 MEMORIES["seattle1_reflect"]   = deckFromGlob(seattle1Reflect);
 // Seattle Trip 1 outro deck (same assets as reflect, but used as the "closing beat")
 MEMORIES["seattle1_closing"] = MEMORIES["seattle1_reflect"];
-
+const cozyStay = import.meta.glob("../assets/photos/dates/cozy_stay/*", { eager: true });
+MEMORIES["cozy_stay"] = deckFromGlob(cozyStay);
 
 // --- Seattle Trip 1 combined "scrapbook" deck (for Map replay) -------------
 

@@ -1,6 +1,7 @@
 import type { LifeEvent } from "./types";
 import { getMemorySrc } from "./memories"; // add at top of events.ts
 
+
 const earsSrc = getMemorySrc("disneyland", "ears-together") ?? "";
 
 export const SEATTLE_1_EVENT: LifeEvent = {
@@ -157,6 +158,51 @@ export const SEATTLE_1_REFLECTION_PROMPT: LifeEvent = {
 };
 
 
+export const PICNIC_DATE: LifeEvent = {
+  id: "picnic_date",
+  title: "Picnic Date",
+  text: "Just us, a little food, and that soft kind of happy that makes time slow down.",
+  choices: [
+    {
+      id: "continue",
+      label: "Let’s pack the basket →",
+      effects: [
+        {
+          type: "picnicDate",
+          title: "Picnic Date",
+          subtitle: "Pick 3 things to bring… then tap through our photos.",
+        },
+        { type: "burst", deck: "picnic_date" },
+        // optional next step:
+        // { type: "goto", eventId: "end_demo" },
+      ],
+    },
+  ],
+};
+
+export const COZY_NEXT_DAY: LifeEvent = {
+  id: "cozy_next_day",
+  title: "The Next Day",
+  text:
+    "We talked long into the night—about everything and nothing—until the world got quiet. Now it’s the next day, and I’m still smiling. What do you want to do?",
+  choices: [
+    {
+      id: "picnic",
+      label: "Let’s go on a picnic date! →",
+      effects: [{ type: "goto", eventId: "picnic_date" }],
+    },
+    {
+      id: "stay",
+      label: "Stay cozy a little longer",
+      effects: [
+        { type: "log", text: "We stayed curled up together a bit longer." },
+        { type: "burst", deck: "cozy_stay" },
+      ],
+    },
+  ],
+};
+
+
 
 
 export const LIFE_EVENTS: LifeEvent[] = [
@@ -232,9 +278,9 @@ export const LIFE_EVENTS: LifeEvent[] = [
         label: "Talk late into the night",
         effects: [
           { type: "stat", key: "love", delta: 5 },
-          { type: "log", text: "We learned more about each other." },
-          { type: "goto", eventId: "vacation_tease" },
-        ],
+          { type: "log", text: "We talked long into the night." },
+  { type: "goto", eventId: "cozy_next_day" },
+],
       },
     ],
   },
@@ -360,8 +406,10 @@ export const LIFE_EVENTS: LifeEvent[] = [
 SEATTLE_1_EVENT,
 SEATTLE_1_ARRIVAL,
 SEATTLE_1_EXPLORE,
+PICNIC_DATE,
 SEATTLE_1_FOOD,
 SEATTLE_1_MUSEUM,
+COZY_NEXT_DAY,
 SEATTLE_1_THREAD,
 SEATTLE_1_REFLECTION_PROMPT,
 ];

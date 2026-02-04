@@ -13,6 +13,7 @@ import type { ReflectionEntry } from "../life/types";
 import { ReflectionReview } from "../life/ReflectionReview";
 import { EndCreditsOverlay } from "../life/EndCreditsOverlay";
 import "./StoryMode.css";
+import { PicnicDateGate } from "../life/PicnicDateGate";
 
 
 
@@ -32,7 +33,8 @@ export function LifePage() {
 
   const [mapGate, setMapGate] = useState<null | { mapId: string; title?: string; subtitle?: string }>(null);
   const [pendingAfterMap, setPendingAfterMap] = useState<Effect[] | null>(null);
-
+  const [picnicGate, setPicnicGate] = useState<null | { title: string; subtitle?: string }>(null);
+  const [pendingAfterPicnic, setPendingAfterPicnic] = useState<Effect[] | null>(null);
   const [foodGate, setFoodGate] = useState<null | { gameId: string; title?: string; subtitle?: string }>(null);
   const [pendingAfterFood, setPendingAfterFood] = useState<Effect[] | null>(null);
   const [reflectionGate, setReflectionGate] = useState<null | {
@@ -121,6 +123,17 @@ useEffect(() => {
       setPendingAfterFood(effects.filter((e) => e.type !== "foodOrder"));
       return;
     }
+
+    // 2.5) Picnic gate
+const picnicEff = effects.find(
+  (e): e is Extract<Effect, { type: "picnicDate" }> => e.type === "picnicDate"
+);
+if (picnicEff) {
+  setPicnicGate({ title: picnicEff.title, subtitle: picnicEff.subtitle });
+  setPendingAfterPicnic(effects.filter((e) => e.type !== "picnicDate"));
+  return;
+}
+
 
     // 3) Reflection gate intercept
 const reflEff = effects.find(
@@ -302,6 +315,14 @@ function finishReflectionSave(text: string) {
     setPendingAfterFood(null);
     runEffects(rest);
   }
+
+  function finishPicnicGate() {
+  setPicnicGate(null);
+  if (!pendingAfterPicnic) return;
+  const rest = pendingAfterPicnic;
+  setPendingAfterPicnic(null);
+  runEffects(rest);
+}
 
   function finishReviewGate() {
   setReviewGate(null);
@@ -553,6 +574,15 @@ function finishReflectionSave(text: string) {
           onDone={() => setShowFinale(false)}
         />
       )}
+
+      {picnicGate && (
+  <PicnicDateGate
+    title={picnicGate.title}
+    subtitle={picnicGate.subtitle}
+    onDone={finishPicnicGate}
+  />
+)}
+
     </div>
   );
   

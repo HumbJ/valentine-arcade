@@ -20,6 +20,10 @@ function titleForDeck(deck: string) {
     seattle1_quiet: "Seattle Trip I — The Museum",
     seattle1_reflect: "Seattle Trip I — Afterglow",
     seattle1_closing: "Seattle Trip I — What we’ll remember",
+    cozy_stay: "A Cozy Night In — Morning After",
+    picnic_date: "Picnic Date 🧺",
+
+
 
   };
 
