@@ -3,7 +3,9 @@ import { LIFE_EVENTS } from "./events";
 
 const clamp01 = (n: number) => Math.max(0, Math.min(100, n));
 
-export function getEventById(id: string): LifeEvent {
+export function getEventById(id: string): LifeEvent | null {
+  // "hub" means we're at home, not in an active event
+  if (id === "hub") return null;
   const ev = LIFE_EVENTS.find((e) => e.id === id);
   if (!ev) throw new Error(`Missing event: ${id}`);
   return ev;
