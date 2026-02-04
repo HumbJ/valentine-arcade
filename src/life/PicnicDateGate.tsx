@@ -47,18 +47,18 @@ export function PicnicDateGate(props: {
   onDone: () => void;
 }) {
   const [phase, setPhase] = useState<Phase>("pack");
-  const [note, setNote] = useState("Pick 3 things to pack our basket.");
+  const [note, setNote] = useState("Pick 4 things to pack our basket.");
 
   const [picked, setPicked] = useState<string[]>([]);
   const pickedSet = useMemo(() => new Set(picked), [picked]);
-  const canPickMore = picked.length < 3;
+  const canPickMore = picked.length < 4;
 
   const [idx, setIdx] = useState(0);
 
   function togglePick(id: string) {
     if (pickedSet.has(id)) {
       setPicked((prev) => prev.filter((x) => x !== id));
-      setNote("Okay okay… swapped. Pick 3 things.");
+      setNote("Okay okay… swapped. Pick 4 things.");
       return;
     }
     if (!canPickMore) {
@@ -112,7 +112,7 @@ export function PicnicDateGate(props: {
           <>
             <div className="picnic-note-box">
               <div className="picnic-note">{note}</div>
-              <div className="picnic-count">Packed: {picked.length}/3</div>
+              <div className="picnic-count">Packed: {picked.length}/4</div>
             </div>
 
             <div className="picnic-grid">
@@ -142,8 +142,8 @@ export function PicnicDateGate(props: {
               <button
                 type="button"
                 onClick={startStory}
-                disabled={picked.length < 3}
-                className={`picnic-btn primary ${picked.length < 3 ? "disabled" : ""}`}
+                disabled={picked.length < 4}
+                className={`picnic-btn primary ${picked.length < 4 ? "disabled" : ""}`}
               >
                 Unpack the memory →
               </button>
