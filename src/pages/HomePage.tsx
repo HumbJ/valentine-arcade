@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { HomeHub, type HubZone } from "../components/HomeHub";
-import { loadSave } from "../life/save";
+import { loadSave, persistSave } from "../life/save";
 import type { SaveData } from "../life/types";
 import "./HomePage.css";
 
@@ -16,10 +16,21 @@ export function HomePage() {
 
   const handleZoneClick = (zone: HubZone) => {
     switch (zone) {
-      case "couch":
-        // Main story mode
-        navigate("/story");
+      case "couch": {
+        // Main story mode - need to set an event before navigating
+        // If there's already an active event, resume it; otherwise start fresh
+        if (save.currentEventId !== "hub") {
+          // Resume existing event
+          navigate("/story");
+        } else {
+          // Start from beginning - set currentEventId before navigating
+          const updated = { ...save, currentEventId: "start" };
+          persistSave(updated);
+          setSave(updated);
+          navigate("/story");
+        }
         break;
+      }
       case "suitcase":
         // Trips / Map page
         navigate("/map");
