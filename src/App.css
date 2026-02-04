@@ -1303,3 +1303,246 @@ html, body {
   .overlay-fade, .card-pop { animation: none !important; }
   .rr-card-inner { transition: none !important; }
 }
+
+/* ===== Picnic Date Gate ===== */
+.picnic-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(255, 200, 220, 0.25);
+  backdrop-filter: blur(12px);
+  animation: overlayIn 180ms ease-out;
+}
+
+.picnic-card {
+  width: min(420px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid var(--pink);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 20px 50px rgba(255, 143, 177, 0.25);
+}
+
+.picnic-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.picnic-kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.picnic-title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--pink2);
+}
+
+.picnic-subtitle {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.picnic-note-box {
+  background: rgba(255, 240, 245, 0.8);
+  border: 1px solid rgba(255, 143, 177, 0.25);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.picnic-note {
+  font-weight: 600;
+  color: #3a2a31;
+  flex: 1;
+}
+
+.picnic-count {
+  font-weight: 700;
+  color: var(--pink2);
+  white-space: nowrap;
+}
+
+.picnic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.picnic-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 143, 177, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.picnic-item:hover:not(.disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 143, 177, 0.2);
+}
+
+.picnic-item.picked {
+  background: linear-gradient(135deg, rgba(255, 220, 230, 0.9) 0%, rgba(255, 200, 215, 0.9) 100%);
+  border-color: var(--pink);
+  box-shadow: 0 4px 12px rgba(255, 143, 177, 0.25);
+}
+
+.picnic-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.picnic-item-emoji {
+  font-size: 1.6rem;
+}
+
+.picnic-item-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #3a2a31;
+}
+
+.picnic-item-status {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.picnic-footer {
+  text-align: center;
+}
+
+.picnic-tip {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.picnic-btn {
+  padding: 12px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 143, 177, 0.4);
+  background: rgba(255, 255, 255, 0.85);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.picnic-btn:hover:not(.disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 143, 177, 0.2);
+}
+
+.picnic-btn.primary {
+  background: linear-gradient(90deg, var(--pink), var(--pink2));
+  color: white;
+  border-color: rgba(255, 111, 158, 0.55);
+}
+
+.picnic-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Picnic Story Phase */
+.picnic-photo-frame {
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 143, 177, 0.35);
+  box-shadow: 0 12px 30px rgba(255, 143, 177, 0.18);
+  margin-bottom: 14px;
+}
+
+.picnic-photo {
+  width: 100%;
+  height: auto;
+  max-height: 50vh;
+  object-fit: contain;
+  display: block;
+  background: radial-gradient(
+    ellipse at center,
+    #fff6fa 0%,
+    #ffdbe9 55%,
+    #ffc3db 100%
+  );
+}
+
+.picnic-caption {
+  text-align: center;
+  font-weight: 650;
+  font-size: 1rem;
+  color: #3a2a31;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.picnic-controls {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.picnic-controls .picnic-btn:first-child {
+  justify-self: start;
+}
+
+.picnic-controls .picnic-btn:last-child {
+  justify-self: end;
+}
+
+.picnic-counter {
+  font-weight: 700;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Mobile adjustments for picnic gate */
+@media (max-width: 480px) {
+  .picnic-card {
+    padding: 16px;
+  }
+
+  .picnic-grid {
+    gap: 8px;
+  }
+
+  .picnic-item {
+    padding: 12px 8px;
+  }
+
+  .picnic-item-emoji {
+    font-size: 1.4rem;
+  }
+
+  .picnic-item-label {
+    font-size: 0.8rem;
+  }
+}
