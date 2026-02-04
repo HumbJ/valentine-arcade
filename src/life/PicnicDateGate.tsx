@@ -47,7 +47,7 @@ export function PicnicDateGate(props: {
   onDone: () => void;
 }) {
   const [phase, setPhase] = useState<Phase>("pack");
-  const [note, setNote] = useState("Pick 4 things to pack our basket.");
+  const [note, setNote] = useState("Pick 3 things to pack our basket.");
 
   const [picked, setPicked] = useState<string[]>([]);
   const pickedSet = useMemo(() => new Set(picked), [picked]);
