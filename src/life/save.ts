@@ -4,10 +4,11 @@ export function defaultSave() {
   return {
     version: 2,
     stats: { love: 0, happiness: 0, memories: 0 },
-    currentEventId: "start",
+    currentEventId: "hub", // "hub" means we're at home, not in an event
     log: [],
     placesUnlocked: [],
-    reflections: [], // NEW
+    reflections: [],
+    completedEvents: [] as string[], // track which events/arcs are done
   };
 }
 
@@ -26,7 +27,8 @@ export function loadSave() {
   stats: { ...fresh.stats, ...(parsed.stats ?? {}) },
   log: Array.isArray(parsed.log) ? parsed.log : [],
   placesUnlocked: Array.isArray(parsed.placesUnlocked) ? parsed.placesUnlocked : [],
-  reflections: Array.isArray(parsed.reflections) ? parsed.reflections : [], // ✅ add this
+  reflections: Array.isArray(parsed.reflections) ? parsed.reflections : [],
+  completedEvents: Array.isArray(parsed.completedEvents) ? parsed.completedEvents : [],
 };
 
   } catch {

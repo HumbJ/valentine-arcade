@@ -8,7 +8,7 @@ export type Effect =
   | { type: "stat"; key: "love" | "happiness" | "memories"; delta: number }
   | { type: "log"; text: string }
   | { type: "goto"; eventId: string }
-  | { type: "gotoHome" }
+  | { type: "gotoHome"; markComplete?: string } // optionally mark an event/arc as complete
   | { type: "burst"; deck: string; pick?: number }
   | { type: "puzzle"; imageSrc: string; rows?: number; cols?: number; title?: string }
   | { type: "unlockPlace"; placeId: string }
@@ -45,12 +45,13 @@ export type LifeEvent = {
 };
 
 export type SaveData = {
-  version: 1;
+  version: 1 | 2;
   stats: Stats;
-  currentEventId: string;
+  currentEventId: string; // "hub" means at home, not in active event
   log: { t: number; text: string }[];
   placesUnlocked: string[];
-  reflections: ReflectionEntry[]; // ✅ add this
+  reflections: ReflectionEntry[];
+  completedEvents: string[]; // track completed event arcs
 };
 
 

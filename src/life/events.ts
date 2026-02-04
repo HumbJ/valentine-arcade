@@ -177,7 +177,7 @@ export const PICNIC_DATE: LifeEvent = {
         { type: "stat", key: "happiness", delta: 4 },
         { type: "stat", key: "memories", delta: 3 },
         { type: "log", text: "Picnic date: sunshine, snacks, and us." },
-        { type: "gotoHome" },
+        { type: "gotoHome", markComplete: "picnic" },
       ],
     },
   ],
@@ -197,8 +197,21 @@ export const JULIAN_DAY_TRIP: LifeEvent = {
         { type: "stat", key: "happiness", delta: 4 },
         { type: "stat", key: "memories", delta: 6 },
         { type: "log", text: "Julian day trip: pie, mines, and questionable ciders." },
-        { type: "gotoHome" },
+        { type: "goto", eventId: "julian_closing" },
       ],
+    },
+  ],
+};
+
+export const JULIAN_CLOSING: LifeEvent = {
+  id: "julian_closing",
+  title: "On the Drive Home",
+  text: "The pie was worth the drive. The mine tour was... an experience. And those ciders? Let's just say we tried them so we never have to again. But honestly, any adventure with you is a good one.",
+  choices: [
+    {
+      id: "home",
+      label: "Back to our life →",
+      effects: [{ type: "gotoHome", markComplete: "julian" }],
     },
   ],
 };
@@ -436,6 +449,7 @@ SEATTLE_1_ARRIVAL,
 SEATTLE_1_EXPLORE,
 PICNIC_DATE,
 JULIAN_DAY_TRIP,
+JULIAN_CLOSING,
 SEATTLE_1_FOOD,
 SEATTLE_1_MUSEUM,
 COZY_NEXT_DAY,

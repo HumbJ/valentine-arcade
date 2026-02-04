@@ -104,6 +104,13 @@ useEffect(() => {
   if (save.currentEventId === "end") setShowFinale(true);
 }, [save.currentEventId]);
 
+// If currentEventId is "hub", redirect to home - no active event
+useEffect(() => {
+  if (save.currentEventId === "hub") {
+    navigate("/");
+  }
+}, [save.currentEventId, navigate]);
+
 
   function runEffects(effects: Effect[], options?: { skipRewards?: boolean }) {
     console.log("RUN EFFECTS TYPES:", effects.map((e) => e.type));
@@ -193,31 +200,39 @@ if (reviewEff) {
       return;
     }
 
-    // 6) Apply
-   setSave((prev: typeof save) => {
-  const next = applyEffects(prev, effects);
-  persistSave(next);
-  return next;
-});
-if (!options?.skipRewards) {
-  showRewardsFromEffects(effects);
-}
-
-// 0) Check for gotoHome - navigate to home hub
-    const gotoHomeEff = effects.find((e) => e.type === "gotoHome");
+    // 6) Check for gotoHome - navigate to home hub
+    const gotoHomeEff = effects.find(
+      (e): e is Extract<Effect, { type: "gotoHome" }> => e.type === "gotoHome"
+    );
     if (gotoHomeEff) {
-      // Apply all other effects first, then navigate
+      // Apply all other effects first
       const otherEffects = effects.filter((e) => e.type !== "gotoHome");
-      if (otherEffects.length > 0) {
-        setSave((prev: typeof save) => {
-          const next = applyEffects(prev, otherEffects);
-          persistSave(next);
-          return next;
-        });
-      }
-      // Navigate to home after a brief delay to let state settle
+      setSave((prev: typeof save) => {
+        let next = otherEffects.length > 0 ? applyEffects(prev, otherEffects) : prev;
+        // Reset to hub state and optionally mark event complete
+        next = {
+          ...next,
+          currentEventId: "hub",
+          completedEvents: gotoHomeEff.markComplete
+            ? [...(next.completedEvents ?? []), gotoHomeEff.markComplete]
+            : (next.completedEvents ?? []),
+        };
+        persistSave(next);
+        return next;
+      });
+      // Navigate to home after a brief delay
       setTimeout(() => navigate("/"), 100);
       return;
+    }
+
+    // 7) Apply remaining effects
+    setSave((prev: typeof save) => {
+      const next = applyEffects(prev, effects);
+      persistSave(next);
+      return next;
+    });
+    if (!options?.skipRewards) {
+      showRewardsFromEffects(effects);
     }
   }
 
