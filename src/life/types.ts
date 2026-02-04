@@ -8,6 +8,7 @@ export type Effect =
   | { type: "stat"; key: "love" | "happiness" | "memories"; delta: number }
   | { type: "log"; text: string }
   | { type: "goto"; eventId: string }
+  | { type: "gotoHome" }
   | { type: "burst"; deck: string; pick?: number }
   | { type: "puzzle"; imageSrc: string; rows?: number; cols?: number; title?: string }
   | { type: "unlockPlace"; placeId: string }

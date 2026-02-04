@@ -177,7 +177,7 @@ export const PICNIC_DATE: LifeEvent = {
         { type: "stat", key: "happiness", delta: 4 },
         { type: "stat", key: "memories", delta: 3 },
         { type: "log", text: "Picnic date: sunshine, snacks, and us." },
-        { type: "goto", eventId: "cozy_next_day" },
+        { type: "gotoHome" },
       ],
     },
   ],

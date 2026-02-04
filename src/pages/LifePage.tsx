@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { applyEffects, getEventById } from "../life/engine";
 import { defaultSave, loadSave, persistSave, resetSave } from "../life/save";
 import { MemoryBurst } from "../life/MemoryBurst";
@@ -19,6 +20,7 @@ import { PicnicDateGate } from "../life/PicnicDateGate";
 
 
 export function LifePage() {
+  const navigate = useNavigate();
   const [save, setSave] = useState(() => loadSave());
 
   const [toast, setToast] = useState<string | null>(null);
@@ -103,8 +105,25 @@ useEffect(() => {
 }, [save.currentEventId]);
 
 
-  function runEffects(effects: Effect[]) {
+  function runEffects(effects: Effect[], options?: { skipRewards?: boolean }) {
     console.log("RUN EFFECTS TYPES:", effects.map((e) => e.type));
+
+    // 0) Check for gotoHome - navigate to home hub
+    const gotoHomeEff = effects.find((e) => e.type === "gotoHome");
+    if (gotoHomeEff) {
+      // Apply all other effects first, then navigate
+      const otherEffects = effects.filter((e) => e.type !== "gotoHome");
+      if (otherEffects.length > 0) {
+        setSave((prev: typeof save) => {
+          const next = applyEffects(prev, otherEffects);
+          persistSave(next);
+          return next;
+        });
+      }
+      // Navigate to home after a brief delay to let state settle
+      setTimeout(() => navigate("/"), 100);
+      return;
+    }
 
     // 1) Map gate
     const mapEff = effects.find(
@@ -195,7 +214,9 @@ if (reviewEff) {
   persistSave(next);
   return next;
 });
-showRewardsFromEffects(effects);
+if (!options?.skipRewards) {
+  showRewardsFromEffects(effects);
+}
   }
 
   function appendReflection(entry: ReflectionEntry) {
@@ -321,7 +342,8 @@ function finishReflectionSave(text: string) {
   if (!pendingAfterPicnic) return;
   const rest = pendingAfterPicnic;
   setPendingAfterPicnic(null);
-  runEffects(rest);
+  // Skip rewards popup since PicnicDateGate already showed rewards visually
+  runEffects(rest, { skipRewards: true });
 }
 
   function finishReviewGate() {
