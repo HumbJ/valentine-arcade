@@ -1524,6 +1524,72 @@ html, body {
   text-align: center;
 }
 
+/* Picnic Rewards Phase */
+.picnic-rewards {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.picnic-rewards-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--pink2);
+  margin-bottom: 14px;
+}
+
+.picnic-rewards-list {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.picnic-reward-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 240, 245, 0.9);
+  border: 1px solid rgba(255, 143, 177, 0.3);
+}
+
+.picnic-reward-icon {
+  font-size: 1.1rem;
+}
+
+.picnic-reward-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #3a2a31;
+}
+
+/* Picnic Ending Phase */
+.picnic-ending {
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.picnic-ending-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.picnic-ending-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #3a2a31;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.picnic-ending-subtext {
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 /* Mobile adjustments for picnic gate */
 @media (max-width: 480px) {
   .picnic-card {
@@ -1544,5 +1610,18 @@ html, body {
 
   .picnic-item-label {
     font-size: 0.8rem;
+  }
+
+  .picnic-rewards-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .picnic-ending-emoji {
+    font-size: 2rem;
+  }
+
+  .picnic-ending-text {
+    font-size: 1rem;
   }
 }

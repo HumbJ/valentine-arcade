@@ -7,9 +7,10 @@ import p4 from "../assets/photos/dates/picnic/04.jpeg";
 import p5 from "../assets/photos/dates/picnic/05.jpeg";
 import p6 from "../assets/photos/dates/picnic/06.jpeg";
 import p7 from "../assets/photos/dates/picnic/07.jpeg";
+import p8 from "../assets/photos/dates/picnic/08.jpeg";
 
 type BasketItem = { id: string; label: string; emoji: string; note: string };
-type Phase = "pack" | "story";
+type Phase = "pack" | "story" | "rewards" | "ending";
 
 const ITEMS: BasketItem[] = [
   { id: "blanket", label: "Blanket", emoji: "🧺", note: "Cozy first. Always." },
@@ -32,6 +33,12 @@ const CAPTIONS = [
   "Small moments that somehow feel huge.",
   "One of those memories I replay on purpose.",
   "Same plan forever: you + me.",
+];
+
+const REWARDS = [
+  { label: "+5 Love", icon: "💕" },
+  { label: "+4 Happiness", icon: "😊" },
+  { label: "+3 Memories", icon: "📸" },
 ];
 
 export function PicnicDateGate(props: {
@@ -69,12 +76,23 @@ export function PicnicDateGate(props: {
   }
 
   function next() {
-    if (idx < PHOTOS.length - 1) setIdx((p) => p + 1);
-    else props.onDone();
+    if (idx < PHOTOS.length - 1) {
+      setIdx((p) => p + 1);
+    } else {
+      setPhase("rewards");
+    }
   }
 
   function prev() {
     if (idx > 0) setIdx((p) => p - 1);
+  }
+
+  function goToEnding() {
+    setPhase("ending");
+  }
+
+  function finish() {
+    props.onDone();
   }
 
   return (
@@ -167,6 +185,67 @@ export function PicnicDateGate(props: {
                 className="picnic-btn primary"
               >
                 {idx < PHOTOS.length - 1 ? "Next →" : "Finish →"}
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* REWARDS PHASE */}
+        {phase === "rewards" && (
+          <>
+            <div className="picnic-photo-frame">
+              <img
+                src={p8}
+                alt="Picnic reward photo"
+                className="picnic-photo"
+                loading="lazy"
+              />
+            </div>
+
+            <div className="picnic-rewards">
+              <div className="picnic-rewards-title">Moment captured 💝</div>
+              <div className="picnic-rewards-list">
+                {REWARDS.map((r, i) => (
+                  <div key={i} className="picnic-reward-item">
+                    <span className="picnic-reward-icon">{r.icon}</span>
+                    <span className="picnic-reward-label">{r.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="picnic-footer">
+              <button
+                type="button"
+                onClick={goToEnding}
+                className="picnic-btn primary"
+              >
+                Continue →
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* ENDING PHASE */}
+        {phase === "ending" && (
+          <>
+            <div className="picnic-ending">
+              <div className="picnic-ending-emoji">🧺💕</div>
+              <div className="picnic-ending-text">
+                Sometimes the best dates aren't about where you go — they're about who you're with.
+              </div>
+              <div className="picnic-ending-subtext">
+                Just sunshine, snacks, and us. That's all we ever need.
+              </div>
+            </div>
+
+            <div className="picnic-footer">
+              <button
+                type="button"
+                onClick={finish}
+                className="picnic-btn primary"
+              >
+                Back to our life →
               </button>
             </div>
           </>

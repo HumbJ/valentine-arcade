@@ -165,16 +165,19 @@ export const PICNIC_DATE: LifeEvent = {
   choices: [
     {
       id: "continue",
-      label: "Let’s pack the basket →",
+      label: "Let's pack the basket →",
       effects: [
         {
           type: "picnicDate",
           title: "Picnic Date",
           subtitle: "Pick 3 things to bring… then tap through our photos.",
         },
-        { type: "burst", deck: "picnic_date" },
-        // optional next step:
-        // { type: "goto", eventId: "end_demo" },
+        // Stats applied after the gate completes
+        { type: "stat", key: "love", delta: 5 },
+        { type: "stat", key: "happiness", delta: 4 },
+        { type: "stat", key: "memories", delta: 3 },
+        { type: "log", text: "Picnic date: sunshine, snacks, and us." },
+        { type: "goto", eventId: "cozy_next_day" },
       ],
     },
   ],
