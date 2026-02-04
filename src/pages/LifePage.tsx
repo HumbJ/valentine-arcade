@@ -104,6 +104,8 @@ useEffect(() => {
 
 
   function runEffects(effects: Effect[]) {
+    console.log("RUN EFFECTS TYPES:", effects.map((e) => e.type));
+
     // 1) Map gate
     const mapEff = effects.find(
       (e): e is Extract<Effect, { type: "mapDiscover" }> => e.type === "mapDiscover"
@@ -125,15 +127,13 @@ useEffect(() => {
     }
 
     // 2.5) Picnic gate
-const picnicEff = effects.find(
-  (e): e is Extract<Effect, { type: "picnicDate" }> => e.type === "picnicDate"
-);
-if (picnicEff) {
+const picnicEff = effects.find((e) => e.type === "picnicDate");
+if (picnicEff && picnicEff.type === "picnicDate") {
   setPicnicGate({ title: picnicEff.title, subtitle: picnicEff.subtitle });
   setPendingAfterPicnic(effects.filter((e) => e.type !== "picnicDate"));
+  
   return;
 }
-
 
     // 3) Reflection gate intercept
 const reflEff = effects.find(
@@ -252,7 +252,7 @@ showRewardsFromEffects(effects);
 
       return;
     }
-
+console.log("CHOICE CLICKED:", choice.id, choice.effects);
     runEffects(choice.effects as Effect[]);
   }
 
@@ -559,6 +559,20 @@ function finishReflectionSave(text: string) {
         />
       )}
 
+      {picnicGate && (
+  <div className="fixed inset-0 z-[99999] bg-black/30">
+    <div className="absolute inset-0" />
+    <div className="relative z-[100000] flex h-full items-center justify-center px-4">
+      <PicnicDateGate
+        title={picnicGate.title}
+        subtitle={picnicGate.subtitle}
+        onDone={finishPicnicGate}
+      />
+    </div>
+  </div>
+)}
+
+
       {reviewGate && (
         <ReflectionReview
           reflections={save.reflections ?? []}
@@ -574,15 +588,6 @@ function finishReflectionSave(text: string) {
           onDone={() => setShowFinale(false)}
         />
       )}
-
-      {picnicGate && (
-  <PicnicDateGate
-    title={picnicGate.title}
-    subtitle={picnicGate.subtitle}
-    onDone={finishPicnicGate}
-  />
-)}
-
     </div>
   );
   
