@@ -108,22 +108,7 @@ useEffect(() => {
   function runEffects(effects: Effect[], options?: { skipRewards?: boolean }) {
     console.log("RUN EFFECTS TYPES:", effects.map((e) => e.type));
 
-    // 0) Check for gotoHome - navigate to home hub
-    const gotoHomeEff = effects.find((e) => e.type === "gotoHome");
-    if (gotoHomeEff) {
-      // Apply all other effects first, then navigate
-      const otherEffects = effects.filter((e) => e.type !== "gotoHome");
-      if (otherEffects.length > 0) {
-        setSave((prev: typeof save) => {
-          const next = applyEffects(prev, otherEffects);
-          persistSave(next);
-          return next;
-        });
-      }
-      // Navigate to home after a brief delay to let state settle
-      setTimeout(() => navigate("/"), 100);
-      return;
-    }
+    
 
     // 1) Map gate
     const mapEff = effects.find(
@@ -217,6 +202,23 @@ if (reviewEff) {
 if (!options?.skipRewards) {
   showRewardsFromEffects(effects);
 }
+
+// 0) Check for gotoHome - navigate to home hub
+    const gotoHomeEff = effects.find((e) => e.type === "gotoHome");
+    if (gotoHomeEff) {
+      // Apply all other effects first, then navigate
+      const otherEffects = effects.filter((e) => e.type !== "gotoHome");
+      if (otherEffects.length > 0) {
+        setSave((prev: typeof save) => {
+          const next = applyEffects(prev, otherEffects);
+          persistSave(next);
+          return next;
+        });
+      }
+      // Navigate to home after a brief delay to let state settle
+      setTimeout(() => navigate("/"), 100);
+      return;
+    }
   }
 
   function appendReflection(entry: ReflectionEntry) {

@@ -170,7 +170,7 @@ export const PICNIC_DATE: LifeEvent = {
         {
           type: "picnicDate",
           title: "Picnic Date",
-          subtitle: "Pick 3 things to bring… then tap through our photos.",
+          
         },
         // Stats applied after the gate completes
         { type: "stat", key: "love", delta: 5 },
