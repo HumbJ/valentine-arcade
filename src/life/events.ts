@@ -1116,9 +1116,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
         id: "movie",
         label: "Pick a comfort movie",
         effects: [
-          { type: "stat", key: "happiness", delta: 4 },
-          { type: "log", text: "Comfort movie night = instant peace." },
-          { type: "goto", eventId: "vacation_tease" },
+          { type: "goto", eventId: "comfort_movie_choice" },
         ],
       },
       {
@@ -1129,6 +1127,129 @@ export const LIFE_EVENTS: LifeEvent[] = [
           { type: "log", text: "We talked long into the night." },
   { type: "goto", eventId: "cozy_next_day" },
 ],
+      },
+    ],
+  },
+  {
+    id: "comfort_movie_choice",
+    title: "Movie Night 🎬",
+    text: "Time to pick something to watch. What's the vibe tonight?",
+    choices: [
+      {
+        id: "mystery",
+        label: "Mystery - Something twisty 🕵️",
+        effects: [
+          { type: "goto", eventId: "comfort_movie_mystery" },
+        ],
+      },
+      {
+        id: "romance",
+        label: "Romance - Cozy and sweet 💕",
+        effects: [
+          { type: "goto", eventId: "comfort_movie_romance" },
+        ],
+      },
+      {
+        id: "comedy",
+        label: "Comedy - Need some laughs 😂",
+        effects: [
+          { type: "goto", eventId: "comfort_movie_comedy" },
+        ],
+      },
+      {
+        id: "adventure",
+        label: "Adventure - Epic journey ⚔️",
+        effects: [
+          { type: "goto", eventId: "comfort_movie_adventure" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "comfort_movie_mystery",
+    title: "Mystery Movie",
+    text: "Plot twists, red herrings, and trying to solve it before the reveal. Let's see if you can spot the clues...",
+    choices: [
+      {
+        id: "play",
+        label: "Start watching 🔍",
+        effects: [
+          {
+            type: "spotTheClues",
+            title: "Spot the Clues",
+            subtitle: "Find the hidden clues before they disappear",
+          },
+          { type: "stat", key: "love", delta: 3 },
+          { type: "stat", key: "happiness", delta: 4 },
+          { type: "log", text: "We solved the mystery before the ending!" },
+          { type: "goto", eventId: "vacation_tease" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "comfort_movie_romance",
+    title: "Romance Movie",
+    text: "Soft lighting, heartfelt moments, and that warm fuzzy feeling. Perfect for cuddling up together.",
+    choices: [
+      {
+        id: "watch",
+        label: "Settle in close 💖",
+        effects: [
+          {
+            type: "perfectMoment",
+            title: "Perfect Moment",
+            subtitle: "Capture the feeling at just the right time",
+          },
+          { type: "stat", key: "love", delta: 6 },
+          { type: "stat", key: "happiness", delta: 3 },
+          { type: "log", text: "Watched a romance that hit close to home." },
+          { type: "goto", eventId: "vacation_tease" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "comfort_movie_comedy",
+    title: "Comedy Movie",
+    text: "Time for some laughs! Nothing beats those moments when you both crack up at the same joke.",
+    choices: [
+      {
+        id: "laugh",
+        label: "Let's go! 🎭",
+        effects: [
+          {
+            type: "giggleGauge",
+            title: "Giggle Gauge",
+            subtitle: "Nail the timing for maximum laughs!",
+          },
+          { type: "stat", key: "happiness", delta: 7 },
+          { type: "stat", key: "love", delta: 2 },
+          { type: "log", text: "Laughed so hard we had to pause the movie." },
+          { type: "goto", eventId: "vacation_tease" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "comfort_movie_adventure",
+    title: "Adventure Movie",
+    text: "Epic quests, daring heroes, and edge-of-your-seat moments. Let's go on this journey together!",
+    choices: [
+      {
+        id: "adventure",
+        label: "Start the quest! 🗡️",
+        effects: [
+          {
+            type: "epicEscape",
+            title: "Epic Escape",
+            subtitle: "React fast or get left behind!",
+          },
+          { type: "stat", key: "happiness", delta: 5 },
+          { type: "stat", key: "memories", delta: 2 },
+          { type: "log", text: "Felt like we went on our own adventure." },
+          { type: "goto", eventId: "vacation_tease" },
+        ],
       },
     ],
   },
