@@ -1033,11 +1033,9 @@ const MOVIE_MYSTERY: LifeEvent = {
       label: "Start watching 🔍",
       effects: [
         {
-          type: "puzzle",
-          imageSrc: "/photos/misc/mystery-clue.jpg",
-          rows: 3,
-          cols: 3,
-          title: "Piece together the mystery",
+          type: "spotTheClues",
+          title: "Spot the Clues",
+          subtitle: "Find the hidden clues before they disappear",
         },
         { type: "stat", key: "love", delta: 3 },
         { type: "stat", key: "happiness", delta: 4 },
@@ -1057,7 +1055,11 @@ const MOVIE_ROMANCE: LifeEvent = {
       id: "watch",
       label: "Settle in close 💖",
       effects: [
-        { type: "burst", deck: "cozy_moments", pick: 3 },
+        {
+          type: "perfectMoment",
+          title: "Perfect Moment",
+          subtitle: "Capture the feeling at just the right time",
+        },
         { type: "stat", key: "love", delta: 6 },
         { type: "stat", key: "happiness", delta: 3 },
         { type: "log", text: "Watched a romance that hit close to home." },
@@ -1077,9 +1079,9 @@ const MOVIE_COMEDY: LifeEvent = {
       label: "Let's go! 🎭",
       effects: [
         {
-          type: "tidePoolMatch",
-          title: "Comedy Timing",
-          subtitle: "Match the punchlines! Tap the pairs quickly.",
+          type: "giggleGauge",
+          title: "Giggle Gauge",
+          subtitle: "Nail the timing for maximum laughs!",
         },
         { type: "stat", key: "happiness", delta: 7 },
         { type: "stat", key: "love", delta: 2 },
@@ -1100,9 +1102,9 @@ const MOVIE_ADVENTURE: LifeEvent = {
       label: "Start the quest! 🗡️",
       effects: [
         {
-          type: "canyonEcho",
-          title: "Epic Score",
-          subtitle: "Follow the rhythm of the adventure!",
+          type: "epicEscape",
+          title: "Epic Escape",
+          subtitle: "React fast or get left behind!",
         },
         { type: "stat", key: "happiness", delta: 5 },
         { type: "stat", key: "memories", delta: 2 },

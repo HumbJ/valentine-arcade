@@ -1,0 +1,271 @@
+/* Perfect Moment romantic timing game styles */
+
+.pm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.pm-wrap {
+  position: relative;
+  background: linear-gradient(180deg, #ffc0cb 0%, #ffb5c5 30%, #ff8fa3 100%);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  min-height: 500px;
+  box-shadow: 0 20px 60px rgba(255, 143, 177, 0.5);
+  overflow: hidden;
+}
+
+.pm-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 450px;
+}
+
+.pm-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 2px 12px rgba(255, 111, 158, 0.6);
+}
+
+.pm-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Intro */
+.pm-intro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pm-intro-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 320px;
+}
+
+/* Playing phase */
+.pm-playing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.pm-score {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2rem;
+}
+
+.pm-moment-zone {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 192, 203, 0.4));
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 30px rgba(255, 143, 177, 0.3);
+}
+
+.pm-moment-zone.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.pm-moment-zone.peak {
+  border-color: #ffd700;
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.6), 0 8px 30px rgba(255, 143, 177, 0.4);
+  animation: pmPeak 0.5s ease-in-out;
+}
+
+@keyframes pmPeak {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.pm-perfect-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 4px solid #ffd700;
+  animation: pmRingPulse 1s infinite;
+  pointer-events: none;
+}
+
+@keyframes pmRingPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.7;
+  }
+}
+
+.pm-moment-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 4px 12px rgba(255, 111, 158, 0.4));
+}
+
+.pm-moment-text {
+  font-size: 1.05rem;
+  color: #fff;
+  text-align: center;
+  line-height: 1.4;
+  font-weight: 600;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.pm-capture-btn {
+  background: linear-gradient(135deg, #ff6b8a, #ff8fa3);
+  color: #fff;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 20px rgba(255, 107, 138, 0.4);
+  margin-bottom: 1rem;
+}
+
+.pm-capture-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 138, 0.5);
+}
+
+.pm-capture-btn:active {
+  transform: scale(0.96);
+}
+
+.pm-feedback {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  animation: pmFeedbackPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pm-feedback.perfect {
+  color: #ffd700;
+  text-shadow: 0 2px 12px rgba(255, 215, 0, 0.6);
+}
+
+.pm-feedback.good {
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
+}
+
+.pm-feedback.missed {
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pmFeedbackPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.pm-round-indicator {
+  position: absolute;
+  bottom: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Complete phase */
+.pm-complete {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pm-final-score {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 12px rgba(255, 111, 158, 0.6);
+}
+
+.pm-complete-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  max-width: 300px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Buttons */
+.pm-btn {
+  background: linear-gradient(135deg, #ff8fa3, #ff6b8a);
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(255, 143, 163, 0.4);
+}
+
+.pm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 143, 163, 0.5);
+}
+
+.pm-btn.primary {
+  background: linear-gradient(135deg, #ff6b8a, #ff8fa3);
+}

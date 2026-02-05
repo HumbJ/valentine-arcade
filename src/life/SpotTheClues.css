@@ -1,0 +1,247 @@
+/* Spot the Clues mystery game styles */
+
+.stc-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(20, 10, 30, 0.92);
+}
+
+.stc-wrap {
+  position: relative;
+  background: linear-gradient(180deg, #2d1b3d 0%, #1a0f2e 50%, #0f0820 100%);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  min-height: 480px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 100px rgba(138, 43, 226, 0.2);
+  overflow: hidden;
+}
+
+.stc-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 430px;
+}
+
+.stc-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 2px 12px rgba(138, 43, 226, 0.6);
+}
+
+.stc-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Intro */
+.stc-intro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.stc-intro-text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 320px;
+}
+
+/* Searching phase */
+.stc-searching {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.stc-progress {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.stc-clue-zone {
+  width: 100%;
+  max-width: 320px;
+  min-height: 180px;
+  border-radius: 1.2rem;
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(75, 0, 130, 0.15));
+  border: 2px solid rgba(138, 43, 226, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stc-clue-zone.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.stc-clue-zone.found {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(56, 142, 60, 0.2));
+  border-color: rgba(76, 175, 80, 0.5);
+}
+
+.stc-clue-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 4px 12px rgba(138, 43, 226, 0.4));
+}
+
+.stc-clue-text {
+  font-size: 1.1rem;
+  color: #fff;
+  text-align: center;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.stc-spot-btn {
+  background: linear-gradient(135deg, #8a2be2, #6a1bb2);
+  color: #fff;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+  animation: btnPulseGlow 1.5s infinite;
+}
+
+.stc-spot-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.5);
+}
+
+.stc-spot-btn:active {
+  transform: scale(0.96);
+}
+
+@keyframes btnPulseGlow {
+  0%, 100% {
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+  }
+  50% {
+    box-shadow: 0 6px 25px rgba(138, 43, 226, 0.6), 0 0 30px rgba(138, 43, 226, 0.3);
+  }
+}
+
+.stc-found-msg {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #4caf50;
+  text-shadow: 0 2px 8px rgba(76, 175, 80, 0.5);
+  animation: foundPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes foundPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Result phase */
+.stc-result {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.stc-result-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.stc-result-icon.success {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
+}
+
+.stc-result-icon.fail {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(255, 152, 0, 0.4);
+}
+
+.stc-result-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.stc-btn {
+  background: linear-gradient(135deg, #6a1bb2, #4a0f82);
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(106, 27, 178, 0.4);
+}
+
+.stc-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(106, 27, 178, 0.5);
+}
+
+.stc-btn.primary {
+  background: linear-gradient(135deg, #8a2be2, #6a1bb2);
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+}
+
+.stc-btn.primary:hover {
+  box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
+}

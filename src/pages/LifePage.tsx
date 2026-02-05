@@ -22,6 +22,10 @@ import { TunnelViewReveal } from "../life/TunnelViewReveal";
 import { TidePoolMatch } from "../life/TidePoolMatch";
 import { PastryStacker } from "../life/PastryStacker";
 import { FoodLocationMatch } from "../life/FoodLocationMatch";
+import { SpotTheClues } from "../life/SpotTheClues";
+import { PerfectMoment } from "../life/PerfectMoment";
+import { GiggleGauge } from "../life/GiggleGauge";
+import { EpicEscape } from "../life/EpicEscape";
 
 
 
@@ -80,6 +84,16 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
   const [pendingAfterPastryStacker, setPendingAfterPastryStacker] = useState<Effect[] | null>(null);
   const [foodLocationMatchGate, setFoodLocationMatchGate] = useState<null | { title?: string; subtitle?: string }>(null);
   const [pendingAfterFoodLocationMatch, setPendingAfterFoodLocationMatch] = useState<Effect[] | null>(null);
+
+  // Movie night mini-game states
+  const [spotTheCluesGate, setSpotTheCluesGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterSpotTheClues, setPendingAfterSpotTheClues] = useState<Effect[] | null>(null);
+  const [perfectMomentGate, setPerfectMomentGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterPerfectMoment, setPendingAfterPerfectMoment] = useState<Effect[] | null>(null);
+  const [giggleGaugeGate, setGiggleGaugeGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterGiggleGauge, setPendingAfterGiggleGauge] = useState<Effect[] | null>(null);
+  const [epicEscapeGate, setEpicEscapeGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterEpicEscape, setPendingAfterEpicEscape] = useState<Effect[] | null>(null);
 
   const event = useMemo(() => getEventById(save.currentEventId), [save.currentEventId]);
 
@@ -259,6 +273,58 @@ if (picnicEff && picnicEff.type === "picnicDate") {
         subtitle: foodLocationMatchEff.subtitle,
       });
       setPendingAfterFoodLocationMatch(effects.filter((e) => e.type !== "foodLocationMatch"));
+      return;
+    }
+
+    // 2.13) Spot the clues gate (Mystery movie)
+    const spotTheCluesEff = effects.find(
+      (e): e is Extract<Effect, { type: "spotTheClues" }> => e.type === "spotTheClues"
+    );
+    if (spotTheCluesEff) {
+      setSpotTheCluesGate({
+        title: spotTheCluesEff.title,
+        subtitle: spotTheCluesEff.subtitle,
+      });
+      setPendingAfterSpotTheClues(effects.filter((e) => e.type !== "spotTheClues"));
+      return;
+    }
+
+    // 2.14) Perfect moment gate (Romance movie)
+    const perfectMomentEff = effects.find(
+      (e): e is Extract<Effect, { type: "perfectMoment" }> => e.type === "perfectMoment"
+    );
+    if (perfectMomentEff) {
+      setPerfectMomentGate({
+        title: perfectMomentEff.title,
+        subtitle: perfectMomentEff.subtitle,
+      });
+      setPendingAfterPerfectMoment(effects.filter((e) => e.type !== "perfectMoment"));
+      return;
+    }
+
+    // 2.15) Giggle gauge gate (Comedy movie)
+    const giggleGaugeEff = effects.find(
+      (e): e is Extract<Effect, { type: "giggleGauge" }> => e.type === "giggleGauge"
+    );
+    if (giggleGaugeEff) {
+      setGiggleGaugeGate({
+        title: giggleGaugeEff.title,
+        subtitle: giggleGaugeEff.subtitle,
+      });
+      setPendingAfterGiggleGauge(effects.filter((e) => e.type !== "giggleGauge"));
+      return;
+    }
+
+    // 2.16) Epic escape gate (Adventure movie)
+    const epicEscapeEff = effects.find(
+      (e): e is Extract<Effect, { type: "epicEscape" }> => e.type === "epicEscape"
+    );
+    if (epicEscapeEff) {
+      setEpicEscapeGate({
+        title: epicEscapeEff.title,
+        subtitle: epicEscapeEff.subtitle,
+      });
+      setPendingAfterEpicEscape(effects.filter((e) => e.type !== "epicEscape"));
       return;
     }
 
@@ -532,6 +598,38 @@ function finishReflectionSave(text: string) {
     if (!pendingAfterFoodLocationMatch) return;
     const rest = pendingAfterFoodLocationMatch;
     setPendingAfterFoodLocationMatch(null);
+    runEffects(rest);
+  }
+
+  function finishSpotTheClues() {
+    setSpotTheCluesGate(null);
+    if (!pendingAfterSpotTheClues) return;
+    const rest = pendingAfterSpotTheClues;
+    setPendingAfterSpotTheClues(null);
+    runEffects(rest);
+  }
+
+  function finishPerfectMoment() {
+    setPerfectMomentGate(null);
+    if (!pendingAfterPerfectMoment) return;
+    const rest = pendingAfterPerfectMoment;
+    setPendingAfterPerfectMoment(null);
+    runEffects(rest);
+  }
+
+  function finishGiggleGauge() {
+    setGiggleGaugeGate(null);
+    if (!pendingAfterGiggleGauge) return;
+    const rest = pendingAfterGiggleGauge;
+    setPendingAfterGiggleGauge(null);
+    runEffects(rest);
+  }
+
+  function finishEpicEscape() {
+    setEpicEscapeGate(null);
+    if (!pendingAfterEpicEscape) return;
+    const rest = pendingAfterEpicEscape;
+    setPendingAfterEpicEscape(null);
     runEffects(rest);
   }
 
@@ -838,6 +936,38 @@ function finishReflectionSave(text: string) {
           title={foodLocationMatchGate.title}
           subtitle={foodLocationMatchGate.subtitle}
           onDone={finishFoodLocationMatch}
+        />
+      )}
+
+      {spotTheCluesGate && (
+        <SpotTheClues
+          title={spotTheCluesGate.title}
+          subtitle={spotTheCluesGate.subtitle}
+          onDone={finishSpotTheClues}
+        />
+      )}
+
+      {perfectMomentGate && (
+        <PerfectMoment
+          title={perfectMomentGate.title}
+          subtitle={perfectMomentGate.subtitle}
+          onDone={finishPerfectMoment}
+        />
+      )}
+
+      {giggleGaugeGate && (
+        <GiggleGauge
+          title={giggleGaugeGate.title}
+          subtitle={giggleGaugeGate.subtitle}
+          onDone={finishGiggleGauge}
+        />
+      )}
+
+      {epicEscapeGate && (
+        <EpicEscape
+          title={epicEscapeGate.title}
+          subtitle={epicEscapeGate.subtitle}
+          onDone={finishEpicEscape}
         />
       )}
 

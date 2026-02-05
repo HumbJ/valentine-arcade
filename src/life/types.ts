@@ -65,6 +65,27 @@ export type Effect =
       type: "foodLocationMatch";
       title?: string;
       subtitle?: string;
+    }
+  // Movie night mini-game effects
+  | {
+      type: "spotTheClues";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "perfectMoment";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "giggleGauge";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "epicEscape";
+      title?: string;
+      subtitle?: string;
     };
 
 
