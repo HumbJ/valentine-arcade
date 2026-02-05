@@ -145,6 +145,14 @@ MEMORIES["roadtrip_solvang"] = deckFromGlob(roadtripSolvang);
 MEMORIES["roadtrip_on_the_road"] = deckFromGlob(roadtripOnTheRoad);
 MEMORIES["roadtrip_food"] = deckFromGlob(roadtripFood);
 
+// Individual on-the-road segments for specific transitions
+const allOnTheRoad = deckFromGlob(roadtripOnTheRoad);
+MEMORIES["roadtrip_ontheroad_01"] = allOnTheRoad.filter(m => m.id.includes("01")); // SD -> Joshua Tree
+MEMORIES["roadtrip_ontheroad_02"] = allOnTheRoad.filter(m => m.id.includes("02")); // Joshua Tree -> Sequoia
+MEMORIES["roadtrip_ontheroad_03"] = allOnTheRoad.filter(m => m.id.includes("03")); // Sequoia -> Kings Canyon
+MEMORIES["roadtrip_ontheroad_04"] = allOnTheRoad.filter(m => m.id.includes("04")); // Kings Canyon -> Yosemite
+MEMORIES["roadtrip_ontheroad_05"] = allOnTheRoad.filter(m => m.id.includes("05")); // Monterey -> Solvang
+
 // Combined road trip scrapbook deck for Map replay
 MEMORIES["roadtrip"] = [
   ...(MEMORIES["roadtrip_joshua_tree"] ?? []),

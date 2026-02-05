@@ -144,6 +144,55 @@ export function TunnelViewReveal({
     setIsDrawing(false);
   };
 
+  // Add document-level listeners for move/end to continue drawing outside canvas
+  useEffect(() => {
+    const handleDocumentMove = (e: MouseEvent | TouchEvent) => {
+      if (!isDrawing) return;
+      e.preventDefault();
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+
+      let x, y;
+      if (e instanceof TouchEvent) {
+        const touch = e.touches[0];
+        if (!touch) return;
+        x = (touch.clientX - rect.left) * scaleX;
+        y = (touch.clientY - rect.top) * scaleY;
+      } else {
+        x = (e.clientX - rect.left) * scaleX;
+        y = (e.clientY - rect.top) * scaleY;
+      }
+
+      // Clamp coordinates to canvas bounds
+      x = Math.max(0, Math.min(canvas.width, x));
+      y = Math.max(0, Math.min(canvas.height, y));
+
+      scratch(x, y);
+    };
+
+    const handleDocumentEnd = () => {
+      setIsDrawing(false);
+    };
+
+    if (isDrawing) {
+      document.addEventListener("mousemove", handleDocumentMove);
+      document.addEventListener("mouseup", handleDocumentEnd);
+      document.addEventListener("touchmove", handleDocumentMove, { passive: false });
+      document.addEventListener("touchend", handleDocumentEnd);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleDocumentMove);
+      document.removeEventListener("mouseup", handleDocumentEnd);
+      document.removeEventListener("touchmove", handleDocumentMove);
+      document.removeEventListener("touchend", handleDocumentEnd);
+    };
+  }, [isDrawing, scratch]);
+
   return (
     <div className="tvr-overlay">
       <div className="tvr-wrap">
@@ -168,11 +217,9 @@ export function TunnelViewReveal({
             className="tvr-canvas"
             onMouseDown={handleStart}
             onMouseMove={handleMove}
-            onMouseUp={handleEnd}
-            onMouseLeave={handleEnd}
             onTouchStart={handleStart}
             onTouchMove={handleMove}
-            onTouchEnd={handleEnd}
+            style={{ touchAction: "none" }}
           />
 
           {!imageLoaded && (

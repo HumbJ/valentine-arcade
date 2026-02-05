@@ -101,7 +101,7 @@
   border-radius: 1rem;
   margin-bottom: 1rem;
   cursor: pointer;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .ps-current {
@@ -169,9 +169,26 @@
   }
 }
 
-.ps-plate {
-  font-size: 3rem;
-  opacity: 0.8;
+.ps-table {
+  width: 120px;
+  height: 16px;
+  background: linear-gradient(180deg, #8b4513 0%, #654321 100%);
+  border-radius: 8px 8px 0 0;
+  box-shadow:
+    0 -2px 4px rgba(139, 69, 19, 0.3) inset,
+    0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.ps-table::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 40px;
+  right: 40px;
+  height: 8px;
+  background: linear-gradient(180deg, #654321, #4a3219);
+  border-radius: 0 0 4px 4px;
 }
 
 .ps-height-marker {
@@ -258,6 +275,13 @@
   color: #8b4513;
 }
 
+.ps-button-group {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .ps-btn {
   background: linear-gradient(135deg, #daa520, #cd853f);
   color: #fff;
@@ -271,7 +295,16 @@
   box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
 }
 
+.ps-btn.secondary {
+  background: linear-gradient(135deg, #8b7355, #6b5744);
+  box-shadow: 0 4px 15px rgba(107, 87, 68, 0.4);
+}
+
 .ps-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(218, 165, 32, 0.5);
+}
+
+.ps-btn.secondary:hover {
+  box-shadow: 0 6px 20px rgba(107, 87, 68, 0.5);
 }

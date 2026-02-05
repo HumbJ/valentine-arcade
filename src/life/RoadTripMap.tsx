@@ -225,7 +225,7 @@ export function RoadTripMap({
             <div className="rtm-driving">Driving...</div>
           ) : (
             <button className="rtm-btn" onClick={onDone}>
-              We're here! →
+              {toStop === "san_diego" ? "We're home! →" : "We're here! →"}
             </button>
           )}
         </div>

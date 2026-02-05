@@ -29,6 +29,16 @@ export function PastryStacker({
 
   const targetHeight = 6; // Stack 6 pastries to win
 
+  const resetGame = () => {
+    setStack([]);
+    setCurrentPastry(PASTRIES[0]);
+    setPosition(0);
+    setDirection(1);
+    setIsDropping(false);
+    setGameOver(false);
+    setScore(0);
+  };
+
   // Animate the swinging pastry
   useEffect(() => {
     if (isDropping || gameOver) return;
@@ -161,8 +171,8 @@ export function PastryStacker({
                 </div>
               ))}
 
-              {/* Plate */}
-              <div className="ps-plate">🍽️</div>
+              {/* Table */}
+              <div className="ps-table" />
             </div>
 
             {/* Progress indicator */}
@@ -186,18 +196,28 @@ export function PastryStacker({
                   <div className="ps-result-text success">
                     Perfect stack! The baker would be proud.
                   </div>
-                  <button className="ps-btn" onClick={onDone}>
-                    Time for pastries! →
-                  </button>
+                  <div className="ps-button-group">
+                    <button className="ps-btn secondary" onClick={resetGame}>
+                      Play again
+                    </button>
+                    <button className="ps-btn" onClick={onDone}>
+                      Time for pastries! →
+                    </button>
+                  </div>
                 </>
               ) : (
                 <>
                   <div className="ps-result-text fail">
                     The tower tumbled... but we still ate them all!
                   </div>
-                  <button className="ps-btn" onClick={onDone}>
-                    Good enough! →
-                  </button>
+                  <div className="ps-button-group">
+                    <button className="ps-btn secondary" onClick={resetGame}>
+                      Try again
+                    </button>
+                    <button className="ps-btn" onClick={onDone}>
+                      Good enough! →
+                    </button>
+                  </div>
                 </>
               )}
             </div>

@@ -3,8 +3,8 @@ import "./StargazingMemory.css";
 
 // Constellation data with simple star patterns
 const CONSTELLATIONS = [
-  { id: "orion", name: "Orion", emoji: "🏹", stars: "★ ★ ★\n ★\n★ ★ ★" },
-  { id: "bigdipper", name: "Big Dipper", emoji: "🐻", stars: "★ ★ ★ ★\n    ★ ★ ★" },
+  { id: "orion", name: "Orion", emoji: "🪢", stars: "★ ★ ★\n ★\n★ ★ ★" },
+  { id: "bigdipper", name: "Big Dipper", emoji: "🥄", stars: "★ ★ ★ ★\n    ★ ★ ★" },
   { id: "cassiopeia", name: "Cassiopeia", emoji: "👑", stars: "★   ★   ★\n  ★   ★" },
   { id: "leo", name: "Leo", emoji: "🦁", stars: "  ★ ★\n★     ★\n  ★ ★ ★" },
   { id: "scorpius", name: "Scorpius", emoji: "🦂", stars: "★ ★ ★\n★\n★ ★ ★ ★" },

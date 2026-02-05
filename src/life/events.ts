@@ -3,7 +3,7 @@ import { getMemorySrc } from "./memories"; // add at top of events.ts
 
 
 const earsSrc = getMemorySrc("disneyland", "ears-together") ?? "";
-const yosemiteTunnelSrc = getMemorySrc("roadtrip_yosemite", "06") ?? "";
+const yosemiteTunnelSrc = getMemorySrc("roadtrip_yosemite", "04") ?? "";
 
 export const SEATTLE_1_EVENT: LifeEvent = {
   id: "seattle_1",
@@ -280,7 +280,7 @@ export const ROAD_TRIP_TO_JOSHUA_TREE: LifeEvent = {
       id: "arrive",
       label: "We made it! →",
       effects: [
-        { type: "burst", deck: "roadtrip_on_the_road", pick: 1 },
+        { type: "burst", deck: "roadtrip_ontheroad_01", pick: 1 },
         { type: "goto", eventId: "joshua_tree_arrival" },
       ],
     },
@@ -349,7 +349,7 @@ export const ROAD_TRIP_TO_SEQUOIA: LifeEvent = {
       id: "arrive",
       label: "Into the forest →",
       effects: [
-        { type: "burst", deck: "roadtrip_on_the_road", pick: 1 },
+        { type: "burst", deck: "roadtrip_ontheroad_02", pick: 1 },
         { type: "goto", eventId: "sequoia_arrival" },
       ],
     },
@@ -402,7 +402,7 @@ export const ROAD_TRIP_TO_KINGS_CANYON: LifeEvent = {
       id: "arrive",
       label: "Into the canyon →",
       effects: [
-        { type: "burst", deck: "roadtrip_on_the_road", pick: 1 },
+        { type: "burst", deck: "roadtrip_ontheroad_03", pick: 1 },
         { type: "goto", eventId: "kings_canyon_arrival" },
       ],
     },
@@ -471,7 +471,7 @@ export const ROAD_TRIP_TO_YOSEMITE: LifeEvent = {
       id: "arrive",
       label: "Through the tunnel... →",
       effects: [
-        { type: "burst", deck: "roadtrip_on_the_road", pick: 1 },
+        { type: "burst", deck: "roadtrip_ontheroad_04", pick: 1 },
         { type: "goto", eventId: "yosemite_arrival" },
       ],
     },
@@ -658,7 +658,7 @@ export const ROAD_TRIP_TO_SOLVANG: LifeEvent = {
       id: "arrive",
       label: "Velkommen! →",
       effects: [
-        { type: "burst", deck: "roadtrip_on_the_road", pick: 1 },
+        { type: "burst", deck: "roadtrip_ontheroad_05", pick: 1 },
         { type: "goto", eventId: "solvang_arrival" },
       ],
     },
@@ -684,7 +684,7 @@ export const SOLVANG_ARRIVAL: LifeEvent = {
 export const SOLVANG_MEMORIES: LifeEvent = {
   id: "solvang_memories",
   title: "A Little Denmark",
-  text: "We wandered the streets, tried every bakery, and pretended we were somewhere in Europe for a day.",
+  text: "We wandered the streets, tried every bakery, and even visited an ostrich farm (because why not?). It felt like we were somewhere in Europe for a day.",
   choices: [
     {
       id: "photos",
