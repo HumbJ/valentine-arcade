@@ -465,6 +465,7 @@
 
 .story-journal.expanded .story-journal-content {
   max-height: 300px;
+  overflow-y: auto;
 }
 
 .story-journal-list {

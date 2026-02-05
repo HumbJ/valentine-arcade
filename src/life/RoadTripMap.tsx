@@ -44,20 +44,19 @@ export function RoadTripMap({
   const from = STOPS[fromStop] ?? STOPS.san_diego;
   const to = STOPS[toStop] ?? STOPS.san_diego;
 
-  // Animate the car from 0 to 100% over ~3 seconds
+  // Animate the car from 0 to 100% - linear to match line drawing speed
   useEffect(() => {
     if (!animating) return;
 
-    const duration = 3000;
+    const duration = 2500; // 2.5 seconds for smoother, slower animation
     const startTime = Date.now();
 
     const frame = () => {
       const elapsed = Date.now() - startTime;
       const pct = Math.min(1, elapsed / duration);
 
-      // Ease-out cubic for smoother animation
-      const eased = 1 - Math.pow(1 - pct, 3);
-      setProgress(eased * 100);
+      // Linear animation to match line drawing
+      setProgress(pct * 100);
 
       if (pct < 1) {
         requestAnimationFrame(frame);

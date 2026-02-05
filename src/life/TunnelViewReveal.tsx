@@ -64,8 +64,9 @@ export function TunnelViewReveal({
     const pixels = imageData.data;
     let transparent = 0;
 
+    // Count pixels that are mostly transparent (alpha < 128)
     for (let i = 3; i < pixels.length; i += 4) {
-      if (pixels[i] === 0) transparent++;
+      if (pixels[i] < 128) transparent++;
     }
 
     return (transparent / (pixels.length / 4)) * 100;
@@ -82,14 +83,14 @@ export function TunnelViewReveal({
     ctx.globalCompositeOperation = "destination-out";
 
     // Create a soft brush effect
-    const gradient = ctx.createRadialGradient(x, y, 0, x, y, 30);
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, 40);
     gradient.addColorStop(0, "rgba(0, 0, 0, 1)");
     gradient.addColorStop(0.5, "rgba(0, 0, 0, 0.5)");
     gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
 
     ctx.fillStyle = gradient;
     ctx.beginPath();
-    ctx.arc(x, y, 30, 0, Math.PI * 2);
+    ctx.arc(x, y, 40, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.globalCompositeOperation = "source-over";
@@ -98,7 +99,7 @@ export function TunnelViewReveal({
     const pct = calculateRevealed();
     setRevealed(pct);
 
-    if (pct >= 60 && !isComplete) {
+    if (pct >= 50 && !isComplete) {
       setIsComplete(true);
     }
   }, [calculateRevealed, isComplete]);

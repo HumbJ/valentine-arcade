@@ -3,7 +3,7 @@ import { getMemorySrc } from "./memories"; // add at top of events.ts
 
 
 const earsSrc = getMemorySrc("disneyland", "ears-together") ?? "";
-const yosemiteTunnelSrc = getMemorySrc("roadtrip_yosemite", "04") ?? "";
+const yosemiteTunnelSrc = getMemorySrc("roadtrip_on_the_road", "06") ?? "";
 
 export const SEATTLE_1_EVENT: LifeEvent = {
   id: "seattle_1",
@@ -658,7 +658,6 @@ export const ROAD_TRIP_TO_SOLVANG: LifeEvent = {
       id: "arrive",
       label: "Velkommen! →",
       effects: [
-        { type: "burst", deck: "roadtrip_ontheroad_05", pick: 1 },
         { type: "goto", eventId: "solvang_arrival" },
       ],
     },

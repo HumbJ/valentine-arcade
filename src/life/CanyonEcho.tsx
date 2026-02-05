@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import "./CanyonEcho.css";
 
 // Rhythm patterns - each pattern is a sequence of timing offsets (in ms)
@@ -10,6 +10,29 @@ const PATTERNS = [
 ];
 
 type GamePhase = "intro" | "listen" | "repeat" | "result" | "complete";
+
+// Create a simple beep sound using Web Audio API
+function playBeep(frequency: number = 440, duration: number = 150) {
+  try {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.frequency.value = frequency;
+    oscillator.type = "sine";
+
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + duration / 1000);
+  } catch (err) {
+    console.warn("Audio playback failed:", err);
+  }
+}
 
 export function CanyonEcho({
   title,
@@ -40,10 +63,11 @@ export function CanyonEcho({
     setPlayerTaps([]);
     setRoundResult(null);
 
-    // Play the pattern
+    // Play the pattern with sound
     newPattern.forEach((time, index) => {
       setTimeout(() => {
         setPlayingIndex(index);
+        playBeep(440, 150); // Play beep sound
         // Visual flash
         setTimeout(() => setPlayingIndex(-1), 150);
       }, time + 500); // 500ms delay before starting
@@ -63,6 +87,7 @@ export function CanyonEcho({
 
     const tapTime = Date.now() - tapStartTime;
     setPlayerTaps((prev) => [...prev, tapTime]);
+    playBeep(440, 100); // Play feedback sound
 
     // Check if player has tapped enough times
     if (playerTaps.length + 1 >= pattern.length) {
@@ -132,7 +157,15 @@ export function CanyonEcho({
           {phase === "intro" && (
             <div className="ce-intro">
               <div className="ce-intro-text">
-                The canyon walls carry sound in mysterious ways. Listen to the echo, then tap to repeat it.
+                The canyon walls carry sound in mysterious ways.
+                <br /><br />
+                <strong>How to play:</strong>
+                <br />
+                1. Listen to the beep pattern
+                <br />
+                2. Tap the TAP button to match the rhythm
+                <br />
+                3. Match the timing as closely as you can!
               </div>
               <button className="ce-btn" onClick={startGame}>
                 Listen to the canyon →
