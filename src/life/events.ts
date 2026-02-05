@@ -1182,7 +1182,21 @@ export const LIFE_EVENTS: LifeEvent[] = [
           { type: "stat", key: "love", delta: 3 },
           { type: "stat", key: "happiness", delta: 4 },
           { type: "log", text: "We solved the mystery before the ending!" },
-          { type: "goto", eventId: "vacation_tease" },
+          { type: "goto", eventId: "after_movie_mystery" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "after_movie_mystery",
+    title: "Mystery Solved",
+    text: "We called it halfway through. That look you gave me when we both figured it out at the same time? Perfect.",
+    choices: [
+      {
+        id: "continue",
+        label: "What's next? →",
+        effects: [
+          { type: "goto", eventId: "activity_hub" },
         ],
       },
     ],
@@ -1204,7 +1218,21 @@ export const LIFE_EVENTS: LifeEvent[] = [
           { type: "stat", key: "love", delta: 6 },
           { type: "stat", key: "happiness", delta: 3 },
           { type: "log", text: "Watched a romance that hit close to home." },
-          { type: "goto", eventId: "vacation_tease" },
+          { type: "goto", eventId: "after_movie_romance" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "after_movie_romance",
+    title: "Warmth Lingers",
+    text: "Your head on my shoulder, that soft smile... somehow the movie felt like it was about us. I like when that happens.",
+    choices: [
+      {
+        id: "continue",
+        label: "What's next? →",
+        effects: [
+          { type: "goto", eventId: "activity_hub" },
         ],
       },
     ],
@@ -1226,7 +1254,21 @@ export const LIFE_EVENTS: LifeEvent[] = [
           { type: "stat", key: "happiness", delta: 7 },
           { type: "stat", key: "love", delta: 2 },
           { type: "log", text: "Laughed so hard we had to pause the movie." },
-          { type: "goto", eventId: "vacation_tease" },
+          { type: "goto", eventId: "after_movie_comedy" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "after_movie_comedy",
+    title: "Still Giggling",
+    text: "My cheeks hurt from smiling. Yours too. We keep quoting it back and forth, and honestly? This is the best part.",
+    choices: [
+      {
+        id: "continue",
+        label: "What's next? →",
+        effects: [
+          { type: "goto", eventId: "activity_hub" },
         ],
       },
     ],
@@ -1248,7 +1290,49 @@ export const LIFE_EVENTS: LifeEvent[] = [
           { type: "stat", key: "happiness", delta: 5 },
           { type: "stat", key: "memories", delta: 2 },
           { type: "log", text: "Felt like we went on our own adventure." },
+          { type: "goto", eventId: "after_movie_adventure" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "after_movie_adventure",
+    title: "Hearts Racing",
+    text: "That final battle had us both on the edge of our seats. You grabbed my hand during the tense part. I didn't let go.",
+    choices: [
+      {
+        id: "continue",
+        label: "What's next? →",
+        effects: [
+          { type: "goto", eventId: "activity_hub" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "activity_hub",
+    title: "What Do You Want to Do?",
+    text: "We're together. That's the important part. What sounds good?",
+    choices: [
+      {
+        id: "movie_night",
+        label: "Movie night 🎬",
+        effects: [
+          { type: "goto", eventId: "comfort_movie_choice" },
+        ],
+      },
+      {
+        id: "adventures",
+        label: "Plan an adventure ✨",
+        effects: [
           { type: "goto", eventId: "vacation_tease" },
+        ],
+      },
+      {
+        id: "cozy_activities",
+        label: "Stay cozy 🌙",
+        effects: [
+          { type: "goto", eventId: "cozy_next_day" },
         ],
       },
     ],
@@ -1257,7 +1341,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
     id: "vacation_tease",
     title: "A Trip Idea",
     text:
-      "We start talking about vacations—places we’ve been, and places we still want to go.",
+      "We start talking about vacations—places we've been, and places we still want to go.",
     choices: [
       {
         id: "japan",
