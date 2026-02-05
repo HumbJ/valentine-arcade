@@ -5,14 +5,67 @@ html, body {
   color: var(--ink);
 }
 :root {
+  /* ===== Color System ===== */
   --bg1: #ffe4ec;
   --bg2: #ffffff;
   --pink: #ff8fb1;
   --pink2: #ff6f9e;
+  --pink-soft: #ffb5c5;
+  --pink-deep: #ff8fa3;
   --ink: #2b2b2b;
   --muted: #7a5060;
   --card: rgba(255, 255, 255, 0.7);
   --stroke: rgba(255, 143, 177, 0.35);
+
+  /* ===== Typography Scale ===== */
+  /* Base: 16px (1rem) */
+  --text-xs: 0.75rem;    /* 12px - hints, labels */
+  --text-sm: 0.875rem;   /* 14px - secondary text */
+  --text-base: 1rem;     /* 16px - body text */
+  --text-md: 1.125rem;   /* 18px - emphasized text */
+  --text-lg: 1.25rem;    /* 20px - subtitles */
+  --text-xl: 1.5rem;     /* 24px - section titles */
+  --text-2xl: 1.875rem;  /* 30px - page titles */
+  --text-3xl: 2.25rem;   /* 36px - hero text */
+
+  /* Font Weights */
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+  --weight-black: 900;
+
+  /* ===== Spacing Scale ===== */
+  /* Based on 4px grid */
+  --space-1: 0.25rem;    /* 4px */
+  --space-2: 0.5rem;     /* 8px */
+  --space-3: 0.75rem;    /* 12px */
+  --space-4: 1rem;       /* 16px */
+  --space-5: 1.25rem;    /* 20px */
+  --space-6: 1.5rem;     /* 24px */
+  --space-8: 2rem;       /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+
+  /* ===== Border Radius Scale ===== */
+  --radius-sm: 0.5rem;   /* 8px */
+  --radius-md: 0.875rem; /* 14px */
+  --radius-lg: 1.125rem; /* 18px */
+  --radius-xl: 1.375rem; /* 22px */
+  --radius-full: 999px;
+
+  /* ===== Shadow Scale ===== */
+  --shadow-sm: 0 2px 8px rgba(255, 143, 177, 0.12);
+  --shadow-md: 0 8px 20px rgba(255, 143, 177, 0.18);
+  --shadow-lg: 0 12px 30px rgba(255, 143, 177, 0.22);
+  --shadow-xl: 0 18px 44px rgba(255, 111, 158, 0.25);
+
+  /* ===== Transition Timings ===== */
+  --transition-fast: 0.1s;
+  --transition-base: 0.2s;
+  --transition-slow: 0.3s;
+  --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 * { box-sizing: border-box; }
@@ -53,27 +106,29 @@ html, body {
 .card {
   background: var(--card);
   border: 1px solid var(--stroke);
-  border-radius: 18px;
-  padding: 14px;
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
   backdrop-filter: blur(8px);
-  box-shadow: 0 10px 22px rgba(255, 143, 177, 0.18);
-  margin-bottom: 14px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-3);
 }
 
 .card-title {
-  font-weight: 600;
-  margin-bottom: 8px;
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  margin-bottom: var(--space-2);
 }
 
 .story {
-  margin: 0 0 12px 0;
+  margin: 0 0 var(--space-3) 0;
   line-height: 1.45;
   color: #3a2a31;
+  font-size: var(--text-base);
 }
 
 .muted {
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: var(--text-sm);
 }
 
 .stats {
@@ -121,19 +176,21 @@ html, body {
 }
 
 .choice {
-  padding: 14px;
-  font-size: 1rem;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 143, 177, 0.35);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--stroke);
   background: white;
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition: transform var(--transition-fast) ease,
+              box-shadow var(--transition-fast) ease;
   text-align: left;
 }
 
 .choice:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 16px rgba(255, 143, 177, 0.22);
+  box-shadow: var(--shadow-md);
 }
 
 .choice:disabled {
@@ -359,12 +416,15 @@ html, body {
 }
 
 .mem-btn {
-  padding: 12px 14px;
-  border-radius: 14px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
   border: 1px solid rgba(255, 143, 177, 0.45);
   background: rgba(255, 255, 255, 0.85);
   cursor: pointer;
-  font-weight: 650;
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  transition: transform var(--transition-fast) var(--transition-bounce),
+              box-shadow var(--transition-fast) ease;
 }
 
 .mem-btn:disabled {
@@ -1812,3 +1872,69 @@ button:active:not(:disabled):not(.mem-dot):not(.fog-btn) {
   transform: scale(0.92);
   transition: transform 0.08s ease-out;
 }
+
+/* ===== Design System Usage Guide ===== */
+/*
+This file defines a comprehensive design system using CSS custom properties.
+All new styles should use these tokens for consistency.
+
+TYPOGRAPHY:
+  Font Sizes:
+    --text-xs (12px)   → hints, labels, small UI text
+    --text-sm (14px)   → secondary text, captions
+    --text-base (16px) → body text, default
+    --text-md (18px)   → emphasized body text
+    --text-lg (20px)   → subtitles, section headers
+    --text-xl (24px)   → section titles
+    --text-2xl (30px)  → page titles
+    --text-3xl (36px)  → hero text, major headings
+
+  Font Weights:
+    --weight-normal (400)    → body text
+    --weight-medium (500)    → slightly emphasized
+    --weight-semibold (600)  → buttons, labels
+    --weight-bold (700)      → headings
+    --weight-extrabold (800) → important headings
+    --weight-black (900)     → hero text
+
+SPACING:
+  Use the 4px grid system:
+    --space-1 (4px)   → tight spacing
+    --space-2 (8px)   → compact spacing
+    --space-3 (12px)  → default spacing
+    --space-4 (16px)  → comfortable spacing
+    --space-5 (20px)  → loose spacing
+    --space-6 (24px)  → section spacing
+    --space-8 (32px)  → large section spacing
+    --space-10 (40px) → major section spacing
+    --space-12 (48px) → page spacing
+
+BORDER RADIUS:
+    --radius-sm (8px)   → small elements
+    --radius-md (14px)  → buttons, cards
+    --radius-lg (18px)  → larger cards
+    --radius-xl (22px)  → modals
+    --radius-full       → pills, circular elements
+
+SHADOWS:
+    --shadow-sm → subtle elevation
+    --shadow-md → standard elevation
+    --shadow-lg → prominent elevation
+    --shadow-xl → modal elevation
+
+TRANSITIONS:
+    --transition-fast (0.1s)  → quick interactions
+    --transition-base (0.2s)  → standard animations
+    --transition-slow (0.3s)  → deliberate transitions
+    --transition-bounce       → bouncy cubic-bezier
+
+EXAMPLE USAGE:
+  .my-button {
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-fast) var(--transition-bounce);
+  }
+*/
