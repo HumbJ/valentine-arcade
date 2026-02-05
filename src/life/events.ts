@@ -765,11 +765,6 @@ export const ROAD_TRIP_FINALE: LifeEvent = {
           subtitle: "Before we close this chapter",
           prompt: "What do you think you'll still remember years from now about this road trip?",
         },
-        {
-          type: "reflectionReview",
-          title: "Our Road Trip Story",
-          closingLine: "From the desert to the coast, every mile brought us closer.",
-        },
         { type: "stat", key: "love", delta: 10 },
         { type: "stat", key: "happiness", delta: 8 },
         { type: "stat", key: "memories", delta: 5 },
