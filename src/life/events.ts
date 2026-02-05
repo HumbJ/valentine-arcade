@@ -982,6 +982,282 @@ export const LIFE_EVENTS: LifeEvent[] = [
     },
   ],
 },
+
+// ============================================
+// RANDOM POP-UP MINI-EVENTS
+// ============================================
+
+const RANDOM_MOVIE_NIGHT: LifeEvent = {
+  id: "random_movie_night",
+  title: "Movie Night 🎬",
+  text: "Time to pick something to watch. What's the vibe tonight?",
+  choices: [
+    {
+      id: "mystery",
+      label: "Mystery - Something twisty 🕵️",
+      effects: [
+        { type: "goto", eventId: "movie_mystery" },
+      ],
+    },
+    {
+      id: "romance",
+      label: "Romance - Cozy and sweet 💕",
+      effects: [
+        { type: "goto", eventId: "movie_romance" },
+      ],
+    },
+    {
+      id: "comedy",
+      label: "Comedy - Need some laughs 😂",
+      effects: [
+        { type: "goto", eventId: "movie_comedy" },
+      ],
+    },
+    {
+      id: "adventure",
+      label: "Adventure - Epic journey ⚔️",
+      effects: [
+        { type: "goto", eventId: "movie_adventure" },
+      ],
+    },
+  ],
+};
+
+const MOVIE_MYSTERY: LifeEvent = {
+  id: "movie_mystery",
+  title: "Mystery Movie",
+  text: "Plot twists, red herrings, and trying to solve it before the reveal. Let's see if you can spot the clues...",
+  choices: [
+    {
+      id: "play",
+      label: "Start watching 🔍",
+      effects: [
+        {
+          type: "puzzle",
+          imageSrc: "/photos/misc/mystery-clue.jpg",
+          rows: 3,
+          cols: 3,
+          title: "Piece together the mystery",
+        },
+        { type: "stat", key: "love", delta: 3 },
+        { type: "stat", key: "happiness", delta: 4 },
+        { type: "log", text: "We solved the mystery before the ending!" },
+        { type: "gotoHome" },
+      ],
+    },
+  ],
+};
+
+const MOVIE_ROMANCE: LifeEvent = {
+  id: "movie_romance",
+  title: "Romance Movie",
+  text: "Soft lighting, heartfelt moments, and that warm fuzzy feeling. Perfect for cuddling up together.",
+  choices: [
+    {
+      id: "watch",
+      label: "Settle in close 💖",
+      effects: [
+        { type: "burst", deck: "cozy_moments", pick: 3 },
+        { type: "stat", key: "love", delta: 6 },
+        { type: "stat", key: "happiness", delta: 3 },
+        { type: "log", text: "Watched a romance that hit close to home." },
+        { type: "gotoHome" },
+      ],
+    },
+  ],
+};
+
+const MOVIE_COMEDY: LifeEvent = {
+  id: "movie_comedy",
+  title: "Comedy Movie",
+  text: "Time for some laughs! Nothing beats those moments when you both crack up at the same joke.",
+  choices: [
+    {
+      id: "laugh",
+      label: "Let's go! 🎭",
+      effects: [
+        {
+          type: "tidePoolMatch",
+          title: "Comedy Timing",
+          subtitle: "Match the punchlines! Tap the pairs quickly.",
+        },
+        { type: "stat", key: "happiness", delta: 7 },
+        { type: "stat", key: "love", delta: 2 },
+        { type: "log", text: "Laughed so hard we had to pause the movie." },
+        { type: "gotoHome" },
+      ],
+    },
+  ],
+};
+
+const MOVIE_ADVENTURE: LifeEvent = {
+  id: "movie_adventure",
+  title: "Adventure Movie",
+  text: "Epic quests, daring heroes, and edge-of-your-seat moments. Let's go on this journey together!",
+  choices: [
+    {
+      id: "adventure",
+      label: "Start the quest! 🗡️",
+      effects: [
+        {
+          type: "canyonEcho",
+          title: "Epic Score",
+          subtitle: "Follow the rhythm of the adventure!",
+        },
+        { type: "stat", key: "happiness", delta: 5 },
+        { type: "stat", key: "memories", delta: 2 },
+        { type: "log", text: "Felt like we went on our own adventure." },
+        { type: "gotoHome" },
+      ],
+    },
+  ],
+};
+
+const RANDOM_PIZZA_NIGHT: LifeEvent = {
+  id: "random_pizza_night",
+  title: "Pizza Debate 🍕",
+  text: "The eternal question: what toppings?",
+  choices: [
+    {
+      id: "weird",
+      label: "Let's get weird with it 🎲",
+      effects: [
+        { type: "stat", key: "happiness", delta: 4 },
+        { type: "log", text: "Ordered pineapple on pizza. No regrets." },
+        { type: "gotoHome" },
+      ],
+    },
+    {
+      id: "classic",
+      label: "Classic pepperoni, always 🍕",
+      effects: [
+        { type: "stat", key: "love", delta: 3 },
+        { type: "log", text: "Sometimes the classics are perfect." },
+        { type: "gotoHome" },
+      ],
+    },
+    {
+      id: "fancy",
+      label: "Make it fancy tonight ✨",
+      effects: [
+        { type: "stat", key: "happiness", delta: 3 },
+        { type: "stat", key: "love", delta: 2 },
+        { type: "log", text: "Tried something new. It was delicious." },
+        { type: "gotoHome" },
+      ],
+    },
+  ],
+};
+
+const RANDOM_COZY_NIGHT: LifeEvent = {
+  id: "random_cozy_night",
+  title: "Cozy Night In 🌙",
+  text: "No plans, just vibes. What sounds good?",
+  choices: [
+    {
+      id: "talk",
+      label: "Talk about everything 💬",
+      effects: [
+        { type: "stat", key: "love", delta: 5 },
+        { type: "log", text: "Talked for hours about nothing and everything." },
+        { type: "gotoHome" },
+      ],
+    },
+    {
+      id: "music",
+      label: "Put on some music 🎵",
+      effects: [
+        { type: "stat", key: "happiness", delta: 4 },
+        { type: "log", text: "Found the perfect playlist for the mood." },
+        { type: "gotoHome" },
+      ],
+    },
+    {
+      id: "stargazing",
+      label: "Look at the stars ⭐",
+      effects: [
+        { type: "stat", key: "memories", delta: 3 },
+        { type: "stat", key: "love", delta: 3 },
+        { type: "log", text: "Stargazing from the window, peaceful and close." },
+        { type: "gotoHome" },
+      ],
+    },
+  ],
+};
+
+const RANDOM_FRIEND_TEXT: LifeEvent = {
+  id: "random_friend_text",
+  title: "Friends Want to Hang! 📱",
+  text: "Group chat is buzzing. Want to go out or keep it chill?",
+  choices: [
+    {
+      id: "go_out",
+      label: "Let's go! Social time 🎉",
+      effects: [
+        { type: "stat", key: "happiness", delta: 5 },
+        { type: "log", text: "Had a blast with friends. Good energy." },
+        { type: "gotoHome" },
+      ],
+    },
+    {
+      id: "rain_check",
+      label: "Rain check, just us tonight 💕",
+      effects: [
+        { type: "stat", key: "love", delta: 4 },
+        { type: "log", text: "Chose quality time together over going out." },
+        { type: "gotoHome" },
+      ],
+    },
+    {
+      id: "invite_over",
+      label: "Invite them here? 🏠",
+      effects: [
+        { type: "stat", key: "happiness", delta: 4 },
+        { type: "stat", key: "love", delta: 2 },
+        { type: "log", text: "Hosted friends at home. Best of both worlds." },
+        { type: "gotoHome" },
+      ],
+    },
+  ],
+};
+
+const RANDOM_ADVENTURE_CALL: LifeEvent = {
+  id: "random_adventure_call",
+  title: "Feeling Adventurous? ✨",
+  text: "That spontaneous energy is calling. What sounds exciting?",
+  choices: [
+    {
+      id: "day_trip",
+      label: "Quick day trip 🚗",
+      effects: [
+        { type: "stat", key: "memories", delta: 4 },
+        { type: "stat", key: "happiness", delta: 3 },
+        { type: "log", text: "Spontaneous drive led to unexpected adventures." },
+        { type: "gotoHome" },
+      ],
+    },
+    {
+      id: "try_something",
+      label: "Try something new 🎲",
+      effects: [
+        { type: "stat", key: "happiness", delta: 5 },
+        { type: "log", text: "Stepped out of our comfort zone together." },
+        { type: "gotoHome" },
+      ],
+    },
+    {
+      id: "explore_local",
+      label: "Explore nearby 🗺️",
+      effects: [
+        { type: "stat", key: "memories", delta: 3 },
+        { type: "stat", key: "love", delta: 3 },
+        { type: "log", text: "Found hidden gems in our own neighborhood." },
+        { type: "gotoHome" },
+      ],
+    },
+  ],
+};
+
 SEATTLE_1_EVENT,
 SEATTLE_1_ARRIVAL,
 SEATTLE_1_EXPLORE,
@@ -1023,4 +1299,14 @@ SOLVANG_MEMORIES,
 SOLVANG_CLOSING,
 ROAD_TRIP_FOOD_GAME,
 ROAD_TRIP_FINALE,
+// Random pop-up events
+RANDOM_MOVIE_NIGHT,
+MOVIE_MYSTERY,
+MOVIE_ROMANCE,
+MOVIE_COMEDY,
+MOVIE_ADVENTURE,
+RANDOM_PIZZA_NIGHT,
+RANDOM_COZY_NIGHT,
+RANDOM_FRIEND_TEXT,
+RANDOM_ADVENTURE_CALL,
 ];

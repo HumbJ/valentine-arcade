@@ -6,27 +6,28 @@ type HubZone = "suitcase" | "tv" | "table" | "phone" | "couch";
 
 type RandomEvent = {
   id: string;
+  eventId: string; // Event ID to trigger in story mode
   text: string;
   emoji: string;
-  zone: HubZone;
 };
 
 const RANDOM_EVENTS: RandomEvent[] = [
-  { id: "cozy_night", text: "Stay in tonight?", emoji: "🌙", zone: "couch" },
-  { id: "pizza_night", text: "Pizza night?", emoji: "🍕", zone: "table" },
-  { id: "movie_time", text: "Movie time?", emoji: "🎬", zone: "tv" },
-  { id: "friend_text", text: "Friends want to hang!", emoji: "📱", zone: "phone" },
-  { id: "adventure_call", text: "Feeling adventurous?", emoji: "✨", zone: "suitcase" },
+  { id: "cozy_night", eventId: "random_cozy_night", text: "Stay in tonight?", emoji: "🌙" },
+  { id: "pizza_night", eventId: "random_pizza_night", text: "Pizza night?", emoji: "🍕" },
+  { id: "movie_time", eventId: "random_movie_night", text: "Movie time?", emoji: "🎬" },
+  { id: "friend_text", eventId: "random_friend_text", text: "Friends want to hang!", emoji: "📱" },
+  { id: "adventure_call", eventId: "random_adventure_call", text: "Feeling adventurous?", emoji: "✨" },
 ];
 
 type Props = {
   stats: Stats;
   onZoneClick: (zone: HubZone) => void;
+  onRandomEventAccept: (eventId: string) => void;
   unlockedTrips?: number;
   totalTrips?: number;
 };
 
-export function HomeHub({ stats, onZoneClick, unlockedTrips = 1, totalTrips = 5 }: Props) {
+export function HomeHub({ stats, onZoneClick, onRandomEventAccept, unlockedTrips = 1, totalTrips = 5 }: Props) {
   const [randomEvent, setRandomEvent] = useState<RandomEvent | null>(null);
   const [showEvent, setShowEvent] = useState(false);
   const [particles, setParticles] = useState<{ id: number; x: number; y: number; delay: number }[]>([]);
@@ -71,7 +72,7 @@ export function HomeHub({ stats, onZoneClick, unlockedTrips = 1, totalTrips = 5 
 
   const acceptEvent = () => {
     if (randomEvent) {
-      onZoneClick(randomEvent.zone);
+      onRandomEventAccept(randomEvent.eventId);
       dismissEvent();
     }
   };

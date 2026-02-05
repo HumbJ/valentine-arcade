@@ -50,6 +50,14 @@ export function HomePage() {
     }
   };
 
+  const handleRandomEventAccept = (eventId: string) => {
+    // Set the event ID and navigate to story mode
+    const updated = { ...save, currentEventId: eventId };
+    persistSave(updated);
+    setSave(updated);
+    navigate("/story");
+  };
+
   // Count unlocked trips (places that are trips)
   const unlockedTrips = save.placesUnlocked.length;
   const totalTrips = 5; // Seattle, Road Trip, Hawaii, Seattle 2, New York
@@ -64,6 +72,7 @@ export function HomePage() {
       <HomeHub
         stats={save.stats}
         onZoneClick={handleZoneClick}
+        onRandomEventAccept={handleRandomEventAccept}
         unlockedTrips={unlockedTrips}
         totalTrips={totalTrips}
       />
