@@ -81,7 +81,14 @@ html, body {
 .screen {
   max-width: 520px;
   margin: 0 auto;
-  padding: 18px;
+  padding: var(--space-4);
+  /* Smooth transition when content changes */
+  transition: opacity var(--transition-base) ease;
+}
+
+/* Ensure smooth page transitions */
+.screen > * {
+  animation-fill-mode: both;
 }
 
 .topbar {
@@ -229,19 +236,29 @@ html, body {
 
 .bottomnav .tab {
   pointer-events: auto;
-  margin: 0 6px;
-  padding: 12px 16px;
-  border-radius: 999px;
+  margin: 0 var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-full);
   background: rgba(255,255,255,0.75);
   border: 1px solid rgba(255, 143, 177, 0.4);
   text-decoration: none;
   color: #3a2a31;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+  transition: all var(--transition-base) var(--transition-bounce);
+  backdrop-filter: blur(8px);
+}
+
+.bottomnav .tab:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
 .bottomnav .tab.active {
   background: rgba(255, 143, 177, 0.18);
   border-color: rgba(255, 111, 158, 0.55);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
 }
 .toast {
   position: sticky;
@@ -735,28 +752,100 @@ html, body {
     transform: scale(1);
   }
 }
+/* ===== Page Transitions ===== */
+
+/* Default page entrance - slide from right with fade */
 .page {
-  animation: pageFlipIn 220ms ease-out;
+  animation: pageEnter 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes pageFlipIn {
+@keyframes pageEnter {
   from {
     opacity: 0;
-    transform: translateX(12px);
+    transform: translateX(20px) scale(0.98);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
   }
 }
 
-.page.flip {
-  animation: pageFlipIn 220ms ease-out;
+/* Page exit animation - slide out to left with fade */
+.page-exit {
+  animation: pageExit 220ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 
-@keyframes pageFlipIn {
-  from { opacity: 0; transform: translateX(12px); }
-  to { opacity: 1; transform: translateX(0); }
+@keyframes pageExit {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.98);
+  }
+}
+
+/* Back navigation - slide from left */
+.page-back {
+  animation: pageEnterBack 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes pageEnterBack {
+  from {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Fade-only transition for overlays */
+.page-fade {
+  animation: pageFade 320ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide up from bottom (good for modals) */
+.page-slide-up {
+  animation: pageSlideUp 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes pageSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scale & fade (good for cards, rewards) */
+.page-scale {
+  animation: pageScale 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pageScale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .map-card {
@@ -1928,6 +2017,15 @@ TRANSITIONS:
     --transition-slow (0.3s)  → deliberate transitions
     --transition-bounce       → bouncy cubic-bezier
 
+PAGE TRANSITIONS:
+  Use these classes to create smooth page navigation:
+    .page            → Default forward navigation (slide from right)
+    .page-exit       → Exit animation (slide to left)
+    .page-back       → Back navigation (slide from left)
+    .page-fade       → Simple fade (overlays)
+    .page-slide-up   → Slide up from bottom (modals)
+    .page-scale      → Scale & fade (cards, rewards)
+
 EXAMPLE USAGE:
   .my-button {
     padding: var(--space-3) var(--space-5);
@@ -1936,5 +2034,10 @@ EXAMPLE USAGE:
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     transition: transform var(--transition-fast) var(--transition-bounce);
+  }
+
+  .my-page {
+    /* This element will slide in from right on mount */
+    animation: pageEnter 280ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 */
