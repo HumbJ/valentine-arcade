@@ -262,6 +262,14 @@ export const ROAD_TRIP_START: LifeEvent = {
       id: "begin",
       label: "Let's hit the road! →",
       effects: [
+        {
+          type: "reflectionPrompt",
+          id: "roadtrip_start",
+          arc: "roadtrip",
+          title: "Before We Go",
+          subtitle: "The adventure begins",
+          prompt: "What things were you most excited about for this road trip?",
+        },
         { type: "log", text: "Road trip begins! First stop: Joshua Tree." },
         { type: "roadTripMap", fromStop: "san_diego", toStop: "joshua_tree", title: "On the Road" },
         { type: "goto", eventId: "road_trip_to_joshua_tree" },
@@ -522,6 +530,14 @@ export const YOSEMITE_CLOSING: LifeEvent = {
       id: "next",
       label: "To Pinnacles! →",
       effects: [
+        {
+          type: "reflectionPrompt",
+          id: "roadtrip_midpoint",
+          arc: "roadtrip",
+          title: "Halfway Through",
+          subtitle: "Pausing to reflect",
+          prompt: "What stood out to you most at this point of the trip?",
+        },
         { type: "log", text: "Yosemite complete. Quick stop at Pinnacles." },
         { type: "roadTripMap", fromStop: "yosemite", toStop: "pinnacles", title: "On the Road" },
         { type: "goto", eventId: "road_trip_to_pinnacles" },
@@ -741,6 +757,19 @@ export const ROAD_TRIP_FINALE: LifeEvent = {
       label: "Back to our little life →",
       effects: [
         { type: "roadTripMap", fromStop: "solvang", toStop: "san_diego", title: "Heading Home" },
+        {
+          type: "reflectionPrompt",
+          id: "roadtrip_end",
+          arc: "roadtrip",
+          title: "Looking Back",
+          subtitle: "Before we close this chapter",
+          prompt: "What do you think you'll still remember years from now about this road trip?",
+        },
+        {
+          type: "reflectionReview",
+          title: "Our Road Trip Story",
+          closingLine: "From the desert to the coast, every mile brought us closer.",
+        },
         { type: "stat", key: "love", delta: 10 },
         { type: "stat", key: "happiness", delta: 8 },
         { type: "stat", key: "memories", delta: 5 },
