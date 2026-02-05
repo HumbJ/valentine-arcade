@@ -244,6 +244,13 @@ export const COZY_NEXT_DAY: LifeEvent = {
         { type: "goto", eventId: "activity_hub" },
       ],
     },
+    {
+      id: "back",
+      label: "← Back",
+      effects: [
+        { type: "goto", eventId: "activity_hub" },
+      ],
+    },
   ],
 };
 
@@ -1166,6 +1173,13 @@ export const LIFE_EVENTS: LifeEvent[] = [
           { type: "goto", eventId: "comfort_movie_adventure" },
         ],
       },
+      {
+        id: "back",
+        label: "← Maybe something else",
+        effects: [
+          { type: "goto", eventId: "activity_hub" },
+        ],
+      },
     ],
   },
   {
@@ -1386,6 +1400,13 @@ export const LIFE_EVENTS: LifeEvent[] = [
           { type: "stat", key: "happiness", delta: 4 },
           { type: "log", text: "A cabin getaway sounds perfect." },
           { type: "goto", eventId: "end_demo" },
+        ],
+      },
+      {
+        id: "back",
+        label: "← Back",
+        effects: [
+          { type: "goto", eventId: "activity_hub" },
         ],
       },
     ],
