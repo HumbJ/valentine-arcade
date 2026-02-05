@@ -27,8 +27,45 @@ export type Effect =
       type: "reflectionReview";
       title?: string;
       closingLine?: string;
-
-  };
+    }
+  // Road trip mini-game effects
+  | {
+      type: "roadTripMap";
+      fromStop: string;    // starting location
+      toStop: string;      // destination
+      title?: string;
+    }
+  | {
+      type: "stargazingMemory";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "canyonEcho";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "tunnelViewReveal";
+      imageSrc: string;    // the image to reveal
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "tidePoolMatch";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "pastryStacker";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "foodLocationMatch";
+      title?: string;
+      subtitle?: string;
+    };
 
 
 export type Choice = {

@@ -1,0 +1,189 @@
+/* Road Trip Map styles */
+
+:root {
+  --rtm-bg: #1a1a2e;
+  --rtm-card: #16213e;
+  --rtm-outline: rgba(255, 255, 255, 0.2);
+  --rtm-coast: rgba(100, 180, 255, 0.4);
+  --rtm-route-bg: rgba(255, 255, 255, 0.15);
+  --rtm-route: #ff6b9d;
+  --rtm-car-bg: rgba(255, 255, 255, 0.9);
+  --rtm-text: #fff;
+  --rtm-muted: rgba(255, 255, 255, 0.6);
+}
+
+.rtm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: rtm-fadeIn 0.3s ease-out;
+}
+
+@keyframes rtm-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.rtm-wrap {
+  background: var(--rtm-card);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: rtm-slideUp 0.4s ease-out;
+}
+
+@keyframes rtm-slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rtm-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--rtm-text);
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.rtm-subtitle {
+  font-size: 1rem;
+  color: var(--rtm-muted);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.rtm-map-container {
+  background: var(--rtm-bg);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rtm-map {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+}
+
+.rtm-california {
+  opacity: 0.5;
+}
+
+.rtm-coast {
+  opacity: 0.6;
+}
+
+.rtm-route-bg {
+  opacity: 0.5;
+}
+
+.rtm-route-traveled,
+.rtm-route-current {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rtm-stop {
+  fill: var(--rtm-route-bg);
+  stroke: var(--rtm-outline);
+  stroke-width: 0.5;
+  transition: all 0.3s ease;
+}
+
+.rtm-stop.visited {
+  fill: var(--rtm-route);
+}
+
+.rtm-stop.from {
+  fill: var(--rtm-route);
+  stroke: #fff;
+  stroke-width: 1;
+}
+
+.rtm-stop.to {
+  fill: #fff;
+  stroke: var(--rtm-route);
+  stroke-width: 1;
+  animation: rtm-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes rtm-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.rtm-label {
+  font-size: 3px;
+  fill: var(--rtm-text);
+  font-weight: 600;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+}
+
+.rtm-car {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: transform 0.1s ease-out;
+}
+
+.rtm-footer {
+  text-align: center;
+}
+
+.rtm-driving {
+  font-size: 1rem;
+  color: var(--rtm-muted);
+  animation: rtm-dots 1.5s ease-in-out infinite;
+}
+
+@keyframes rtm-dots {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.rtm-btn {
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+}
+
+.rtm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.5);
+}
+
+.rtm-btn:active {
+  transform: translateY(0);
+}

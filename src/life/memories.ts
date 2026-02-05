@@ -124,6 +124,38 @@ MEMORIES["cozy_stay"] = deckFromGlob(cozyStay);
 const julianTrip = import.meta.glob("../assets/photos/dates/julian/*", { eager: true });
 MEMORIES["julian_trip"] = deckFromGlob(julianTrip);
 
+// --- Road Trip decks --------------------------------------------------------
+const roadtripJoshuaTree = import.meta.glob("../assets/photos/trips/roadtrip/joshua_tree/*", { eager: true });
+const roadtripSequoia = import.meta.glob("../assets/photos/trips/roadtrip/sequoia/*", { eager: true });
+const roadtripKingsCanyon = import.meta.glob("../assets/photos/trips/roadtrip/kings_canyon/*", { eager: true });
+const roadtripYosemite = import.meta.glob("../assets/photos/trips/roadtrip/yosemite/*", { eager: true });
+const roadtripPinnacles = import.meta.glob("../assets/photos/trips/roadtrip/pinnacle/*", { eager: true });
+const roadtripMonterey = import.meta.glob("../assets/photos/trips/roadtrip/monterey/*", { eager: true });
+const roadtripSolvang = import.meta.glob("../assets/photos/trips/roadtrip/solvang/*", { eager: true });
+const roadtripOnTheRoad = import.meta.glob("../assets/photos/trips/roadtrip/on_the_road/*", { eager: true });
+const roadtripFood = import.meta.glob("../assets/photos/trips/roadtrip/food/*", { eager: true });
+
+MEMORIES["roadtrip_joshua_tree"] = deckFromGlob(roadtripJoshuaTree);
+MEMORIES["roadtrip_sequoia"] = deckFromGlob(roadtripSequoia);
+MEMORIES["roadtrip_kings_canyon"] = deckFromGlob(roadtripKingsCanyon);
+MEMORIES["roadtrip_yosemite"] = deckFromGlob(roadtripYosemite);
+MEMORIES["roadtrip_pinnacles"] = deckFromGlob(roadtripPinnacles);
+MEMORIES["roadtrip_monterey"] = deckFromGlob(roadtripMonterey);
+MEMORIES["roadtrip_solvang"] = deckFromGlob(roadtripSolvang);
+MEMORIES["roadtrip_on_the_road"] = deckFromGlob(roadtripOnTheRoad);
+MEMORIES["roadtrip_food"] = deckFromGlob(roadtripFood);
+
+// Combined road trip scrapbook deck for Map replay
+MEMORIES["roadtrip"] = [
+  ...(MEMORIES["roadtrip_joshua_tree"] ?? []),
+  ...(MEMORIES["roadtrip_sequoia"] ?? []),
+  ...(MEMORIES["roadtrip_kings_canyon"] ?? []),
+  ...(MEMORIES["roadtrip_yosemite"] ?? []),
+  ...(MEMORIES["roadtrip_pinnacles"] ?? []),
+  ...(MEMORIES["roadtrip_monterey"] ?? []),
+  ...(MEMORIES["roadtrip_solvang"] ?? []),
+];
+
 // --- Seattle Trip 1 combined "scrapbook" deck (for Map replay) -------------
 
 MEMORIES["seattle1"] = [

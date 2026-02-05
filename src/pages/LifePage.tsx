@@ -15,6 +15,7 @@ import { ReflectionReview } from "../life/ReflectionReview";
 import { EndCreditsOverlay } from "../life/EndCreditsOverlay";
 import "./StoryMode.css";
 import { PicnicDateGate } from "../life/PicnicDateGate";
+import { RoadTripMap } from "../life/RoadTripMap";
 
 
 
@@ -57,6 +58,10 @@ const [pendingAfterReview, setPendingAfterReview] = useState<Effect[] | null>(nu
 const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | null>(null);
 
   const [reward, setReward] = useState<null | { title: string; lines: string[] }>(null);
+
+  // Road trip mini-game states
+  const [roadTripMapGate, setRoadTripMapGate] = useState<null | { fromStop: string; toStop: string; title?: string }>(null);
+  const [pendingAfterRoadTripMap, setPendingAfterRoadTripMap] = useState<Effect[] | null>(null);
 
   const event = useMemo(() => getEventById(save.currentEventId), [save.currentEventId]);
 
@@ -142,9 +147,23 @@ const picnicEff = effects.find((e) => e.type === "picnicDate");
 if (picnicEff && picnicEff.type === "picnicDate") {
   setPicnicGate({ title: picnicEff.title, subtitle: picnicEff.subtitle });
   setPendingAfterPicnic(effects.filter((e) => e.type !== "picnicDate"));
-  
+
   return;
 }
+
+    // 2.6) Road trip map gate
+    const roadTripMapEff = effects.find(
+      (e): e is Extract<Effect, { type: "roadTripMap" }> => e.type === "roadTripMap"
+    );
+    if (roadTripMapEff) {
+      setRoadTripMapGate({
+        fromStop: roadTripMapEff.fromStop,
+        toStop: roadTripMapEff.toStop,
+        title: roadTripMapEff.title,
+      });
+      setPendingAfterRoadTripMap(effects.filter((e) => e.type !== "roadTripMap"));
+      return;
+    }
 
     // 3) Reflection gate intercept
 const reflEff = effects.find(
@@ -362,6 +381,14 @@ function finishReflectionSave(text: string) {
   // Skip rewards popup since PicnicDateGate already showed rewards visually
   runEffects(rest, { skipRewards: true });
 }
+
+  function finishRoadTripMap() {
+    setRoadTripMapGate(null);
+    if (!pendingAfterRoadTripMap) return;
+    const rest = pendingAfterRoadTripMap;
+    setPendingAfterRoadTripMap(null);
+    runEffects(rest);
+  }
 
   function finishReviewGate() {
   setReviewGate(null);
@@ -611,6 +638,14 @@ function finishReflectionSave(text: string) {
   </div>
 )}
 
+      {roadTripMapGate && (
+        <RoadTripMap
+          fromStop={roadTripMapGate.fromStop}
+          toStop={roadTripMapGate.toStop}
+          title={roadTripMapGate.title}
+          onDone={finishRoadTripMap}
+        />
+      )}
 
       {reviewGate && (
         <ReflectionReview

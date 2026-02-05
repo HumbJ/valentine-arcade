@@ -246,6 +246,512 @@ export const COZY_NEXT_DAY: LifeEvent = {
 
 
 
+// =============================================================================
+// ROAD TRIP EVENTS
+// Route: San Diego -> Joshua Tree -> Sequoia -> Kings Canyon -> Yosemite ->
+//        Pinnacles -> Monterey -> Solvang -> San Diego
+// =============================================================================
+
+export const ROAD_TRIP_START: LifeEvent = {
+  id: "road_trip_start",
+  title: "The Great California Road Trip",
+  text: "We packed up the car, queued up the playlist, and hit the road. A week of national parks, coastal towns, and adventure awaits.",
+  choices: [
+    {
+      id: "begin",
+      label: "Let's hit the road! →",
+      effects: [
+        { type: "log", text: "Road trip begins! First stop: Joshua Tree." },
+        { type: "roadTripMap", fromStop: "san_diego", toStop: "joshua_tree", title: "On the Road" },
+        { type: "goto", eventId: "road_trip_to_joshua_tree" },
+      ],
+    },
+  ],
+};
+
+// --- JOSHUA TREE ---
+export const ROAD_TRIP_TO_JOSHUA_TREE: LifeEvent = {
+  id: "road_trip_to_joshua_tree",
+  title: "Driving to Joshua Tree",
+  text: "The city fades behind us as the desert opens up. Weird rock formations start appearing, and those iconic twisted trees dot the landscape.",
+  choices: [
+    {
+      id: "arrive",
+      label: "We made it! →",
+      effects: [
+        { type: "burst", deck: "roadtrip_on_the_road", pick: 1 },
+        { type: "goto", eventId: "joshua_tree_arrival" },
+      ],
+    },
+  ],
+};
+
+export const JOSHUA_TREE_ARRIVAL: LifeEvent = {
+  id: "joshua_tree_arrival",
+  title: "Joshua Tree National Park",
+  text: "There's something alien about this place. The boulders, the spiky trees, the endless sky. And at night? The stars are unreal.",
+  choices: [
+    {
+      id: "explore",
+      label: "Time to stargaze →",
+      effects: [
+        { type: "stargazingMemory", title: "Stargazing", subtitle: "Match the constellations we saw together" },
+        { type: "goto", eventId: "joshua_tree_memories" },
+      ],
+    },
+  ],
+};
+
+export const JOSHUA_TREE_MEMORIES: LifeEvent = {
+  id: "joshua_tree_memories",
+  title: "Joshua Tree Moments",
+  text: "We climbed rocks, chased sunsets, and made the desert feel like home for a day.",
+  choices: [
+    {
+      id: "photos",
+      label: "Relive the memories →",
+      effects: [
+        { type: "burst", deck: "roadtrip_joshua_tree" },
+        { type: "stat", key: "love", delta: 4 },
+        { type: "stat", key: "happiness", delta: 5 },
+        { type: "stat", key: "memories", delta: 10 },
+        { type: "goto", eventId: "joshua_tree_closing" },
+      ],
+    },
+  ],
+};
+
+export const JOSHUA_TREE_CLOSING: LifeEvent = {
+  id: "joshua_tree_closing",
+  title: "Leaving the Desert",
+  text: "The stars were incredible, the rocks were wild, and somehow you made the desert feel romantic. Next up: the big trees.",
+  choices: [
+    {
+      id: "next",
+      label: "Onward to Sequoia! →",
+      effects: [
+        { type: "log", text: "Joshua Tree complete. Heading to Sequoia." },
+        { type: "roadTripMap", fromStop: "joshua_tree", toStop: "sequoia", title: "On the Road" },
+        { type: "goto", eventId: "road_trip_to_sequoia" },
+      ],
+    },
+  ],
+};
+
+// --- SEQUOIA ---
+export const ROAD_TRIP_TO_SEQUOIA: LifeEvent = {
+  id: "road_trip_to_sequoia",
+  title: "Driving to Sequoia",
+  text: "From the desert floor, we climb into the mountains. The temperature drops, the trees get taller, and suddenly we're in a different world.",
+  choices: [
+    {
+      id: "arrive",
+      label: "Into the forest →",
+      effects: [
+        { type: "burst", deck: "roadtrip_on_the_road", pick: 1 },
+        { type: "goto", eventId: "sequoia_arrival" },
+      ],
+    },
+  ],
+};
+
+export const SEQUOIA_ARRIVAL: LifeEvent = {
+  id: "sequoia_arrival",
+  title: "Sequoia National Park",
+  text: "Standing next to these ancient giants makes you feel so small—but in a good way. Some of these trees were saplings when Rome was an empire.",
+  choices: [
+    {
+      id: "explore",
+      label: "Walk among giants →",
+      effects: [
+        { type: "burst", deck: "roadtrip_sequoia" },
+        { type: "stat", key: "love", delta: 3 },
+        { type: "stat", key: "happiness", delta: 4 },
+        { type: "stat", key: "memories", delta: 9 },
+        { type: "goto", eventId: "sequoia_closing" },
+      ],
+    },
+  ],
+};
+
+export const SEQUOIA_CLOSING: LifeEvent = {
+  id: "sequoia_closing",
+  title: "Through the Trees",
+  text: "The scale of it all is humbling. And somehow, holding your hand while looking up at something that's been alive for millennia... it puts things in perspective.",
+  choices: [
+    {
+      id: "next",
+      label: "To Kings Canyon! →",
+      effects: [
+        { type: "log", text: "Sequoia explored. Kings Canyon awaits." },
+        { type: "roadTripMap", fromStop: "sequoia", toStop: "kings_canyon", title: "On the Road" },
+        { type: "goto", eventId: "road_trip_to_kings_canyon" },
+      ],
+    },
+  ],
+};
+
+// --- KINGS CANYON ---
+export const ROAD_TRIP_TO_KINGS_CANYON: LifeEvent = {
+  id: "road_trip_to_kings_canyon",
+  title: "Driving to Kings Canyon",
+  text: "Just a short drive from Sequoia, but the landscape shifts dramatically. Deep valleys carved by ancient rivers.",
+  choices: [
+    {
+      id: "arrive",
+      label: "Into the canyon →",
+      effects: [
+        { type: "burst", deck: "roadtrip_on_the_road", pick: 1 },
+        { type: "goto", eventId: "kings_canyon_arrival" },
+      ],
+    },
+  ],
+};
+
+export const KINGS_CANYON_ARRIVAL: LifeEvent = {
+  id: "kings_canyon_arrival",
+  title: "Kings Canyon",
+  text: "The canyon walls tower above us. There's an echo here that makes every sound feel bigger, more significant.",
+  choices: [
+    {
+      id: "explore",
+      label: "Listen to the canyon →",
+      effects: [
+        { type: "canyonEcho", title: "Canyon Echo", subtitle: "Match the rhythm of the mountains" },
+        { type: "goto", eventId: "kings_canyon_memories" },
+      ],
+    },
+  ],
+};
+
+export const KINGS_CANYON_MEMORIES: LifeEvent = {
+  id: "kings_canyon_memories",
+  title: "Canyon Views",
+  text: "We found viewpoints that took our breath away, and quiet moments that meant even more.",
+  choices: [
+    {
+      id: "photos",
+      label: "Take it all in →",
+      effects: [
+        { type: "burst", deck: "roadtrip_kings_canyon" },
+        { type: "stat", key: "love", delta: 4 },
+        { type: "stat", key: "happiness", delta: 5 },
+        { type: "stat", key: "memories", delta: 6 },
+        { type: "goto", eventId: "kings_canyon_closing" },
+      ],
+    },
+  ],
+};
+
+export const KINGS_CANYON_CLOSING: LifeEvent = {
+  id: "kings_canyon_closing",
+  title: "Echoes Fade",
+  text: "The canyon holds onto sounds and memories alike. We'll carry this one with us. Time for the crown jewel...",
+  choices: [
+    {
+      id: "next",
+      label: "Yosemite awaits! →",
+      effects: [
+        { type: "log", text: "Kings Canyon complete. The big one: Yosemite." },
+        { type: "roadTripMap", fromStop: "kings_canyon", toStop: "yosemite", title: "On the Road" },
+        { type: "goto", eventId: "road_trip_to_yosemite" },
+      ],
+    },
+  ],
+};
+
+// --- YOSEMITE ---
+export const ROAD_TRIP_TO_YOSEMITE: LifeEvent = {
+  id: "road_trip_to_yosemite",
+  title: "Driving to Yosemite",
+  text: "The anticipation builds as we wind through mountain roads. Every turn reveals something more stunning than the last.",
+  choices: [
+    {
+      id: "arrive",
+      label: "Through the tunnel... →",
+      effects: [
+        { type: "burst", deck: "roadtrip_on_the_road", pick: 1 },
+        { type: "goto", eventId: "yosemite_arrival" },
+      ],
+    },
+  ],
+};
+
+export const YOSEMITE_ARRIVAL: LifeEvent = {
+  id: "yosemite_arrival",
+  title: "Yosemite National Park",
+  text: "And then... the tunnel. Darkness for a moment, and then the valley opens up before us. Half Dome, El Capitan, waterfalls—it's almost too much.",
+  choices: [
+    {
+      id: "reveal",
+      label: "Take in the view →",
+      effects: [
+        { type: "tunnelViewReveal", imageSrc: "", title: "Tunnel View", subtitle: "Wipe away the fog to reveal the magic" },
+        { type: "goto", eventId: "yosemite_memories" },
+      ],
+    },
+  ],
+};
+
+export const YOSEMITE_MEMORIES: LifeEvent = {
+  id: "yosemite_memories",
+  title: "Valley of Wonders",
+  text: "Waterfalls, granite cliffs, and meadows that look like paintings. Every direction is a postcard.",
+  choices: [
+    {
+      id: "photos",
+      label: "Capture the magic →",
+      effects: [
+        { type: "burst", deck: "roadtrip_yosemite" },
+        { type: "stat", key: "love", delta: 6 },
+        { type: "stat", key: "happiness", delta: 7 },
+        { type: "stat", key: "memories", delta: 7 },
+        { type: "goto", eventId: "yosemite_closing" },
+      ],
+    },
+  ],
+};
+
+export const YOSEMITE_CLOSING: LifeEvent = {
+  id: "yosemite_closing",
+  title: "Leaving the Valley",
+  text: "Some places change you just by being there. Yosemite is one of them. But we're not done yet—the coast is calling.",
+  choices: [
+    {
+      id: "next",
+      label: "To Pinnacles! →",
+      effects: [
+        { type: "log", text: "Yosemite complete. Quick stop at Pinnacles." },
+        { type: "roadTripMap", fromStop: "yosemite", toStop: "pinnacles", title: "On the Road" },
+        { type: "goto", eventId: "road_trip_to_pinnacles" },
+      ],
+    },
+  ],
+};
+
+// --- PINNACLES ---
+export const ROAD_TRIP_TO_PINNACLES: LifeEvent = {
+  id: "road_trip_to_pinnacles",
+  title: "Driving to Pinnacles",
+  text: "A quick detour to one of California's lesser-known parks. Ancient volcanic spires and hidden caves await.",
+  choices: [
+    {
+      id: "arrive",
+      label: "A quick stop →",
+      effects: [
+        { type: "goto", eventId: "pinnacles_arrival" },
+      ],
+    },
+  ],
+};
+
+export const PINNACLES_ARRIVAL: LifeEvent = {
+  id: "pinnacles_arrival",
+  title: "Pinnacles National Park",
+  text: "A brief but memorable stop. The rock formations here are unlike anything else—volcanic remnants turned into natural sculptures.",
+  choices: [
+    {
+      id: "snap",
+      label: "Snap a memory →",
+      effects: [
+        { type: "burst", deck: "roadtrip_pinnacles" },
+        { type: "stat", key: "memories", delta: 1 },
+        { type: "goto", eventId: "pinnacles_closing" },
+      ],
+    },
+  ],
+};
+
+export const PINNACLES_CLOSING: LifeEvent = {
+  id: "pinnacles_closing",
+  title: "Onward",
+  text: "Short and sweet. Now let's go see the ocean.",
+  choices: [
+    {
+      id: "next",
+      label: "To Monterey! →",
+      effects: [
+        { type: "log", text: "Pinnacles visited. Ocean time: Monterey." },
+        { type: "roadTripMap", fromStop: "pinnacles", toStop: "monterey", title: "On the Road" },
+        { type: "goto", eventId: "road_trip_to_monterey" },
+      ],
+    },
+  ],
+};
+
+// --- MONTEREY ---
+export const ROAD_TRIP_TO_MONTEREY: LifeEvent = {
+  id: "road_trip_to_monterey",
+  title: "Driving to Monterey",
+  text: "The mountains give way to rolling hills, and then—finally—the Pacific Ocean. Salt air and crashing waves.",
+  choices: [
+    {
+      id: "arrive",
+      label: "Ocean views! →",
+      effects: [
+        { type: "goto", eventId: "monterey_arrival" },
+      ],
+    },
+  ],
+};
+
+export const MONTEREY_ARRIVAL: LifeEvent = {
+  id: "monterey_arrival",
+  title: "Monterey Bay",
+  text: "Tide pools, sea otters, and that perfect coastal town vibe. Time to explore what lives beneath the waves.",
+  choices: [
+    {
+      id: "explore",
+      label: "Check out the tide pools →",
+      effects: [
+        { type: "tidePoolMatch", title: "Tide Pool Discovery", subtitle: "Match the creatures to their names" },
+        { type: "goto", eventId: "monterey_memories" },
+      ],
+    },
+  ],
+};
+
+export const MONTEREY_MEMORIES: LifeEvent = {
+  id: "monterey_memories",
+  title: "Coastal Magic",
+  text: "The aquarium, the pier, the food... Monterey delivered on every front.",
+  choices: [
+    {
+      id: "photos",
+      label: "Seaside memories →",
+      effects: [
+        { type: "burst", deck: "roadtrip_monterey" },
+        { type: "stat", key: "love", delta: 5 },
+        { type: "stat", key: "happiness", delta: 6 },
+        { type: "stat", key: "memories", delta: 10 },
+        { type: "goto", eventId: "monterey_closing" },
+      ],
+    },
+  ],
+};
+
+export const MONTEREY_CLOSING: LifeEvent = {
+  id: "monterey_closing",
+  title: "Leaving the Coast",
+  text: "Sea lions barking, waves crashing, and the best clam chowder ever. One more stop before home...",
+  choices: [
+    {
+      id: "next",
+      label: "To Solvang! →",
+      effects: [
+        { type: "log", text: "Monterey explored. Final stop: Solvang." },
+        { type: "roadTripMap", fromStop: "monterey", toStop: "solvang", title: "On the Road" },
+        { type: "goto", eventId: "road_trip_to_solvang" },
+      ],
+    },
+  ],
+};
+
+// --- SOLVANG ---
+export const ROAD_TRIP_TO_SOLVANG: LifeEvent = {
+  id: "road_trip_to_solvang",
+  title: "Driving to Solvang",
+  text: "South along the coast, through wine country, to a little Danish village in the middle of California. Why not?",
+  choices: [
+    {
+      id: "arrive",
+      label: "Velkommen! →",
+      effects: [
+        { type: "burst", deck: "roadtrip_on_the_road", pick: 1 },
+        { type: "goto", eventId: "solvang_arrival" },
+      ],
+    },
+  ],
+};
+
+export const SOLVANG_ARRIVAL: LifeEvent = {
+  id: "solvang_arrival",
+  title: "Solvang",
+  text: "Windmills, half-timbered buildings, and more pastries than we could ever eat. Though we certainly tried.",
+  choices: [
+    {
+      id: "explore",
+      label: "Time for pastries! →",
+      effects: [
+        { type: "pastryStacker", title: "Danish Delights", subtitle: "Stack the pastries!" },
+        { type: "goto", eventId: "solvang_memories" },
+      ],
+    },
+  ],
+};
+
+export const SOLVANG_MEMORIES: LifeEvent = {
+  id: "solvang_memories",
+  title: "A Little Denmark",
+  text: "We wandered the streets, tried every bakery, and pretended we were somewhere in Europe for a day.",
+  choices: [
+    {
+      id: "photos",
+      label: "Sweet memories →",
+      effects: [
+        { type: "burst", deck: "roadtrip_solvang" },
+        { type: "stat", key: "love", delta: 4 },
+        { type: "stat", key: "happiness", delta: 6 },
+        { type: "stat", key: "memories", delta: 10 },
+        { type: "goto", eventId: "solvang_closing" },
+      ],
+    },
+  ],
+};
+
+export const SOLVANG_CLOSING: LifeEvent = {
+  id: "solvang_closing",
+  title: "The Last Stretch",
+  text: "Full of pastries and memories, we begin the final drive home. But first... a little food game.",
+  choices: [
+    {
+      id: "food_game",
+      label: "One more game! →",
+      effects: [
+        { type: "goto", eventId: "road_trip_food_game" },
+      ],
+    },
+  ],
+};
+
+// --- FOOD GAME & FINALE ---
+export const ROAD_TRIP_FOOD_GAME: LifeEvent = {
+  id: "road_trip_food_game",
+  title: "Road Trip Eats",
+  text: "We ate so well on this trip. Can you remember where each meal was from?",
+  choices: [
+    {
+      id: "play",
+      label: "Let's see... →",
+      effects: [
+        { type: "foodLocationMatch", title: "Road Trip Eats", subtitle: "Match each meal to where we had it" },
+        { type: "goto", eventId: "road_trip_finale" },
+      ],
+    },
+  ],
+};
+
+export const ROAD_TRIP_FINALE: LifeEvent = {
+  id: "road_trip_finale",
+  title: "Home Again",
+  text: "A week of parks, coasts, deserts, and pastries. We saw so much, but the best part was doing it together.",
+  choices: [
+    {
+      id: "finish",
+      label: "Back to our little life →",
+      effects: [
+        { type: "roadTripMap", fromStop: "solvang", toStop: "san_diego", title: "Heading Home" },
+        { type: "stat", key: "love", delta: 10 },
+        { type: "stat", key: "happiness", delta: 8 },
+        { type: "stat", key: "memories", delta: 5 },
+        { type: "unlockPlace", placeId: "roadtrip" },
+        { type: "log", text: "California Road Trip: parks, coast, pastries, and us." },
+        { type: "gotoHome", markComplete: "roadtrip" },
+      ],
+    },
+  ],
+};
+
 export const LIFE_EVENTS: LifeEvent[] = [
   {
     id: "start",
@@ -356,6 +862,14 @@ export const LIFE_EVENTS: LifeEvent[] = [
     { type: "goto", eventId: "seattle_1" },
   ],
 },
+{
+  id: "roadtrip",
+  label: "California Road Trip 🚗 (parks + coast + pastries)",
+  effects: [
+    { type: "log", text: "We looked at the map… and planned the ultimate California adventure." },
+    { type: "goto", eventId: "road_trip_start" },
+  ],
+},
       {
         id: "cozy",
         label: "Cozy cabin 🏔 (quiet + warm + slow mornings)",
@@ -455,4 +969,34 @@ SEATTLE_1_MUSEUM,
 COZY_NEXT_DAY,
 SEATTLE_1_THREAD,
 SEATTLE_1_REFLECTION_PROMPT,
+// Road Trip events
+ROAD_TRIP_START,
+ROAD_TRIP_TO_JOSHUA_TREE,
+JOSHUA_TREE_ARRIVAL,
+JOSHUA_TREE_MEMORIES,
+JOSHUA_TREE_CLOSING,
+ROAD_TRIP_TO_SEQUOIA,
+SEQUOIA_ARRIVAL,
+SEQUOIA_CLOSING,
+ROAD_TRIP_TO_KINGS_CANYON,
+KINGS_CANYON_ARRIVAL,
+KINGS_CANYON_MEMORIES,
+KINGS_CANYON_CLOSING,
+ROAD_TRIP_TO_YOSEMITE,
+YOSEMITE_ARRIVAL,
+YOSEMITE_MEMORIES,
+YOSEMITE_CLOSING,
+ROAD_TRIP_TO_PINNACLES,
+PINNACLES_ARRIVAL,
+PINNACLES_CLOSING,
+ROAD_TRIP_TO_MONTEREY,
+MONTEREY_ARRIVAL,
+MONTEREY_MEMORIES,
+MONTEREY_CLOSING,
+ROAD_TRIP_TO_SOLVANG,
+SOLVANG_ARRIVAL,
+SOLVANG_MEMORIES,
+SOLVANG_CLOSING,
+ROAD_TRIP_FOOD_GAME,
+ROAD_TRIP_FINALE,
 ];
