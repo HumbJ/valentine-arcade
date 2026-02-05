@@ -1701,3 +1701,114 @@ html, body {
     font-size: 1rem;
   }
 }
+
+/* ===== Button Micro-Interactions ===== */
+
+/* Press animation - apply to all interactive buttons */
+.choice,
+.mem-btn,
+.jg-btn,
+.mdg-btn,
+.fog-btn,
+.picnic-btn,
+.ce-btn,
+.story-choice,
+.story-btn,
+.story-reset-btn,
+button:not(.mem-dot):not(.fog-btn) {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.1s ease;
+}
+
+/* Active press state */
+.choice:active:not(:disabled),
+.mem-btn:active:not(:disabled),
+.jg-btn:active:not(:disabled),
+.mdg-btn:active:not(:disabled),
+.fog-btn:active:not(:disabled),
+.picnic-btn:active:not(:disabled),
+.ce-btn:active:not(:disabled),
+.story-choice:active:not(:disabled),
+.story-btn:active:not(:disabled),
+.story-reset-btn:active:not(:disabled),
+button:active:not(:disabled):not(.mem-dot):not(.fog-btn) {
+  transform: scale(0.97);
+}
+
+/* Ripple effect container */
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  animation: btnRipple 600ms ease-out;
+}
+
+@keyframes btnRipple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Primary button special press effect */
+.mem-btn.primary:active:not(:disabled),
+.jg-btn.primary:active:not(:disabled),
+.mdg-btn.primary:active:not(:disabled),
+.picnic-btn.primary:active:not(:disabled),
+.ce-btn.primary:active:not(:disabled) {
+  transform: scale(0.96);
+  box-shadow: 0 4px 12px rgba(255, 143, 177, 0.3);
+}
+
+/* Spring-back animation for important actions */
+@keyframes btnSpring {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn-spring {
+  animation: btnSpring 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Pulse effect for primary actions */
+@keyframes btnPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 143, 177, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 143, 177, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 143, 177, 0);
+  }
+}
+
+/* Subtle pulse on hover for primary buttons */
+.mem-btn.primary:hover:not(:disabled),
+.jg-btn.primary:hover:not(:disabled),
+.mdg-btn.primary:hover:not(:disabled),
+.picnic-btn.primary:hover:not(:disabled),
+.ce-btn.primary:hover:not(:disabled),
+.story-btn:hover:not(:disabled) {
+  animation: btnPulse 1.5s infinite;
+}
+
+/* Enhanced tap zone for mini-games */
+.ce-tap-zone:active {
+  transform: scale(0.92);
+  transition: transform 0.08s ease-out;
+}
