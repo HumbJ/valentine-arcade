@@ -100,8 +100,8 @@ export function CanyonEcho({
 
   // Evaluate the player's taps against the pattern
   const evaluatePattern = (taps: number[]) => {
-    // Check timing accuracy (within 200ms tolerance)
-    const tolerance = 250;
+    // Check timing accuracy with generous tolerance
+    const tolerance = 400; // 400ms tolerance
     let correct = 0;
 
     pattern.forEach((targetTime, index) => {
@@ -115,7 +115,8 @@ export function CanyonEcho({
     });
 
     const accuracy = correct / pattern.length;
-    const success = accuracy >= 0.5; // 50% or better
+    // More forgiving: need at least 40% accuracy (e.g., 2 out of 5 beats)
+    const success = accuracy >= 0.4;
 
     setRoundResult(success ? "success" : "fail");
     if (success) {

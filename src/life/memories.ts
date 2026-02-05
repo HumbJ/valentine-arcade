@@ -138,7 +138,13 @@ const roadtripFood = import.meta.glob("../assets/photos/trips/roadtrip/food/*", 
 MEMORIES["roadtrip_joshua_tree"] = deckFromGlob(roadtripJoshuaTree);
 MEMORIES["roadtrip_sequoia"] = deckFromGlob(roadtripSequoia);
 MEMORIES["roadtrip_kings_canyon"] = deckFromGlob(roadtripKingsCanyon);
-MEMORIES["roadtrip_yosemite"] = deckFromGlob(roadtripYosemite);
+
+// Yosemite: put video at the end
+const yosemiteDeck = deckFromGlob(roadtripYosemite);
+const yosemitePhotos = yosemiteDeck.filter((m) => m.type === "photo");
+const yosemiteVideos = yosemiteDeck.filter((m) => m.type === "video");
+MEMORIES["roadtrip_yosemite"] = [...yosemitePhotos, ...yosemiteVideos];
+
 MEMORIES["roadtrip_pinnacles"] = deckFromGlob(roadtripPinnacles);
 MEMORIES["roadtrip_monterey"] = deckFromGlob(roadtripMonterey);
 MEMORIES["roadtrip_solvang"] = deckFromGlob(roadtripSolvang);
