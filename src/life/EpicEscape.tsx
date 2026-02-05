@@ -5,12 +5,12 @@ type GamePhase = "intro" | "playing" | "result" | "complete";
 
 // Quick time events
 const QTE_PROMPTS = [
-  { action: "JUMP!", emoji: "🦘", duration: 2500 },
-  { action: "DODGE!", emoji: "💨", duration: 2200 },
-  { action: "CLIMB!", emoji: "🧗", duration: 2400 },
-  { action: "RUN!", emoji: "🏃", duration: 2000 },
-  { action: "DIVE!", emoji: "🤿", duration: 2300 },
-  { action: "SWING!", emoji: "🎢", duration: 2200 },
+  { action: "JUMP!", emoji: "🦘", duration: 3000 },
+  { action: "DODGE!", emoji: "💨", duration: 2800 },
+  { action: "CLIMB!", emoji: "🧗", duration: 2900 },
+  { action: "RUN!", emoji: "🏃", duration: 2700 },
+  { action: "DIVE!", emoji: "🤿", duration: 2850 },
+  { action: "SWING!", emoji: "🎢", duration: 2800 },
 ];
 
 export function EpicEscape({

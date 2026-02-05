@@ -23,6 +23,7 @@ export function SpotTheClues({
   const [phase, setPhase] = useState<GamePhase>("intro");
   const [currentClueIndex, setCurrentClueIndex] = useState(0);
   const [foundClues, setFoundClues] = useState(0);
+  const [score, setScore] = useState(0);
   const [showClue, setShowClue] = useState(false);
   const [clueRevealed, setClueRevealed] = useState(false);
 
@@ -34,6 +35,7 @@ export function SpotTheClues({
     setPhase("searching");
     setCurrentClueIndex(0);
     setFoundClues(0);
+    setScore(0);
     // Show first clue after a moment
     setTimeout(() => {
       setShowClue(true);
@@ -46,6 +48,7 @@ export function SpotTheClues({
 
     setClueRevealed(true);
     setFoundClues((prev) => prev + 1);
+    setScore((prev) => prev + 2); // 2 points per found clue
 
     // Move to next clue or finish
     setTimeout(() => {
@@ -116,7 +119,7 @@ export function SpotTheClues({
           {phase === "searching" && (
             <div className="stc-searching">
               <div className="stc-progress">
-                Clues found: {foundClues} / {totalClues}
+                Score: {score} | Clues: {foundClues} / {totalClues}
               </div>
 
               <div className={`stc-clue-zone ${showClue ? "visible" : ""} ${clueRevealed ? "found" : ""}`}>
@@ -135,7 +138,7 @@ export function SpotTheClues({
               )}
 
               {clueRevealed && (
-                <div className="stc-found-msg">Found! ✓</div>
+                <div className="stc-found-msg">Found! +2 ✓</div>
               )}
             </div>
           )}
@@ -144,6 +147,9 @@ export function SpotTheClues({
             <div className="stc-result">
               <div className={`stc-result-icon ${foundClues >= 2 ? "success" : "fail"}`}>
                 {foundClues >= 2 ? "✓" : "!"}
+              </div>
+              <div className="stc-final-score">
+                {score} / {totalClues * 2} clues spotted
               </div>
               <div className="stc-result-text">
                 {foundClues === totalClues

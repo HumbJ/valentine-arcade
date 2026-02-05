@@ -221,7 +221,7 @@ export const COZY_NEXT_DAY: LifeEvent = {
   id: "cozy_next_day",
   title: "The Next Day",
   text:
-    "We talked long into the night—about everything and nothing—until the world got quiet. Now it’s the next day, and I’m still smiling. What do you want to do?",
+    "We talked long into the night—about everything and nothing—until the world got quiet. Now it's the next day, and I'm still smiling. What do you want to do?",
   choices: [
     {
       id: "picnic",
@@ -239,6 +239,9 @@ export const COZY_NEXT_DAY: LifeEvent = {
       effects: [
         { type: "log", text: "We stayed curled up together a bit longer." },
         { type: "burst", deck: "cozy_stay" },
+        { type: "stat", key: "love", delta: 3 },
+        { type: "stat", key: "happiness", delta: 2 },
+        { type: "goto", eventId: "activity_hub" },
       ],
     },
   ],

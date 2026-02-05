@@ -45,11 +45,11 @@ export function PerfectMoment({
       setMomentVisible(true);
       startTimeRef.current = Date.now();
 
-      // Open capture window after 1.5s (peak of animation)
+      // Open capture window after 1.2s (peak of animation)
       setTimeout(() => {
         setCaptureWindow(true);
 
-        // Close capture window after 1s
+        // Close capture window after 2s
         setTimeout(() => {
           setCaptureWindow(false);
           if (feedback === null) {
@@ -57,8 +57,8 @@ export function PerfectMoment({
             setFeedback("missed");
             setTimeout(nextRound, 1500);
           }
-        }, 1000);
-      }, 1500);
+        }, 2000);
+      }, 1200);
     }, 500);
   }, [currentRound, feedback]);
 

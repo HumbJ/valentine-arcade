@@ -77,7 +77,7 @@ export function GiggleGauge({
     setFeedback(null);
     setGaugePosition(50);
     setGaugeDirection(1);
-    speedRef.current = 1.5 + currentRound * 0.3; // Get faster each round
+    speedRef.current = 1.2 + currentRound * 0.15; // Get faster each round, but more gradually
 
     setTimeout(() => {
       setIsActive(true);
