@@ -1,0 +1,203 @@
+/* Stargazing Memory Game styles */
+
+.sgm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.sgm-wrap {
+  position: relative;
+  background: linear-gradient(180deg, #0a0a1a 0%, #1a1a3a 50%, #0d0d2a 100%);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+  min-height: 500px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.sgm-sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sgm-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  animation: sgm-twinkle 3s ease-in-out infinite;
+}
+
+@keyframes sgm-twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+.sgm-content {
+  position: relative;
+  z-index: 1;
+}
+
+.sgm-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.sgm-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.sgm-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sgm-card {
+  aspect-ratio: 1;
+  perspective: 600px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.sgm-card:disabled {
+  cursor: default;
+}
+
+.sgm-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+.sgm-card.flipped .sgm-card-inner,
+.sgm-card.matched .sgm-card-inner {
+  transform: rotateY(180deg);
+}
+
+.sgm-card-front,
+.sgm-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.sgm-card-front {
+  background: linear-gradient(135deg, #2a2a5a 0%, #1a1a4a 100%);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 20px rgba(100, 100, 200, 0.2);
+}
+
+.sgm-card-back {
+  background: linear-gradient(135deg, #3a3a7a 0%, #2a2a6a 100%);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transform: rotateY(180deg);
+}
+
+.sgm-card.matched .sgm-card-back {
+  background: linear-gradient(135deg, #4a7a4a 0%, #3a6a3a 100%);
+  border-color: rgba(100, 255, 100, 0.3);
+  animation: sgm-matchGlow 0.5s ease-out;
+}
+
+@keyframes sgm-matchGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(100, 255, 100, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 20px 5px rgba(100, 255, 100, 0);
+  }
+}
+
+.sgm-emoji {
+  font-size: 2rem;
+}
+
+.sgm-name {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  padding: 0.25rem;
+}
+
+.sgm-progress {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.sgm-complete {
+  text-align: center;
+  animation: sgm-fadeIn 0.5s ease-out;
+}
+
+@keyframes sgm-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sgm-complete-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.sgm-btn {
+  background: linear-gradient(135deg, #6b5b95, #574b90);
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(107, 91, 149, 0.4);
+}
+
+.sgm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(107, 91, 149, 0.5);
+}

@@ -1,0 +1,277 @@
+/* Pastry Stacker game styles */
+
+.ps-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.ps-wrap {
+  position: relative;
+  background: linear-gradient(180deg, #87ceeb 0%, #f5deb3 60%, #deb887 100%);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+  min-height: 500px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+/* Decorative windmill */
+.ps-windmill {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 80px;
+}
+
+.ps-windmill-base {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 50px;
+  background: linear-gradient(180deg, #8b4513, #654321);
+  clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+}
+
+.ps-windmill-blades {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  animation: ps-spin 4s linear infinite;
+}
+
+.ps-blade {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 6px;
+  background: #654321;
+  transform-origin: left center;
+  border-radius: 0 3px 3px 0;
+}
+
+.ps-blade:nth-child(1) { transform: rotate(0deg); }
+.ps-blade:nth-child(2) { transform: rotate(90deg); }
+.ps-blade:nth-child(3) { transform: rotate(180deg); }
+.ps-blade:nth-child(4) { transform: rotate(270deg); }
+
+@keyframes ps-spin {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+
+.ps-content {
+  position: relative;
+  z-index: 1;
+}
+
+.ps-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #654321;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.ps-subtitle {
+  font-size: 0.9rem;
+  color: #8b4513;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.ps-game-area {
+  position: relative;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.ps-current {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  margin-left: -25px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.05s linear;
+}
+
+.ps-dropping {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  margin-left: -25px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ps-drop 0.3s ease-in forwards;
+}
+
+@keyframes ps-drop {
+  to {
+    top: calc(100% - 100px);
+  }
+}
+
+.ps-pastry-emoji {
+  font-size: 2.5rem;
+}
+
+.ps-stack {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.ps-stacked {
+  position: absolute;
+  width: 50px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ps-land 0.2s ease-out;
+}
+
+@keyframes ps-land {
+  from {
+    transform: translateY(-20px) scale(1.2);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.ps-plate {
+  font-size: 3rem;
+  opacity: 0.8;
+}
+
+.ps-height-marker {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ps-height-bar {
+  width: 12px;
+  flex: 1;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.ps-height-fill {
+  width: 100%;
+  background: linear-gradient(180deg, #ffd700, #ffa500);
+  border-radius: 6px;
+  transition: height 0.3s ease;
+}
+
+.ps-height-label {
+  font-size: 0.7rem;
+  color: #654321;
+  font-weight: 600;
+}
+
+.ps-score {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #654321;
+  margin-bottom: 0.5rem;
+}
+
+.ps-hint {
+  text-align: center;
+  color: #8b4513;
+  font-size: 0.875rem;
+  animation: ps-pulse 1s ease-in-out infinite;
+}
+
+@keyframes ps-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.ps-result {
+  text-align: center;
+  animation: ps-fadeIn 0.5s ease-out;
+}
+
+@keyframes ps-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ps-result-text {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.ps-result-text.success {
+  color: #228b22;
+}
+
+.ps-result-text.fail {
+  color: #8b4513;
+}
+
+.ps-btn {
+  background: linear-gradient(135deg, #daa520, #cd853f);
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
+}
+
+.ps-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(218, 165, 32, 0.5);
+}

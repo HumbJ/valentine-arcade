@@ -16,6 +16,12 @@ import { EndCreditsOverlay } from "../life/EndCreditsOverlay";
 import "./StoryMode.css";
 import { PicnicDateGate } from "../life/PicnicDateGate";
 import { RoadTripMap } from "../life/RoadTripMap";
+import { StargazingMemory } from "../life/StargazingMemory";
+import { CanyonEcho } from "../life/CanyonEcho";
+import { TunnelViewReveal } from "../life/TunnelViewReveal";
+import { TidePoolMatch } from "../life/TidePoolMatch";
+import { PastryStacker } from "../life/PastryStacker";
+import { FoodLocationMatch } from "../life/FoodLocationMatch";
 
 
 
@@ -62,6 +68,18 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
   // Road trip mini-game states
   const [roadTripMapGate, setRoadTripMapGate] = useState<null | { fromStop: string; toStop: string; title?: string }>(null);
   const [pendingAfterRoadTripMap, setPendingAfterRoadTripMap] = useState<Effect[] | null>(null);
+  const [stargazingGate, setStargazingGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterStargazing, setPendingAfterStargazing] = useState<Effect[] | null>(null);
+  const [canyonEchoGate, setCanyonEchoGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterCanyonEcho, setPendingAfterCanyonEcho] = useState<Effect[] | null>(null);
+  const [tunnelViewGate, setTunnelViewGate] = useState<null | { imageSrc: string; title?: string; subtitle?: string }>(null);
+  const [pendingAfterTunnelView, setPendingAfterTunnelView] = useState<Effect[] | null>(null);
+  const [tidePoolGate, setTidePoolGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterTidePool, setPendingAfterTidePool] = useState<Effect[] | null>(null);
+  const [pastryStackerGate, setPastryStackerGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterPastryStacker, setPendingAfterPastryStacker] = useState<Effect[] | null>(null);
+  const [foodLocationMatchGate, setFoodLocationMatchGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterFoodLocationMatch, setPendingAfterFoodLocationMatch] = useState<Effect[] | null>(null);
 
   const event = useMemo(() => getEventById(save.currentEventId), [save.currentEventId]);
 
@@ -162,6 +180,85 @@ if (picnicEff && picnicEff.type === "picnicDate") {
         title: roadTripMapEff.title,
       });
       setPendingAfterRoadTripMap(effects.filter((e) => e.type !== "roadTripMap"));
+      return;
+    }
+
+    // 2.7) Stargazing memory gate (Joshua Tree)
+    const stargazingEff = effects.find(
+      (e): e is Extract<Effect, { type: "stargazingMemory" }> => e.type === "stargazingMemory"
+    );
+    if (stargazingEff) {
+      setStargazingGate({
+        title: stargazingEff.title,
+        subtitle: stargazingEff.subtitle,
+      });
+      setPendingAfterStargazing(effects.filter((e) => e.type !== "stargazingMemory"));
+      return;
+    }
+
+    // 2.8) Canyon echo gate (Kings Canyon)
+    const canyonEchoEff = effects.find(
+      (e): e is Extract<Effect, { type: "canyonEcho" }> => e.type === "canyonEcho"
+    );
+    if (canyonEchoEff) {
+      setCanyonEchoGate({
+        title: canyonEchoEff.title,
+        subtitle: canyonEchoEff.subtitle,
+      });
+      setPendingAfterCanyonEcho(effects.filter((e) => e.type !== "canyonEcho"));
+      return;
+    }
+
+    // 2.9) Tunnel view reveal gate (Yosemite)
+    const tunnelViewEff = effects.find(
+      (e): e is Extract<Effect, { type: "tunnelViewReveal" }> => e.type === "tunnelViewReveal"
+    );
+    if (tunnelViewEff) {
+      setTunnelViewGate({
+        imageSrc: tunnelViewEff.imageSrc,
+        title: tunnelViewEff.title,
+        subtitle: tunnelViewEff.subtitle,
+      });
+      setPendingAfterTunnelView(effects.filter((e) => e.type !== "tunnelViewReveal"));
+      return;
+    }
+
+    // 2.10) Tide pool match gate (Monterey)
+    const tidePoolEff = effects.find(
+      (e): e is Extract<Effect, { type: "tidePoolMatch" }> => e.type === "tidePoolMatch"
+    );
+    if (tidePoolEff) {
+      setTidePoolGate({
+        title: tidePoolEff.title,
+        subtitle: tidePoolEff.subtitle,
+      });
+      setPendingAfterTidePool(effects.filter((e) => e.type !== "tidePoolMatch"));
+      return;
+    }
+
+    // 2.11) Pastry stacker gate (Solvang)
+    const pastryStackerEff = effects.find(
+      (e): e is Extract<Effect, { type: "pastryStacker" }> => e.type === "pastryStacker"
+    );
+    if (pastryStackerEff) {
+      setPastryStackerGate({
+        title: pastryStackerEff.title,
+        subtitle: pastryStackerEff.subtitle,
+      });
+      setPendingAfterPastryStacker(effects.filter((e) => e.type !== "pastryStacker"));
+      return;
+    }
+
+    // 2.12) Food location match gate (end of road trip)
+    const foodLocationMatchEff = effects.find(
+      (e): e is Extract<Effect, { type: "foodLocationMatch" }> => e.type === "foodLocationMatch"
+    );
+    if (foodLocationMatchEff) {
+      setFoodLocationMatchGate({
+        title: foodLocationMatchEff.title,
+        subtitle: foodLocationMatchEff.subtitle,
+      });
+      setPendingAfterFoodLocationMatch(effects.filter((e) => e.type !== "foodLocationMatch"));
       return;
     }
 
@@ -387,6 +484,54 @@ function finishReflectionSave(text: string) {
     if (!pendingAfterRoadTripMap) return;
     const rest = pendingAfterRoadTripMap;
     setPendingAfterRoadTripMap(null);
+    runEffects(rest);
+  }
+
+  function finishStargazing() {
+    setStargazingGate(null);
+    if (!pendingAfterStargazing) return;
+    const rest = pendingAfterStargazing;
+    setPendingAfterStargazing(null);
+    runEffects(rest);
+  }
+
+  function finishCanyonEcho() {
+    setCanyonEchoGate(null);
+    if (!pendingAfterCanyonEcho) return;
+    const rest = pendingAfterCanyonEcho;
+    setPendingAfterCanyonEcho(null);
+    runEffects(rest);
+  }
+
+  function finishTunnelView() {
+    setTunnelViewGate(null);
+    if (!pendingAfterTunnelView) return;
+    const rest = pendingAfterTunnelView;
+    setPendingAfterTunnelView(null);
+    runEffects(rest);
+  }
+
+  function finishTidePool() {
+    setTidePoolGate(null);
+    if (!pendingAfterTidePool) return;
+    const rest = pendingAfterTidePool;
+    setPendingAfterTidePool(null);
+    runEffects(rest);
+  }
+
+  function finishPastryStacker() {
+    setPastryStackerGate(null);
+    if (!pendingAfterPastryStacker) return;
+    const rest = pendingAfterPastryStacker;
+    setPendingAfterPastryStacker(null);
+    runEffects(rest);
+  }
+
+  function finishFoodLocationMatch() {
+    setFoodLocationMatchGate(null);
+    if (!pendingAfterFoodLocationMatch) return;
+    const rest = pendingAfterFoodLocationMatch;
+    setPendingAfterFoodLocationMatch(null);
     runEffects(rest);
   }
 
@@ -644,6 +789,55 @@ function finishReflectionSave(text: string) {
           toStop={roadTripMapGate.toStop}
           title={roadTripMapGate.title}
           onDone={finishRoadTripMap}
+        />
+      )}
+
+      {stargazingGate && (
+        <StargazingMemory
+          title={stargazingGate.title}
+          subtitle={stargazingGate.subtitle}
+          onDone={finishStargazing}
+        />
+      )}
+
+      {canyonEchoGate && (
+        <CanyonEcho
+          title={canyonEchoGate.title}
+          subtitle={canyonEchoGate.subtitle}
+          onDone={finishCanyonEcho}
+        />
+      )}
+
+      {tunnelViewGate && (
+        <TunnelViewReveal
+          imageSrc={tunnelViewGate.imageSrc}
+          title={tunnelViewGate.title}
+          subtitle={tunnelViewGate.subtitle}
+          onDone={finishTunnelView}
+        />
+      )}
+
+      {tidePoolGate && (
+        <TidePoolMatch
+          title={tidePoolGate.title}
+          subtitle={tidePoolGate.subtitle}
+          onDone={finishTidePool}
+        />
+      )}
+
+      {pastryStackerGate && (
+        <PastryStacker
+          title={pastryStackerGate.title}
+          subtitle={pastryStackerGate.subtitle}
+          onDone={finishPastryStacker}
+        />
+      )}
+
+      {foodLocationMatchGate && (
+        <FoodLocationMatch
+          title={foodLocationMatchGate.title}
+          subtitle={foodLocationMatchGate.subtitle}
+          onDone={finishFoodLocationMatch}
         />
       )}
 

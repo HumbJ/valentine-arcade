@@ -1,0 +1,239 @@
+/* Food Location Match game styles */
+
+.flm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.flm-wrap {
+  background: linear-gradient(180deg, #2d3436 0%, #1e272e 100%);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.flm-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.flm-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.flm-game {
+  margin-bottom: 1rem;
+}
+
+.flm-photos {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.flm-photo {
+  flex: 1;
+  aspect-ratio: 1;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.flm-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flm-photo:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.flm-photo.selected {
+  border-color: #ffd700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.flm-photo.matched {
+  border-color: #32cd32;
+  cursor: default;
+}
+
+.flm-photo.wrong {
+  border-color: #ff6347;
+  animation: flm-shake 0.3s ease;
+}
+
+@keyframes flm-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.flm-photo-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(50, 205, 50, 0.9);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem;
+  text-align: center;
+}
+
+.flm-locations {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.flm-locations-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.flm-location {
+  position: relative;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.flm-location:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.flm-location.matched {
+  background: rgba(50, 205, 50, 0.3);
+  border-color: #32cd32;
+  cursor: default;
+}
+
+.flm-location.wrong {
+  background: rgba(255, 99, 71, 0.3);
+  border-color: #ff6347;
+  animation: flm-shake 0.3s ease;
+}
+
+.flm-check {
+  position: absolute;
+  right: 1rem;
+  color: #32cd32;
+  font-weight: 700;
+}
+
+.flm-progress {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.flm-hint {
+  text-align: center;
+  color: #ffd700;
+  font-size: 0.875rem;
+  animation: flm-pulse 1s ease-in-out infinite;
+}
+
+@keyframes flm-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.flm-complete {
+  text-align: center;
+  animation: flm-fadeIn 0.5s ease-out;
+  margin-top: 1rem;
+}
+
+@keyframes flm-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flm-complete-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.flm-btn {
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+}
+
+.flm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.5);
+}
+
+/* Video reward screen */
+.flm-video-wrap {
+  background: #000;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.flm-video-title {
+  font-size: 1.25rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.flm-video {
+  width: 100%;
+  max-height: 300px;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}

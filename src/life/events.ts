@@ -3,6 +3,7 @@ import { getMemorySrc } from "./memories"; // add at top of events.ts
 
 
 const earsSrc = getMemorySrc("disneyland", "ears-together") ?? "";
+const yosemiteTunnelSrc = getMemorySrc("roadtrip_yosemite", "06") ?? "";
 
 export const SEATTLE_1_EVENT: LifeEvent = {
   id: "seattle_1",
@@ -486,7 +487,7 @@ export const YOSEMITE_ARRIVAL: LifeEvent = {
       id: "reveal",
       label: "Take in the view →",
       effects: [
-        { type: "tunnelViewReveal", imageSrc: "", title: "Tunnel View", subtitle: "Wipe away the fog to reveal the magic" },
+        { type: "tunnelViewReveal", imageSrc: yosemiteTunnelSrc, title: "Tunnel View", subtitle: "Wipe away the fog to reveal the magic" },
         { type: "goto", eventId: "yosemite_memories" },
       ],
     },
