@@ -464,6 +464,82 @@ html, body {
   color: var(--muted);
   font-weight: 600;
 }
+
+/* Memory Burst Enhancements */
+.mem-frame {
+  position: relative;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.mem-frame-transitioning {
+  opacity: 0.3;
+  transition: opacity 150ms ease-out;
+}
+
+.mem-photo {
+  animation: memPhotoZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes memPhotoZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+.mem-nav-hint {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.mem-nav-left {
+  left: 20px;
+}
+
+.mem-nav-right {
+  right: 20px;
+}
+
+.mem-frame:hover .mem-nav-hint {
+  opacity: 0.6;
+}
+
+.mem-progress-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.mem-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 143, 177, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.mem-dot:hover {
+  background: rgba(255, 143, 177, 0.5);
+  transform: scale(1.2);
+}
+
+.mem-dot.active {
+  background: var(--pink);
+  width: 24px;
+  border-radius: 4px;
+}
+
 .jg-overlay {
   position: fixed;
   inset: 0;

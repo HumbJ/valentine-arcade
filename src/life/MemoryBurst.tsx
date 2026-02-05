@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { MEMORIES, type MemoryItem } from "./memories";
 
 function shuffle<T>(arr: T[]) {
@@ -52,6 +52,9 @@ export function MemoryBurst({
   }, [deck, pick]);
 
   const [idx, setIdx] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   const current: MemoryItem | undefined = items[idx];
 
@@ -59,12 +62,64 @@ export function MemoryBurst({
   const canNext = idx < items.length - 1;
 
   function next() {
-    if (canNext) setIdx((i) => i + 1);
+    if (canNext && !isTransitioning) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setIdx((i) => i + 1);
+        setIsTransitioning(false);
+      }, 150);
+    }
   }
 
   function back() {
-    if (canBack) setIdx((i) => i - 1);
+    if (canBack && !isTransitioning) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setIdx((i) => i - 1);
+        setIsTransitioning(false);
+      }, 150);
+    }
   }
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") back();
+      else if (e.key === "ArrowRight") next();
+      else if (e.key === "Escape") onDone();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [idx, items.length]);
+
+  // Touch/swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    const threshold = 50;
+
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0) next(); // Swipe left -> next
+      else back(); // Swipe right -> back
+    }
+  };
+
+  // Click on left/right sides of photo
+  const handleFrameClick = (e: React.MouseEvent) => {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const width = rect.width;
+
+    if (x < width / 3) back();
+    else if (x > (2 * width) / 3) next();
+  };
 
   // If deck is empty (or wrong key), just close gracefully
   if (!current) {
@@ -89,9 +144,16 @@ export function MemoryBurst({
         <div className="mem-title">{titleForDeck(deck)}
 </div>
 
-        <div className="mem-frame">
+        <div
+          className={`mem-frame ${isTransitioning ? "mem-frame-transitioning" : ""}`}
+          onClick={handleFrameClick}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          style={{ cursor: "pointer" }}
+        >
           {current.type === "photo" ? (
-            <img src={current.src} alt={current.caption ?? current.id} />
+            <img src={current.src} alt={current.caption ?? current.id} className="mem-photo" />
           ) : (
             <video
               src={current.src}
@@ -101,9 +163,44 @@ export function MemoryBurst({
               muted={current.muted ?? true}
               controls
               preload="metadata"
+              onClick={(e) => e.stopPropagation()}
             />
           )}
+
+          {/* Navigation hints */}
+          {canBack && (
+            <div className="mem-nav-hint mem-nav-left">
+              <span>←</span>
+            </div>
+          )}
+          {canNext && (
+            <div className="mem-nav-hint mem-nav-right">
+              <span>→</span>
+            </div>
+          )}
         </div>
+
+        {/* Progress dots */}
+        {items.length > 1 && (
+          <div className="mem-progress-dots">
+            {items.map((_, i) => (
+              <button
+                key={i}
+                className={`mem-dot ${i === idx ? "active" : ""}`}
+                onClick={() => {
+                  if (!isTransitioning) {
+                    setIsTransitioning(true);
+                    setTimeout(() => {
+                      setIdx(i);
+                      setIsTransitioning(false);
+                    }, 150);
+                  }
+                }}
+                aria-label={`Go to photo ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
 
         {current.caption ? <div className="mem-caption">{current.caption}</div> : null}
 
