@@ -52,7 +52,6 @@ export function MemoryBurst({
   }, [deck, pick]);
 
   const [idx, setIdx] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
@@ -62,22 +61,14 @@ export function MemoryBurst({
   const canNext = idx < items.length - 1;
 
   function next() {
-    if (canNext && !isTransitioning) {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setIdx((i) => i + 1);
-        setIsTransitioning(false);
-      }, 150);
+    if (canNext) {
+      setIdx((i) => i + 1);
     }
   }
 
   function back() {
-    if (canBack && !isTransitioning) {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setIdx((i) => i - 1);
-        setIsTransitioning(false);
-      }, 150);
+    if (canBack) {
+      setIdx((i) => i - 1);
     }
   }
 
@@ -145,7 +136,7 @@ export function MemoryBurst({
 </div>
 
         <div
-          className={`mem-frame ${isTransitioning ? "mem-frame-transitioning" : ""}`}
+          className="mem-frame"
           onClick={handleFrameClick}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -187,15 +178,7 @@ export function MemoryBurst({
               <button
                 key={i}
                 className={`mem-dot ${i === idx ? "active" : ""}`}
-                onClick={() => {
-                  if (!isTransitioning) {
-                    setIsTransitioning(true);
-                    setTimeout(() => {
-                      setIdx(i);
-                      setIsTransitioning(false);
-                    }, 150);
-                  }
-                }}
+                onClick={() => setIdx(i)}
                 aria-label={`Go to photo ${i + 1}`}
               />
             ))}

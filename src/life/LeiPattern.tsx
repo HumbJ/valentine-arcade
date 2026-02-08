@@ -62,19 +62,26 @@ export function LeiPattern({
   useEffect(() => {
     if (phase === "showing") {
       if (showingIndex < pattern.length) {
-        setHighlightedFlower(pattern[showingIndex].id);
+        // Add initial delay for the first flower
+        const initialDelay = showingIndex === 0 ? 500 : 0;
 
-        const timer = setTimeout(() => {
-          setHighlightedFlower(null);
+        const startTimer = setTimeout(() => {
+          setHighlightedFlower(pattern[showingIndex].id);
 
-          const nextTimer = setTimeout(() => {
-            setShowingIndex(showingIndex + 1);
-          }, 300);
+          const timer = setTimeout(() => {
+            setHighlightedFlower(null);
 
-          return () => clearTimeout(nextTimer);
-        }, 700);
+            const nextTimer = setTimeout(() => {
+              setShowingIndex(showingIndex + 1);
+            }, 300);
 
-        return () => clearTimeout(timer);
+            return () => clearTimeout(nextTimer);
+          }, 700);
+
+          return () => clearTimeout(timer);
+        }, initialDelay);
+
+        return () => clearTimeout(startTimer);
       } else {
         setTimeout(() => {
           setPhase("playing");
@@ -190,9 +197,14 @@ export function LeiPattern({
                   <button
                     key={flower.id}
                     className={`lp-flower-btn ${highlightedFlower === flower.id ? "highlighted" : ""}`}
-                    style={{
-                      backgroundColor: highlightedFlower === flower.id ? flower.color : undefined,
-                    }}
+                    style={
+                      highlightedFlower === flower.id
+                        ? {
+                            backgroundColor: flower.color,
+                            borderColor: flower.color,
+                          }
+                        : {}
+                    }
                     onClick={() => handleFlowerClick(flower)}
                     disabled={phase !== "playing"}
                   >

@@ -140,7 +140,7 @@
   border-radius: 1rem;
   padding: 1rem 0.75rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease-out;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -163,17 +163,23 @@
 }
 
 .lp-flower-btn.highlighted {
-  border-color: #fff;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 6px 20px rgba(136, 14, 79, 0.6);
+  border-width: 4px;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.9),
+              0 0 50px currentColor,
+              0 6px 20px rgba(136, 14, 79, 0.6);
   animation: lpHighlight 0.3s ease-out;
+  transform: scale(1.05);
 }
 
 @keyframes lpHighlight {
-  0%, 100% {
-    transform: scale(1);
+  0% {
+    transform: scale(1.05);
   }
   50% {
-    transform: scale(1.15);
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.05);
   }
 }
 

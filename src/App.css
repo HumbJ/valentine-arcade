@@ -549,11 +549,6 @@ html, body {
   touch-action: pan-y;
 }
 
-.mem-frame-transitioning {
-  opacity: 0.3;
-  transition: opacity 150ms ease-out;
-}
-
 .mem-photo {
   animation: memPhotoZoom 20s ease-in-out infinite alternate;
 }
