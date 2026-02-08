@@ -50,53 +50,58 @@ export function OceanSpotting({
 
   // Spawn a new creature
   const spawnCreature = useCallback(() => {
-    if (creaturesSpawned >= TOTAL_CREATURES) {
-      // Game complete after all creatures have appeared
-      setTimeout(() => {
-        setPhase("complete");
-      }, 2000);
-      return;
-    }
+    setCreaturesSpawned((currentSpawned) => {
+      if (currentSpawned >= TOTAL_CREATURES) {
+        // Game complete after all creatures have appeared
+        setTimeout(() => {
+          setPhase("complete");
+        }, 2000);
+        return currentSpawned;
+      }
 
-    const creatureType = CREATURE_TYPES[Math.floor(Math.random() * CREATURE_TYPES.length)];
-    const availableSpots = Array.from({ length: TOTAL_SPOTS }, (_, i) => i).filter(
-      (spot) => !creatures.some((c) => c.visible && c.spot === spot)
-    );
+      setCreatures((currentCreatures) => {
+        const creatureType = CREATURE_TYPES[Math.floor(Math.random() * CREATURE_TYPES.length)];
+        const availableSpots = Array.from({ length: TOTAL_SPOTS }, (_, i) => i).filter(
+          (spot) => !currentCreatures.some((c) => c.visible && c.spot === spot)
+        );
 
-    if (availableSpots.length === 0) {
-      // Try again in a moment if no spots available
-      spawnTimerRef.current = setTimeout(spawnCreature, 300);
-      return;
-    }
+        if (availableSpots.length === 0) {
+          // Try again in a moment if no spots available
+          spawnTimerRef.current = setTimeout(spawnCreature, 300);
+          return currentCreatures;
+        }
 
-    const spot = availableSpots[Math.floor(Math.random() * availableSpots.length)];
-    const creatureId = nextCreatureId.current++;
+        const spot = availableSpots[Math.floor(Math.random() * availableSpots.length)];
+        const creatureId = nextCreatureId.current++;
 
-    const newCreature: Creature = {
-      id: creatureId,
-      type: creatureType.type,
-      emoji: creatureType.emoji,
-      spot,
-      visible: true,
-      caught: false,
-    };
+        const newCreature: Creature = {
+          id: creatureId,
+          type: creatureType.type,
+          emoji: creatureType.emoji,
+          spot,
+          visible: true,
+          caught: false,
+        };
 
-    setCreatures((prev) => [...prev.filter((c) => c.visible || c.caught), newCreature]);
-    setCreaturesSpawned((prev) => prev + 1);
+        // Hide after duration
+        const hideTimer = setTimeout(() => {
+          setCreatures((prev) =>
+            prev.map((c) => (c.id === creatureId ? { ...c, visible: false } : c))
+          );
+        }, creatureType.duration);
 
-    // Hide after duration
-    const hideTimer = setTimeout(() => {
-      setCreatures((prev) =>
-        prev.map((c) => (c.id === creatureId ? { ...c, visible: false } : c))
-      );
-    }, creatureType.duration);
+        hideTimersRef.current.set(creatureId, hideTimer);
 
-    hideTimersRef.current.set(creatureId, hideTimer);
+        // Spawn next creature
+        const nextDelay = 800 + Math.random() * 1200; // 800-2000ms
+        spawnTimerRef.current = setTimeout(spawnCreature, nextDelay);
 
-    // Spawn next creature
-    const nextDelay = 800 + Math.random() * 1200; // 800-2000ms
-    spawnTimerRef.current = setTimeout(spawnCreature, nextDelay);
-  }, [creatures, creaturesSpawned]);
+        return [...currentCreatures.filter((c) => c.visible || c.caught), newCreature];
+      });
+
+      return currentSpawned + 1;
+    });
+  }, []);
 
   // Handle catching a creature
   const catchCreature = useCallback((creatureId: number) => {
