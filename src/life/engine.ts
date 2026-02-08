@@ -54,6 +54,17 @@ if (
     next.currentEventId = eff.eventId;
     continue;
   }
+
+  if (eff.type === "gotoHome") {
+    next.currentEventId = "hub";
+    if (eff.markComplete) {
+      next.completedEvents = Array.isArray(next.completedEvents) ? next.completedEvents : [];
+      if (!next.completedEvents.includes(eff.markComplete)) {
+        next.completedEvents = [...next.completedEvents, eff.markComplete];
+      }
+    }
+    continue;
+  }
 }
 
   return next;

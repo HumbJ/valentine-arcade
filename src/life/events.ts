@@ -146,7 +146,7 @@ export const SEATTLE_1_REFLECTION_PROMPT: LifeEvent = {
       "Seattle Trip I: our first big adventure — exploring the world and learning how easy it can feel to be together.",
   },
 
-  { type: "goto", eventId: "end_demo" }, // later you can change to post_seattle
+  { type: "gotoHome", markComplete: "seattle1" },
 ],
 
     },
@@ -1616,7 +1616,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
     { type: "stat", key: "love", delta: 10 },
     { type: "stat", key: "happiness", delta: 12 },
     { type: "log", text: "Disneyland: pure magic together." },
-    { type: "goto", eventId: "end_demo" },
+    { type: "gotoHome", markComplete: "disneyland" },
   ],
 },
     {
