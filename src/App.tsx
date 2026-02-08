@@ -4,6 +4,7 @@ import { HomePage } from "./pages/HomePage";
 import { LifePage } from "./pages/LifePage";
 import { ArcadePage } from "./pages/ArcadePage";
 import { MapPage } from "./pages/MapPage";
+import { MiniGamesPage } from "./pages/MiniGamesPage";
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
@@ -11,7 +12,7 @@ import type { ReactNode } from "react";
 function BottomNav() {
   const loc = useLocation();
   const onHome = loc.pathname === "/";
-  const onStory = loc.pathname.startsWith("/story");
+  const onGames = loc.pathname.startsWith("/mini-games");
   const onMap = loc.pathname.startsWith("/map");
 
   return (
@@ -19,8 +20,8 @@ function BottomNav() {
       <Link className={`tab ${onHome ? "active" : ""}`} to="/">
         🏠 Home
       </Link>
-      <Link className={`tab ${onStory ? "active" : ""}`} to="/story">
-        💗 Story
+      <Link className={`tab ${onGames ? "active" : ""}`} to="/mini-games">
+        🎮 Mini-Games
       </Link>
       <Link className={`tab ${onMap ? "active" : ""}`} to="/map">
         🗺️ Map
@@ -49,6 +50,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/story" element={<LifePage />} />
+          <Route path="/mini-games" element={<MiniGamesPage />} />
           <Route path="/arcade" element={<ArcadePage />} />
           <Route path="/map" element={<MapPage />} />
           {/* Placeholder routes for hub zones - can be expanded later */}

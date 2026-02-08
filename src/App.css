@@ -1001,6 +1001,66 @@ html, body {
   line-height: 1.5;
 }
 
+/* Mini-Games grid */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.game-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 143, 177, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.game-card.locked {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.game-card:not(.locked) {
+  cursor: pointer;
+}
+
+.game-card:not(.locked):hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 143, 177, 0.5);
+  box-shadow: 0 4px 12px rgba(255, 143, 177, 0.2);
+}
+
+.game-emoji {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.game-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3a2a31;
+  margin-bottom: 4px;
+}
+
+.game-description {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.game-status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 143, 177, 0.2);
+}
+
 /* Rewards overlay (manual close, intentional pacing) */
 .reward-card {
   text-align: left;
