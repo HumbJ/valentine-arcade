@@ -111,6 +111,23 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
 
   const event = useMemo(() => getEventById(save.currentEventId), [save.currentEventId]);
 
+  // Filter out completed trips from vacation_tease menu
+  const filteredEvent = useMemo(() => {
+    if (!event || event.id !== "vacation_tease") return event;
+
+    const completedTrips = save.completedEvents || [];
+    const tripChoiceIds = ["disneyland", "seattle1", "roadtrip", "hawaii"];
+
+    const filteredChoices = event.choices.filter(
+      (choice) => !tripChoiceIds.includes(choice.id) || !completedTrips.includes(choice.id)
+    );
+
+    return {
+      ...event,
+      choices: filteredChoices,
+    };
+  }, [event, save.completedEvents]);
+
   function showRewardsFromEffects(effects: Effect[]) {
     const shouldShow = effects.some(
       (e) => e.type === "unlockPlace" || (e.type === "stat" && e.key === "memories")
@@ -497,7 +514,7 @@ if (reviewEff) {
 
 
   function choose(choiceId: string) {
-    const ev: any = event;
+    const ev: any = filteredEvent;
     const choice = ev?.choices?.find((c: any) => c.id === choiceId);
     if (!choice) return;
 
@@ -740,7 +757,7 @@ function finishReflectionSave(text: string) {
   runEffects(rest);
 }
 
-  const ev: any = event;
+  const ev: any = filteredEvent;
   const [journalOpen, setJournalOpen] = useState(false);
 
   // Generate particles for background
