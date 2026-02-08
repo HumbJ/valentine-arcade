@@ -26,6 +26,10 @@ import { SpotTheClues } from "../life/SpotTheClues";
 import { PerfectMoment } from "../life/PerfectMoment";
 import { GiggleGauge } from "../life/GiggleGauge";
 import { EpicEscape } from "../life/EpicEscape";
+import { OceanSpotting } from "../life/OceanSpotting";
+import { IslandDrive } from "../life/IslandDrive";
+import { ShellMerge } from "../life/ShellMerge";
+import { LeiPattern } from "../life/LeiPattern";
 
 
 
@@ -94,6 +98,16 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
   const [pendingAfterGiggleGauge, setPendingAfterGiggleGauge] = useState<Effect[] | null>(null);
   const [epicEscapeGate, setEpicEscapeGate] = useState<null | { title?: string; subtitle?: string }>(null);
   const [pendingAfterEpicEscape, setPendingAfterEpicEscape] = useState<Effect[] | null>(null);
+
+  // Hawaii trip mini-game states
+  const [oceanSpottingGate, setOceanSpottingGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterOceanSpotting, setPendingAfterOceanSpotting] = useState<Effect[] | null>(null);
+  const [islandDriveGate, setIslandDriveGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterIslandDrive, setPendingAfterIslandDrive] = useState<Effect[] | null>(null);
+  const [shellMergeGate, setShellMergeGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterShellMerge, setPendingAfterShellMerge] = useState<Effect[] | null>(null);
+  const [leiPatternGate, setLeiPatternGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterLeiPattern, setPendingAfterLeiPattern] = useState<Effect[] | null>(null);
 
   const event = useMemo(() => getEventById(save.currentEventId), [save.currentEventId]);
 
@@ -325,6 +339,58 @@ if (picnicEff && picnicEff.type === "picnicDate") {
         subtitle: epicEscapeEff.subtitle,
       });
       setPendingAfterEpicEscape(effects.filter((e) => e.type !== "epicEscape"));
+      return;
+    }
+
+    // 2.17) Ocean spotting gate (Hawaii boating)
+    const oceanSpottingEff = effects.find(
+      (e): e is Extract<Effect, { type: "oceanSpotting" }> => e.type === "oceanSpotting"
+    );
+    if (oceanSpottingEff) {
+      setOceanSpottingGate({
+        title: oceanSpottingEff.title,
+        subtitle: oceanSpottingEff.subtitle,
+      });
+      setPendingAfterOceanSpotting(effects.filter((e) => e.type !== "oceanSpotting"));
+      return;
+    }
+
+    // 2.18) Island drive gate (Hawaii explore)
+    const islandDriveEff = effects.find(
+      (e): e is Extract<Effect, { type: "islandDrive" }> => e.type === "islandDrive"
+    );
+    if (islandDriveEff) {
+      setIslandDriveGate({
+        title: islandDriveEff.title,
+        subtitle: islandDriveEff.subtitle,
+      });
+      setPendingAfterIslandDrive(effects.filter((e) => e.type !== "islandDrive"));
+      return;
+    }
+
+    // 2.19) Shell merge gate (Hawaii beach)
+    const shellMergeEff = effects.find(
+      (e): e is Extract<Effect, { type: "shellMerge" }> => e.type === "shellMerge"
+    );
+    if (shellMergeEff) {
+      setShellMergeGate({
+        title: shellMergeEff.title,
+        subtitle: shellMergeEff.subtitle,
+      });
+      setPendingAfterShellMerge(effects.filter((e) => e.type !== "shellMerge"));
+      return;
+    }
+
+    // 2.20) Lei pattern gate (Hawaii luau)
+    const leiPatternEff = effects.find(
+      (e): e is Extract<Effect, { type: "leiPattern" }> => e.type === "leiPattern"
+    );
+    if (leiPatternEff) {
+      setLeiPatternGate({
+        title: leiPatternEff.title,
+        subtitle: leiPatternEff.subtitle,
+      });
+      setPendingAfterLeiPattern(effects.filter((e) => e.type !== "leiPattern"));
       return;
     }
 
@@ -630,6 +696,38 @@ function finishReflectionSave(text: string) {
     if (!pendingAfterEpicEscape) return;
     const rest = pendingAfterEpicEscape;
     setPendingAfterEpicEscape(null);
+    runEffects(rest);
+  }
+
+  function finishOceanSpotting() {
+    setOceanSpottingGate(null);
+    if (!pendingAfterOceanSpotting) return;
+    const rest = pendingAfterOceanSpotting;
+    setPendingAfterOceanSpotting(null);
+    runEffects(rest);
+  }
+
+  function finishIslandDrive() {
+    setIslandDriveGate(null);
+    if (!pendingAfterIslandDrive) return;
+    const rest = pendingAfterIslandDrive;
+    setPendingAfterIslandDrive(null);
+    runEffects(rest);
+  }
+
+  function finishShellMerge() {
+    setShellMergeGate(null);
+    if (!pendingAfterShellMerge) return;
+    const rest = pendingAfterShellMerge;
+    setPendingAfterShellMerge(null);
+    runEffects(rest);
+  }
+
+  function finishLeiPattern() {
+    setLeiPatternGate(null);
+    if (!pendingAfterLeiPattern) return;
+    const rest = pendingAfterLeiPattern;
+    setPendingAfterLeiPattern(null);
     runEffects(rest);
   }
 
@@ -968,6 +1066,38 @@ function finishReflectionSave(text: string) {
           title={epicEscapeGate.title}
           subtitle={epicEscapeGate.subtitle}
           onDone={finishEpicEscape}
+        />
+      )}
+
+      {oceanSpottingGate && (
+        <OceanSpotting
+          title={oceanSpottingGate.title}
+          subtitle={oceanSpottingGate.subtitle}
+          onDone={finishOceanSpotting}
+        />
+      )}
+
+      {islandDriveGate && (
+        <IslandDrive
+          title={islandDriveGate.title}
+          subtitle={islandDriveGate.subtitle}
+          onDone={finishIslandDrive}
+        />
+      )}
+
+      {shellMergeGate && (
+        <ShellMerge
+          title={shellMergeGate.title}
+          subtitle={shellMergeGate.subtitle}
+          onDone={finishShellMerge}
+        />
+      )}
+
+      {leiPatternGate && (
+        <LeiPattern
+          title={leiPatternGate.title}
+          subtitle={leiPatternGate.subtitle}
+          onDone={finishLeiPattern}
         />
       )}
 

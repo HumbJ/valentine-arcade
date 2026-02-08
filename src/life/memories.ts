@@ -153,6 +153,23 @@ MEMORIES["roadtrip_food"] = deckFromGlob(roadtripFood);
 
 // Individual on-the-road segments for specific transitions
 const allOnTheRoad = deckFromGlob(roadtripOnTheRoad);
+
+// --- Hawaii Trip decks --------------------------------------------------------
+const hawaiiArrival = import.meta.glob("../assets/photos/trips/hawaii/arrival/*", { eager: true });
+const hawaiiExplore = import.meta.glob("../assets/photos/trips/hawaii/explore/*", { eager: true });
+const hawaiiBoating = import.meta.glob("../assets/photos/trips/hawaii/boating/*", { eager: true });
+const hawaiiExplore2 = import.meta.glob("../assets/photos/trips/hawaii/explore2/*", { eager: true });
+const hawaiiBeach = import.meta.glob("../assets/photos/trips/hawaii/beach/*", { eager: true });
+const hawaiiLuau = import.meta.glob("../assets/photos/trips/hawaii/luau/*", { eager: true });
+const hawaiiReflection = import.meta.glob("../assets/photos/trips/hawaii/reflection/*", { eager: true });
+
+MEMORIES["hawaii_arrival"] = deckFromGlob(hawaiiArrival);
+MEMORIES["hawaii_explore"] = deckFromGlob(hawaiiExplore);
+MEMORIES["hawaii_boating"] = deckFromGlob(hawaiiBoating);
+MEMORIES["hawaii_explore2"] = deckFromGlob(hawaiiExplore2);
+MEMORIES["hawaii_beach"] = deckFromGlob(hawaiiBeach);
+MEMORIES["hawaii_luau"] = deckFromGlob(hawaiiLuau);
+MEMORIES["hawaii_reflection"] = deckFromGlob(hawaiiReflection);
 MEMORIES["roadtrip_ontheroad_01"] = allOnTheRoad.filter(m => m.id.includes("01")); // SD -> Joshua Tree
 MEMORIES["roadtrip_ontheroad_02"] = allOnTheRoad.filter(m => m.id.includes("02")); // Joshua Tree -> Sequoia
 MEMORIES["roadtrip_ontheroad_03"] = allOnTheRoad.filter(m => m.id.includes("03")); // Sequoia -> Kings Canyon

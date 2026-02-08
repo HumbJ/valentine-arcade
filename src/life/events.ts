@@ -786,6 +786,187 @@ export const ROAD_TRIP_FINALE: LifeEvent = {
   ],
 };
 
+// =============================================================================
+// HAWAII TRIP EVENTS
+// =============================================================================
+
+export const HAWAII_TRIP_START: LifeEvent = {
+  id: "hawaii_trip_start",
+  title: "Hawaii Trip 🌺",
+  text: "Island time. Ocean air. That feeling when you land somewhere completely different and know a week of magic is ahead.",
+  choices: [
+    {
+      id: "begin",
+      label: "Lei's go! ✈️",
+      effects: [
+        { type: "log", text: "Hawaii trip begins! Aloha awaits." },
+        { type: "goto", eventId: "hawaii_arrival" },
+      ],
+    },
+  ],
+};
+
+export const HAWAII_ARRIVAL: LifeEvent = {
+  id: "hawaii_arrival",
+  title: "Arrival",
+  text: "Warm breeze, flower leis, and that instant switch to island pace. We're here.",
+  choices: [
+    {
+      id: "continue",
+      label: "Breathe it in →",
+      effects: [
+        { type: "burst", deck: "hawaii_arrival" },
+        {
+          type: "reflectionPrompt",
+          id: "hawaii_arrival",
+          arc: "hawaii",
+          title: "Just Landed",
+          subtitle: "That first moment",
+          prompt: "What did it feel like when we first arrived in Hawaii?",
+        },
+        { type: "goto", eventId: "hawaii_explore" },
+      ],
+    },
+  ],
+};
+
+export const HAWAII_EXPLORE: LifeEvent = {
+  id: "hawaii_explore",
+  title: "Exploring",
+  text: "Driving around the island, windows down, every turn revealing something new. Mountains, beaches, hidden waterfalls.",
+  choices: [
+    {
+      id: "continue",
+      label: "Keep exploring →",
+      effects: [
+        {
+          type: "islandDrive",
+          title: "Island Drive",
+          subtitle: "Remember the route around the island!",
+        },
+        { type: "burst", deck: "hawaii_explore" },
+        { type: "goto", eventId: "hawaii_boating" },
+      ],
+    },
+  ],
+};
+
+export const HAWAII_BOATING: LifeEvent = {
+  id: "hawaii_boating",
+  title: "On the Water",
+  text: "Out on the ocean, the island shrinking behind us. Dolphins leap, turtles surface, and the water is so clear it feels unreal.",
+  choices: [
+    {
+      id: "continue",
+      label: "Watch the ocean →",
+      effects: [
+        {
+          type: "oceanSpotting",
+          title: "Ocean Spotting",
+          subtitle: "Spot the sea creatures before they swim away!",
+        },
+        { type: "burst", deck: "hawaii_boating" },
+        { type: "goto", eventId: "hawaii_explore2" },
+      ],
+    },
+  ],
+};
+
+export const HAWAII_EXPLORE2: LifeEvent = {
+  id: "hawaii_explore2",
+  title: "More Adventures",
+  text: "Waterfalls, hikes, shave ice, and that perfect kind of tired that comes from doing everything. The days blur together in the best way.",
+  choices: [
+    {
+      id: "continue",
+      label: "Keep going →",
+      effects: [
+        { type: "burst", deck: "hawaii_explore2" },
+        {
+          type: "reflectionPrompt",
+          id: "hawaii_midpoint",
+          arc: "hawaii",
+          title: "Halfway Through",
+          subtitle: "Pausing for a moment",
+          prompt: "What's been your favorite part of the trip so far?",
+        },
+        { type: "goto", eventId: "hawaii_beach" },
+      ],
+    },
+  ],
+};
+
+export const HAWAII_BEACH: LifeEvent = {
+  id: "hawaii_beach",
+  title: "Beach Day",
+  text: "Golden sand, warm water, and nowhere to be. We collect shells, watch the waves, and let time disappear.",
+  choices: [
+    {
+      id: "continue",
+      label: "Walk the shore →",
+      effects: [
+        {
+          type: "shellMerge",
+          title: "Shell Merge",
+          subtitle: "Collect and merge shells from the beach!",
+        },
+        { type: "burst", deck: "hawaii_beach" },
+        { type: "goto", eventId: "hawaii_luau" },
+      ],
+    },
+  ],
+};
+
+export const HAWAII_LUAU: LifeEvent = {
+  id: "hawaii_luau",
+  title: "Luau Night",
+  text: "Fire dancers, flower leis, and food that tastes like the island itself. The night air is perfect, and everything feels a little bit magical.",
+  choices: [
+    {
+      id: "continue",
+      label: "Make a lei →",
+      effects: [
+        {
+          type: "leiPattern",
+          title: "Lei Pattern",
+          subtitle: "Remember the flowers in the lei!",
+        },
+        { type: "burst", deck: "hawaii_luau" },
+        { type: "goto", eventId: "hawaii_reflection" },
+      ],
+    },
+  ],
+};
+
+export const HAWAII_REFLECTION: LifeEvent = {
+  id: "hawaii_reflection",
+  title: "Last Morning",
+  text: "The trip is ending, but the feeling stays. Some places change you.",
+  choices: [
+    {
+      id: "reflect",
+      label: "One last moment",
+      effects: [
+        { type: "burst", deck: "hawaii_reflection" },
+        {
+          type: "reflectionPrompt",
+          id: "hawaii_end",
+          arc: "hawaii",
+          title: "Aloha",
+          subtitle: "Before we leave",
+          prompt: "What will you carry home from Hawaii?",
+        },
+        { type: "stat", key: "love", delta: 12 },
+        { type: "stat", key: "happiness", delta: 14 },
+        { type: "stat", key: "memories", delta: 15 },
+        { type: "unlockPlace", placeId: "hawaii" },
+        { type: "log", text: "Hawaii: island magic, ocean dreams, and endless aloha." },
+        { type: "gotoHome", markComplete: "hawaii" },
+      ],
+    },
+  ],
+};
+
 // ============================================
 // RANDOM POP-UP MINI-EVENTS
 // ============================================
@@ -1393,6 +1574,14 @@ export const LIFE_EVENTS: LifeEvent[] = [
     { type: "goto", eventId: "road_trip_start" },
   ],
 },
+{
+  id: "hawaii",
+  label: "Hawaii 🌺 (beaches + ocean + aloha)",
+  effects: [
+    { type: "log", text: "We started dreaming of Hawaii… and suddenly we were packing our leis." },
+    { type: "goto", eventId: "hawaii_trip_start" },
+  ],
+},
       {
         id: "cozy",
         label: "Cozy cabin 🏔 (quiet + warm + slow mornings)",
@@ -1530,6 +1719,15 @@ SOLVANG_MEMORIES,
 SOLVANG_CLOSING,
 ROAD_TRIP_FOOD_GAME,
 ROAD_TRIP_FINALE,
+// Hawaii events
+HAWAII_TRIP_START,
+HAWAII_ARRIVAL,
+HAWAII_EXPLORE,
+HAWAII_BOATING,
+HAWAII_EXPLORE2,
+HAWAII_BEACH,
+HAWAII_LUAU,
+HAWAII_REFLECTION,
 // Random pop-up events
 RANDOM_MOVIE_NIGHT,
 MOVIE_MYSTERY,
