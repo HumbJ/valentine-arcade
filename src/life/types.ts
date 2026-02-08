@@ -86,6 +86,27 @@ export type Effect =
       type: "epicEscape";
       title?: string;
       subtitle?: string;
+    }
+  // Hawaii trip mini-game effects
+  | {
+      type: "oceanSpotting";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "islandDrive";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "shellMerge";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "leiPattern";
+      title?: string;
+      subtitle?: string;
     };
 
 

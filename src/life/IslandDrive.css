@@ -1,0 +1,318 @@
+/* Island Drive route memory game styles */
+
+.id-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(120, 85, 60, 0.92) 0%, rgba(80, 50, 30, 0.92) 100%);
+}
+
+.id-wrap {
+  position: relative;
+  background: linear-gradient(180deg, #8bc34a 0%, #689f38 50%, #558b2f 100%);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 450px;
+  width: 100%;
+  min-height: 560px;
+  box-shadow: 0 20px 60px rgba(85, 139, 47, 0.6);
+  overflow: hidden;
+  border: 3px solid rgba(139, 195, 74, 0.5);
+}
+
+.id-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 510px;
+}
+
+.id-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 2px 12px rgba(51, 105, 30, 0.8);
+}
+
+.id-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Intro */
+.id-intro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.id-intro-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 340px;
+}
+
+/* Watching phase */
+.id-watching {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.id-round-info {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+.id-instruction {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 8px rgba(51, 105, 30, 0.6);
+}
+
+.id-route-display {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 380px;
+}
+
+.id-sign-display {
+  width: 80px;
+  height: 90px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  opacity: 0.3;
+  transform: scale(0.9);
+  transition: all 0.3s ease;
+}
+
+.id-sign-display.showing {
+  opacity: 1;
+  transform: scale(1);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  animation: idSignPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.id-sign-display.shown {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+@keyframes idSignPop {
+  0% {
+    transform: scale(0.7);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Playing phase */
+.id-playing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding-top: 1rem;
+}
+
+.id-player-route {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  min-height: 50px;
+  align-items: center;
+}
+
+.id-player-sign {
+  font-size: 2rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 0.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  animation: idPlayerSignAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes idPlayerSignAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.id-sign-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 360px;
+  margin-bottom: 1rem;
+}
+
+.id-sign-btn {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0.75rem;
+  padding: 0.75rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.id-sign-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.3));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(51, 105, 30, 0.4);
+}
+
+.id-sign-btn:active {
+  transform: scale(0.95);
+}
+
+.id-sign-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 6px rgba(51, 105, 30, 0.4));
+}
+
+.id-sign-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(51, 105, 30, 0.6);
+}
+
+.id-feedback {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  animation: idFeedbackPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.id-feedback.correct {
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.8);
+}
+
+.id-feedback.wrong {
+  color: #ffeb3b;
+  text-shadow: 0 2px 12px rgba(255, 235, 59, 0.8);
+}
+
+@keyframes idFeedbackPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Result & Complete phases */
+.id-result,
+.id-complete {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.id-result-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+.id-final-score {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 3px 16px rgba(139, 195, 74, 0.8);
+}
+
+.id-complete-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  max-width: 320px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Buttons */
+.id-btn {
+  background: linear-gradient(135deg, #689f38, #558b2f);
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(85, 139, 47, 0.4);
+}
+
+.id-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(85, 139, 47, 0.5);
+}
+
+.id-btn.primary {
+  background: linear-gradient(135deg, #7cb342, #689f38);
+  box-shadow: 0 4px 15px rgba(124, 179, 66, 0.4);
+}
+
+.id-btn.primary:hover {
+  box-shadow: 0 6px 20px rgba(124, 179, 66, 0.5);
+}

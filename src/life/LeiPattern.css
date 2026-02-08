@@ -1,0 +1,282 @@
+/* Lei Pattern luau mini-game styles */
+
+.lp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(156, 39, 176, 0.92) 0%, rgba(123, 31, 162, 0.92) 100%);
+}
+
+.lp-wrap {
+  position: relative;
+  background: linear-gradient(180deg, #f06292 0%, #ec407a 50%, #e91e63 100%);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  min-height: 580px;
+  box-shadow: 0 20px 60px rgba(233, 30, 99, 0.6);
+  overflow: hidden;
+  border: 3px solid rgba(240, 98, 146, 0.6);
+}
+
+.lp-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 530px;
+}
+
+.lp-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 2px 12px rgba(136, 14, 79, 0.8);
+}
+
+.lp-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Intro */
+.lp-intro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.lp-intro-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 340px;
+}
+
+/* Game phase */
+.lp-game {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding-top: 0.5rem;
+}
+
+.lp-round-info {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+.lp-instruction {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 8px rgba(136, 14, 79, 0.6);
+}
+
+.lp-pattern-display {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  min-height: 50px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 320px;
+}
+
+.lp-pattern-flower {
+  font-size: 2rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  animation: lpFlowerAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 2px 8px rgba(136, 14, 79, 0.4));
+}
+
+@keyframes lpFlowerAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-20deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+.lp-flowers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 1rem;
+}
+
+.lp-flower-btn {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.3));
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-radius: 1rem;
+  padding: 1rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.lp-flower-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.4));
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(136, 14, 79, 0.4);
+}
+
+.lp-flower-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.lp-flower-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.lp-flower-btn.highlighted {
+  border-color: #fff;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 6px 20px rgba(136, 14, 79, 0.6);
+  animation: lpHighlight 0.3s ease-out;
+}
+
+@keyframes lpHighlight {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.lp-flower-emoji {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 3px 8px rgba(136, 14, 79, 0.4));
+}
+
+.lp-flower-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(136, 14, 79, 0.6);
+}
+
+.lp-feedback {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  animation: lpFeedbackPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lp-feedback.correct {
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.8);
+}
+
+.lp-feedback.wrong {
+  color: #ffeb3b;
+  text-shadow: 0 2px 12px rgba(255, 235, 59, 0.8);
+}
+
+@keyframes lpFeedbackPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Result & Complete phases */
+.lp-result,
+.lp-complete {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.lp-result-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+.lp-final-score {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 3px 16px rgba(240, 98, 146, 0.8);
+}
+
+.lp-complete-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  max-width: 320px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Buttons */
+.lp-btn {
+  background: linear-gradient(135deg, #ec407a, #d81b60);
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(216, 27, 96, 0.4);
+}
+
+.lp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(216, 27, 96, 0.5);
+}
+
+.lp-btn.primary {
+  background: linear-gradient(135deg, #f06292, #ec407a);
+  box-shadow: 0 4px 15px rgba(240, 98, 146, 0.4);
+}
+
+.lp-btn.primary:hover {
+  box-shadow: 0 6px 20px rgba(240, 98, 146, 0.5);
+}
