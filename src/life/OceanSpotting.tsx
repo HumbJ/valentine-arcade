@@ -20,7 +20,7 @@ const CREATURE_TYPES = [
 ];
 
 const TOTAL_SPOTS = 9;
-const TOTAL_CREATURES = 18;
+const GAME_DURATION = 30000; // 30 seconds
 
 export function OceanSpotting({
   title,
@@ -34,72 +34,63 @@ export function OceanSpotting({
   const [phase, setPhase] = useState<GamePhase>("intro");
   const [creatures, setCreatures] = useState<Creature[]>([]);
   const [score, setScore] = useState(0);
-  const [creaturesSpawned, setCreaturesSpawned] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState(GAME_DURATION);
   const nextCreatureId = useRef(0);
   const spawnTimerRef = useRef<NodeJS.Timeout | null>(null);
   const hideTimersRef = useRef<Map<number, NodeJS.Timeout>>(new Map());
+  const gameTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const gameStartTimeRef = useRef<number>(0);
 
   // Start the game
   const startGame = () => {
     setPhase("playing");
     setScore(0);
-    setCreaturesSpawned(0);
+    setTimeRemaining(GAME_DURATION);
     setCreatures([]);
     nextCreatureId.current = 0;
+    gameStartTimeRef.current = Date.now();
   };
 
   // Spawn a new creature
   const spawnCreature = useCallback(() => {
-    setCreaturesSpawned((currentSpawned) => {
-      if (currentSpawned >= TOTAL_CREATURES) {
-        // Game complete after all creatures have appeared
-        setTimeout(() => {
-          setPhase("complete");
-        }, 2000);
-        return currentSpawned;
+    setCreatures((currentCreatures) => {
+      const creatureType = CREATURE_TYPES[Math.floor(Math.random() * CREATURE_TYPES.length)];
+      const availableSpots = Array.from({ length: TOTAL_SPOTS }, (_, i) => i).filter(
+        (spot) => !currentCreatures.some((c) => c.visible && c.spot === spot)
+      );
+
+      if (availableSpots.length === 0) {
+        // Try again in a moment if no spots available
+        spawnTimerRef.current = setTimeout(spawnCreature, 300);
+        return currentCreatures;
       }
 
-      setCreatures((currentCreatures) => {
-        const creatureType = CREATURE_TYPES[Math.floor(Math.random() * CREATURE_TYPES.length)];
-        const availableSpots = Array.from({ length: TOTAL_SPOTS }, (_, i) => i).filter(
-          (spot) => !currentCreatures.some((c) => c.visible && c.spot === spot)
+      const spot = availableSpots[Math.floor(Math.random() * availableSpots.length)];
+      const creatureId = nextCreatureId.current++;
+
+      const newCreature: Creature = {
+        id: creatureId,
+        type: creatureType.type,
+        emoji: creatureType.emoji,
+        spot,
+        visible: true,
+        caught: false,
+      };
+
+      // Hide after duration
+      const hideTimer = setTimeout(() => {
+        setCreatures((prev) =>
+          prev.map((c) => (c.id === creatureId ? { ...c, visible: false } : c))
         );
+      }, creatureType.duration);
 
-        if (availableSpots.length === 0) {
-          // Try again in a moment if no spots available
-          spawnTimerRef.current = setTimeout(spawnCreature, 300);
-          return currentCreatures;
-        }
+      hideTimersRef.current.set(creatureId, hideTimer);
 
-        const spot = availableSpots[Math.floor(Math.random() * availableSpots.length)];
-        const creatureId = nextCreatureId.current++;
+      // Spawn next creature
+      const nextDelay = 800 + Math.random() * 1200; // 800-2000ms
+      spawnTimerRef.current = setTimeout(spawnCreature, nextDelay);
 
-        const newCreature: Creature = {
-          id: creatureId,
-          type: creatureType.type,
-          emoji: creatureType.emoji,
-          spot,
-          visible: true,
-          caught: false,
-        };
-
-        // Hide after duration
-        const hideTimer = setTimeout(() => {
-          setCreatures((prev) =>
-            prev.map((c) => (c.id === creatureId ? { ...c, visible: false } : c))
-          );
-        }, creatureType.duration);
-
-        hideTimersRef.current.set(creatureId, hideTimer);
-
-        // Spawn next creature
-        const nextDelay = 800 + Math.random() * 1200; // 800-2000ms
-        spawnTimerRef.current = setTimeout(spawnCreature, nextDelay);
-
-        return [...currentCreatures.filter((c) => c.visible || c.caught), newCreature];
-      });
-
-      return currentSpawned + 1;
+      return [...currentCreatures.filter((c) => c.visible || c.caught), newCreature];
     });
   }, []);
 
@@ -124,20 +115,34 @@ export function OceanSpotting({
     );
   }, []);
 
-  // Start spawning when game begins
+  // Start spawning and timer when game begins
   useEffect(() => {
-    if (phase === "playing" && creaturesSpawned === 0) {
+    if (phase === "playing") {
+      // Start spawning creatures
       spawnCreature();
-    }
 
-    return () => {
-      if (spawnTimerRef.current) {
-        clearTimeout(spawnTimerRef.current);
-      }
-      hideTimersRef.current.forEach((timer) => clearTimeout(timer));
-      hideTimersRef.current.clear();
-    };
-  }, [phase, spawnCreature, creaturesSpawned]);
+      // Update timer every 100ms
+      const timerInterval = setInterval(() => {
+        const elapsed = Date.now() - gameStartTimeRef.current;
+        const remaining = Math.max(0, GAME_DURATION - elapsed);
+        setTimeRemaining(remaining);
+
+        if (remaining <= 0) {
+          clearInterval(timerInterval);
+          setPhase("complete");
+        }
+      }, 100);
+
+      return () => {
+        clearInterval(timerInterval);
+        if (spawnTimerRef.current) {
+          clearTimeout(spawnTimerRef.current);
+        }
+        hideTimersRef.current.forEach((timer) => clearTimeout(timer));
+        hideTimersRef.current.clear();
+      };
+    }
+  }, [phase, spawnCreature]);
 
   return (
     <div className="os-overlay">
@@ -169,7 +174,8 @@ export function OceanSpotting({
 
           {phase === "playing" && (
             <div className="os-playing">
-              <div className="os-score">Spotted: {score} / {TOTAL_CREATURES}</div>
+              <div className="os-score">Spotted: {score}</div>
+              <div className="os-timer">Time: {Math.ceil(timeRemaining / 1000)}s</div>
 
               <div className="os-ocean">
                 {Array.from({ length: TOTAL_SPOTS }).map((_, spotIndex) => {
@@ -181,6 +187,7 @@ export function OceanSpotting({
                         <button
                           className={`os-creature ${creature.caught ? "caught" : ""}`}
                           onClick={() => catchCreature(creature.id)}
+                          disabled={creature.caught}
                         >
                           {creature.emoji}
                         </button>
@@ -189,24 +196,20 @@ export function OceanSpotting({
                   );
                 })}
               </div>
-
-              <div className="os-progress">
-                Creatures: {creaturesSpawned} / {TOTAL_CREATURES}
-              </div>
             </div>
           )}
 
           {phase === "complete" && (
             <div className="os-complete">
               <div className="os-final-score">
-                {score} / {TOTAL_CREATURES} spotted!
+                You spotted {score} creatures!
               </div>
               <div className="os-complete-text">
-                {score >= TOTAL_CREATURES - 2
-                  ? "Incredible! You spotted nearly everything! 🐋"
-                  : score >= TOTAL_CREATURES - 5
+                {score >= 20
+                  ? "Incredible! Your eyes are as sharp as a seabird's! 🐋"
+                  : score >= 15
                   ? "Great eye! The ocean shared its secrets with you. 🐬"
-                  : score >= TOTAL_CREATURES - 8
+                  : score >= 10
                   ? "Nice work! You caught glimpses of the magic. 🐢"
                   : "The ocean is fast, but we got to see some wonders! 🐟"}
               </div>
