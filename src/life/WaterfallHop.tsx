@@ -3,10 +3,11 @@ import "./WaterfallHop.css";
 
 type GamePhase = "intro" | "playing" | "complete";
 
-interface Rock {
+interface WaterStream {
   id: number;
   position: number; // 0-2 (left, center, right)
   distance: number; // vertical position (0-100%)
+  speed: number; // how fast this stream falls
 }
 
 export function WaterfallHop({
@@ -20,26 +21,27 @@ export function WaterfallHop({
 }) {
   const [phase, setPhase] = useState<GamePhase>("intro");
   const [playerPosition, setPlayerPosition] = useState(1); // 0=left, 1=center, 2=right
-  const [rocks, setRocks] = useState<Rock[]>([]);
+  const [waterStreams, setWaterStreams] = useState<WaterStream[]>([]);
   const [score, setScore] = useState(0);
   const [failed, setFailed] = useState(false);
 
   const gameLoopRef = useRef<number | null>(null);
   const lastSpawnRef = useRef(0);
-  const speedRef = useRef(1); // Rocks per second
-  const nextRockIdRef = useRef(0);
+  const nextStreamIdRef = useRef(0);
 
   const GAME_DURATION = 30000; // 30 seconds
   const startTimeRef = useRef(0);
   const [timeRemaining, setTimeRemaining] = useState(GAME_DURATION);
 
-  // Generate next rock position
-  const generateRock = useCallback((): Rock => {
+  // Generate next water stream position
+  const generateStream = useCallback((): WaterStream => {
     const position = Math.floor(Math.random() * 3); // 0, 1, or 2
+    const speed = 1.2 + Math.random() * 0.8; // 1.2-2.0 speed multiplier
     return {
-      id: nextRockIdRef.current++,
+      id: nextStreamIdRef.current++,
       position,
       distance: 0, // Start at top
+      speed,
     };
   }, []);
 
@@ -55,23 +57,17 @@ export function WaterfallHop({
   };
 
   // Check collisions
-  const checkCollision = useCallback((rockList: Rock[], playerPos: number) => {
-    const COLLISION_ZONE_START = 85; // When rock reaches 85% it enters landing zone
-    const COLLISION_ZONE_END = 95; // When rock reaches 95% it exits landing zone
+  const checkCollision = useCallback((streamList: WaterStream[], playerPos: number) => {
+    const PLAYER_ZONE_START = 85; // Player is at 85-100% of screen
+    const PLAYER_ZONE_END = 100;
 
-    for (const rock of rockList) {
-      // Check if player successfully caught a rock in the landing zone
-      if (rock.distance >= COLLISION_ZONE_START && rock.distance <= COLLISION_ZONE_END) {
-        if (rock.position === playerPos) {
-          // Success! Player landed on rock
-          return { success: true, rockId: rock.id };
+    for (const stream of streamList) {
+      // Check if water stream hits the player zone
+      if (stream.distance >= PLAYER_ZONE_START && stream.distance <= PLAYER_ZONE_END) {
+        if (stream.position === playerPos) {
+          // Hit by water!
+          return { hit: true, streamId: stream.id };
         }
-      }
-
-      // Check if a rock passed the landing zone without being caught (miss)
-      if (rock.distance > COLLISION_ZONE_END) {
-        // Any rock that passes the zone is a fail
-        return { success: false, rockId: rock.id };
       }
     }
     return null;
@@ -83,8 +79,7 @@ export function WaterfallHop({
 
     startTimeRef.current = Date.now();
     lastSpawnRef.current = 0;
-    nextRockIdRef.current = 0;
-    speedRef.current = 1;
+    nextStreamIdRef.current = 0;
 
     const loop = () => {
       const now = Date.now();
@@ -93,6 +88,9 @@ export function WaterfallHop({
 
       setTimeRemaining(remaining);
 
+      // Score = seconds survived
+      setScore(Math.floor(elapsed / 1000));
+
       if (remaining <= 0) {
         setPhase("complete");
         return;
@@ -100,36 +98,29 @@ export function WaterfallHop({
 
       // Increase difficulty over time
       const difficulty = Math.min(2.5, 1 + elapsed / 15000);
-      speedRef.current = difficulty;
 
-      // Spawn rocks
-      if (now - lastSpawnRef.current > 1000 / speedRef.current) {
-        setRocks((prev) => [...prev, generateRock()]);
+      // Spawn water streams (faster as game progresses)
+      if (now - lastSpawnRef.current > 800 / difficulty) {
+        setWaterStreams((prev) => [...prev, generateStream()]);
         lastSpawnRef.current = now;
       }
 
-      // Move rocks down and remove off-screen rocks
-      setRocks((prev) => {
+      // Move streams down and remove off-screen streams
+      setWaterStreams((prev) => {
         const updated = prev
-          .map((rock) => ({
-            ...rock,
-            distance: rock.distance + 0.8 * difficulty, // Speed increases with difficulty
+          .map((stream) => ({
+            ...stream,
+            distance: stream.distance + 1.2 * stream.speed * difficulty,
           }))
-          .filter((rock) => rock.distance < 110); // Remove rocks past bottom
+          .filter((stream) => stream.distance < 110); // Remove streams past bottom
 
         // Check collisions
         const collision = checkCollision(updated, playerPosition);
         if (collision) {
-          if (collision.success) {
-            setScore((s) => s + 1);
-          } else {
-            setFailed(true);
-            setTimeout(() => {
-              setPhase("complete");
-            }, 1000);
-          }
-          // Remove the rock that was jumped on/missed
-          return updated.filter((r) => r.id !== collision.rockId);
+          setFailed(true);
+          setTimeout(() => {
+            setPhase("complete");
+          }, 1000);
         }
 
         return updated;
@@ -147,7 +138,7 @@ export function WaterfallHop({
         cancelAnimationFrame(gameLoopRef.current);
       }
     };
-  }, [phase, playerPosition, failed, generateRock, checkCollision]);
+  }, [phase, playerPosition, failed, generateStream, checkCollision]);
 
   // Keyboard controls
   useEffect(() => {
@@ -167,7 +158,7 @@ export function WaterfallHop({
   const startGame = () => {
     setPhase("playing");
     setPlayerPosition(1);
-    setRocks([]);
+    setWaterStreams([]);
     setScore(0);
     setFailed(false);
     setTimeRemaining(GAME_DURATION);
@@ -177,28 +168,28 @@ export function WaterfallHop({
     <div className="wh-overlay">
       <div className="wh-wrap">
         <div className="wh-content">
-          <div className="wh-title">{title ?? "Waterfall Hop"}</div>
+          <div className="wh-title">{title ?? "Waterfall Dodge"}</div>
           <div className="wh-subtitle">
-            {subtitle ?? "Jump across the rocks!"}
+            {subtitle ?? "Dodge the falling water!"}
           </div>
 
           {phase === "intro" && (
             <div className="wh-intro">
               <div className="wh-intro-text">
-                The waterfall roars beside us, mist in the air. Time to hop
-                across the rocks and see how far we can get!
+                The waterfall roars beside us, cascading water everywhere. Can you
+                dodge the streams and stay dry for 30 seconds?
                 <br /><br />
                 <strong>How to play:</strong>
                 <br />
                 • Use arrow keys or tap buttons to move left/right
                 <br />
-                • Land on the rocks as they pass
+                • Avoid the falling water streams
                 <br />
-                • Don't miss any rocks!
-                <br />• Survive 30 seconds!
+                • Stay dry as long as possible!
+                <br />• Survive 30 seconds to win!
               </div>
               <button className="wh-btn primary" onClick={startGame}>
-                Start hopping! 💧
+                Start dodging! 💧
               </button>
             </div>
           )}
@@ -207,11 +198,11 @@ export function WaterfallHop({
             <div className="wh-playing">
               <div className="wh-stats">
                 <div className="wh-stat">
-                  <span className="wh-stat-label">Score:</span>
-                  <span className="wh-stat-value">{score}</span>
+                  <span className="wh-stat-label">Time Survived:</span>
+                  <span className="wh-stat-value">{score}s</span>
                 </div>
                 <div className="wh-stat">
-                  <span className="wh-stat-label">Time:</span>
+                  <span className="wh-stat-label">Time Left:</span>
                   <span className="wh-stat-value">
                     {Math.ceil(timeRemaining / 1000)}s
                   </span>
@@ -219,18 +210,17 @@ export function WaterfallHop({
               </div>
 
               <div className="wh-game-area">
-                {/* Rocks */}
-                {rocks.map((rock) => (
+                {/* Water streams */}
+                {waterStreams.map((stream) => (
                   <div
-                    key={rock.id}
-                    className="wh-rock"
+                    key={stream.id}
+                    className="wh-water-stream"
                     style={{
-                      left: rock.position === 0 ? "15%" : rock.position === 1 ? "50%" : "85%",
-                      top: `${rock.distance}%`,
-                      transform: "translateX(-50%)",
+                      left: stream.position === 0 ? "15%" : stream.position === 1 ? "50%" : "85%",
+                      top: `${stream.distance}%`,
                     }}
                   >
-                    🪨
+                    <div className="wh-water-gradient"></div>
                   </div>
                 ))}
 
@@ -244,8 +234,8 @@ export function WaterfallHop({
                   🧍
                 </div>
 
-                {/* Landing zone indicator */}
-                <div className="wh-landing-zone"></div>
+                {/* Player zone indicator (bottom 15%) */}
+                <div className="wh-player-zone"></div>
               </div>
 
               <div className="wh-controls">
@@ -265,16 +255,16 @@ export function WaterfallHop({
                 {failed ? "💦" : "🎉"}
               </div>
               <div className="wh-final-score">
-                {failed ? `Made it ${score} hops!` : `Perfect! ${score} hops!`}
+                {failed ? `Survived ${score} seconds!` : `Perfect! ${score} seconds!`}
               </div>
               <div className="wh-complete-text">
                 {failed
-                  ? "The mist got you, but what a ride! The waterfalls were worth it! 💧"
-                  : score >= 50
-                  ? "Incredible! You're a waterfall hopping champion! 🏆"
-                  : score >= 30
-                  ? "Amazing hops! Those rocks didn't stand a chance! 💪"
-                  : "You survived the waterfalls! What an adventure! ✨"}
+                  ? score >= 20
+                    ? "Almost made it! The waterfall was relentless! 💧"
+                    : score >= 10
+                    ? "Good effort! Those streams are tricky! 🌊"
+                    : "The mist got you early, but what a rush! 💦"
+                  : "Incredible! You stayed completely dry! You're a waterfall master! 🏆"}
               </div>
               <button className="wh-btn primary" onClick={onDone}>
                 Back to dry land →

@@ -140,9 +140,9 @@ export const TRIP_MINI_GAMES: TripGames[] = [
       },
       {
         id: "waterfallHop",
-        title: "Waterfall Hop",
+        title: "Waterfall Dodge",
         emoji: "💧",
-        description: "Jump across the rocks",
+        description: "Dodge the falling water",
         component: "WaterfallHop",
       },
     ],
