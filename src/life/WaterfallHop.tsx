@@ -56,20 +56,22 @@ export function WaterfallHop({
 
   // Check collisions
   const checkCollision = useCallback((rockList: Rock[], playerPos: number) => {
-    const COLLISION_ZONE = 85; // When rock reaches 85-95% it's in landing zone
-    const LANDING_ZONE_END = 95;
+    const COLLISION_ZONE_START = 85; // When rock reaches 85% it enters landing zone
+    const COLLISION_ZONE_END = 95; // When rock reaches 95% it exits landing zone
 
     for (const rock of rockList) {
-      if (rock.distance >= COLLISION_ZONE && rock.distance <= LANDING_ZONE_END) {
+      // Check if player successfully caught a rock in the landing zone
+      if (rock.distance >= COLLISION_ZONE_START && rock.distance <= COLLISION_ZONE_END) {
         if (rock.position === playerPos) {
           // Success! Player landed on rock
           return { success: true, rockId: rock.id };
         }
-      } else if (rock.distance > LANDING_ZONE_END) {
-        // Missed the rock
-        if (rock.position === playerPos) {
-          return { success: false, rockId: rock.id };
-        }
+      }
+
+      // Check if a rock passed the landing zone without being caught (miss)
+      if (rock.distance > COLLISION_ZONE_END) {
+        // Any rock that passes the zone is a fail
+        return { success: false, rockId: rock.id };
       }
     }
     return null;
