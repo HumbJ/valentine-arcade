@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import "./EpicEscape.css";
 
 type GamePhase = "intro" | "playing" | "result" | "complete";
@@ -29,39 +29,56 @@ export function EpicEscape({
   const [responded, setResponded] = useState(false);
   const [feedback, setFeedback] = useState<"success" | "fail" | null>(null);
 
+  const respondedRef = useRef(false);
+  const timersRef = useRef<NodeJS.Timeout[]>([]);
+
   const totalRounds = 6;
   const currentQTE = QTE_PROMPTS[currentRound % QTE_PROMPTS.length];
 
   // Start a round
   const startRound = useCallback(() => {
+    // Clear any existing timers
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
+
     setFeedback(null);
     setShowPrompt(false);
     setResponded(false);
+    respondedRef.current = false;
 
     // Show prompt after delay
-    setTimeout(() => {
+    const t1 = setTimeout(() => {
       setShowPrompt(true);
 
       // Auto-fail after duration if no response
-      setTimeout(() => {
-        if (!responded) {
+      const t2 = setTimeout(() => {
+        if (!respondedRef.current) {
           setFeedback("fail");
-          setTimeout(nextRound, 1500);
+          const t3 = setTimeout(nextRound, 1500);
+          timersRef.current.push(t3);
         }
       }, currentQTE.duration);
+      timersRef.current.push(t2);
     }, 1000);
-  }, [currentRound, responded, currentQTE]);
+    timersRef.current.push(t1);
+  }, [currentQTE]);
 
   // Handle action button click
   const handleAction = useCallback(() => {
-    if (!showPrompt || responded) return;
+    if (respondedRef.current) return;
+
+    // Clear any pending timers since user responded
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
 
     setResponded(true);
+    respondedRef.current = true;
     setFeedback("success");
     setScore((prev) => prev + 1);
 
-    setTimeout(nextRound, 1200);
-  }, [showPrompt, responded]);
+    const t = setTimeout(nextRound, 1200);
+    timersRef.current.push(t);
+  }, []);
 
   // Move to next round
   const nextRound = () => {
@@ -78,14 +95,19 @@ export function EpicEscape({
     setPhase("playing");
     setCurrentRound(0);
     setScore(0);
-    startRound();
   };
 
   useEffect(() => {
     if (phase === "playing") {
       startRound();
     }
-  }, [phase]);
+
+    return () => {
+      // Cleanup all timers when component unmounts or phase changes
+      timersRef.current.forEach(clearTimeout);
+      timersRef.current = [];
+    };
+  }, [phase, currentRound, startRound]);
 
   return (
     <div className="ee-overlay">

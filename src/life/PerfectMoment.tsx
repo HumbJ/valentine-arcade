@@ -30,54 +30,75 @@ export function PerfectMoment({
 
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef(0);
+  const feedbackRef = useRef<"perfect" | "good" | "missed" | null>(null);
+  const timersRef = useRef<NodeJS.Timeout[]>([]);
 
   const totalRounds = 4;
   const currentMoment = MOMENTS[currentRound % MOMENTS.length];
 
   // Start a round
   const startRound = useCallback(() => {
+    // Clear any existing timers
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
+
     setFeedback(null);
+    feedbackRef.current = null;
     setMomentVisible(false);
     setCaptureWindow(false);
 
     // Fade in the moment
-    setTimeout(() => {
+    const t1 = setTimeout(() => {
       setMomentVisible(true);
       startTimeRef.current = Date.now();
 
       // Open capture window after 1.2s (peak of animation)
-      setTimeout(() => {
+      const t2 = setTimeout(() => {
         setCaptureWindow(true);
 
         // Close capture window after 2s
-        setTimeout(() => {
+        const t3 = setTimeout(() => {
           setCaptureWindow(false);
-          if (feedback === null) {
+          if (feedbackRef.current === null) {
             // Missed it
             setFeedback("missed");
-            setTimeout(nextRound, 1500);
+            feedbackRef.current = "missed";
+            const t4 = setTimeout(nextRound, 1500);
+            timersRef.current.push(t4);
           }
         }, 2000);
+        timersRef.current.push(t3);
       }, 1200);
+      timersRef.current.push(t2);
     }, 500);
-  }, [currentRound, feedback]);
+    timersRef.current.push(t1);
+  }, []);
 
   // Handle capture attempt
   const handleCapture = useCallback(() => {
-    if (!momentVisible || feedback !== null) return;
+    if (feedbackRef.current !== null) return;
+
+    // Clear any pending timers since user captured
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
 
     if (captureWindow) {
       // Perfect timing!
       setFeedback("perfect");
+      feedbackRef.current = "perfect";
       setScore((prev) => prev + 2);
-    } else {
+    } else if (momentVisible) {
       // Okay timing
       setFeedback("good");
+      feedbackRef.current = "good";
       setScore((prev) => prev + 1);
+    } else {
+      return; // Don't advance if clicked before moment visible
     }
 
-    setTimeout(nextRound, 1500);
-  }, [momentVisible, captureWindow, feedback]);
+    const t = setTimeout(nextRound, 1500);
+    timersRef.current.push(t);
+  }, [momentVisible, captureWindow]);
 
   // Move to next round
   const nextRound = () => {
@@ -94,14 +115,19 @@ export function PerfectMoment({
     setPhase("playing");
     setCurrentRound(0);
     setScore(0);
-    startRound();
   };
 
   useEffect(() => {
     if (phase === "playing") {
       startRound();
     }
-  }, [phase]);
+
+    return () => {
+      // Cleanup all timers when component unmounts or phase changes
+      timersRef.current.forEach(clearTimeout);
+      timersRef.current = [];
+    };
+  }, [phase, currentRound, startRound]);
 
   return (
     <div className="pm-overlay">
