@@ -39,7 +39,7 @@ export function BouquetRush({
   onDone: () => void;
 }) {
   const [phase, setPhase] = useState<GamePhase>("intro");
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
   const [currentBouquet, setCurrentBouquet] = useState<Flower[]>([]);
   const [score, setScore] = useState(0);
   const [ordersCompleted, setOrdersCompleted] = useState(0);
@@ -47,7 +47,6 @@ export function BouquetRush({
 
   const gameStartTimeRef = useRef(0);
   const nextOrderIdRef = useRef(0);
-  const lastSpawnTimeRef = useRef(0);
   const gameLoopRef = useRef<number | null>(null);
   const [timeRemaining, setTimeRemaining] = useState(GAME_DURATION);
 
@@ -93,12 +92,11 @@ export function BouquetRush({
     return true;
   };
 
-  // Submit current bouquet for the first order
+  // Submit current bouquet
   const submitBouquet = () => {
     if (currentBouquet.length === 0) return;
-    if (orders.length === 0) return;
+    if (!currentOrder) return;
 
-    const currentOrder = orders[0];
     const isCorrect = checkMatch(currentOrder.flowers, currentBouquet);
 
     if (isCorrect) {
@@ -108,14 +106,8 @@ export function BouquetRush({
       setScore((s) => s + baseScore + timeBonus);
       setOrdersCompleted((c) => c + 1);
 
-      // Remove the completed order and immediately spawn a new one if there's room
-      setOrders((prev) => {
-        const remaining = prev.slice(1);
-        if (remaining.length < 3) {
-          return [...remaining, generateOrder()];
-        }
-        return remaining;
-      });
+      // Spawn new order immediately
+      setCurrentOrder(generateOrder());
     } else {
       // Wrong! Just clear and let them try again (small penalty)
       setScore((s) => Math.max(0, s - 10));
@@ -129,11 +121,10 @@ export function BouquetRush({
     if (phase !== "playing") return;
 
     gameStartTimeRef.current = Date.now();
-    lastSpawnTimeRef.current = Date.now();
     nextOrderIdRef.current = 0;
 
     // Spawn first order immediately
-    setOrders([generateOrder()]);
+    setCurrentOrder(generateOrder());
 
     const loop = () => {
       const now = Date.now();
@@ -147,31 +138,25 @@ export function BouquetRush({
         return;
       }
 
-      // Spawn new orders periodically (every 4-7 seconds if there's room)
-      // Check current orders length inside the state update to avoid dependency
-      setOrders((currentOrders) => {
-        if (currentOrders.length < 3 && now - lastSpawnTimeRef.current > 4000 + Math.random() * 3000) {
-          lastSpawnTimeRef.current = now;
-          return [...currentOrders, generateOrder()];
-        }
-        return currentOrders;
-      });
+      // Update current order timer
+      setCurrentOrder((order) => {
+        if (!order) return order;
 
-      // Update order timers
-      setOrders((prev) => {
-        const updated = prev.map((order) => ({
+        const newTimeRemaining = Math.max(0, order.timeRemaining - 16); // ~60fps
+
+        // Check if order expired
+        if (newTimeRemaining <= 0) {
+          // Order failed! Count as failed and spawn new order
+          setOrdersFailed((f) => f + 1);
+          setScore((s) => Math.max(0, s - 50)); // Big penalty
+          setCurrentBouquet([]); // Clear current bouquet
+          return generateOrder(); // Return new order
+        }
+
+        return {
           ...order,
-          timeRemaining: Math.max(0, order.timeRemaining - 16), // ~60fps
-        }));
-
-        // Remove expired orders and count as failed
-        const expired = updated.filter((o) => o.timeRemaining <= 0);
-        if (expired.length > 0) {
-          setOrdersFailed((f) => f + expired.length);
-          setScore((s) => Math.max(0, s - 50 * expired.length)); // Big penalty
-        }
-
-        return updated.filter((o) => o.timeRemaining > 0);
+          timeRemaining: newTimeRemaining,
+        };
       });
 
       gameLoopRef.current = requestAnimationFrame(loop);
@@ -189,7 +174,7 @@ export function BouquetRush({
   // Start game
   const startGame = () => {
     setPhase("playing");
-    setOrders([]);
+    setCurrentOrder(null);
     setCurrentBouquet([]);
     setScore(0);
     setOrdersCompleted(0);
@@ -246,24 +231,22 @@ export function BouquetRush({
                 </div>
               </div>
 
-              {/* Customer Orders */}
+              {/* Customer Order */}
               <div className="br-orders">
-                {orders.length === 0 && <div className="br-no-orders">Waiting for customers...</div>}
-                {orders.map((order, index) => (
-                  <div key={order.id} className={`br-order ${index === 0 ? "active" : ""}`}>
+                {!currentOrder && <div className="br-no-orders">Waiting for customer...</div>}
+                {currentOrder && (
+                  <div className="br-order active">
                     <div className="br-order-header">
-                      <span className="br-order-label">
-                        {index === 0 ? "Current Order" : `Order ${index + 1}`}
-                      </span>
+                      <span className="br-order-label">Current Order</span>
                       <div className="br-order-timer">
                         <div
                           className="br-order-timer-bar"
                           style={{
-                            width: `${(order.timeRemaining / order.maxTime) * 100}%`,
+                            width: `${(currentOrder.timeRemaining / currentOrder.maxTime) * 100}%`,
                             backgroundColor:
-                              order.timeRemaining < 5000
+                              currentOrder.timeRemaining < 4000
                                 ? "#f44336"
-                                : order.timeRemaining < 10000
+                                : currentOrder.timeRemaining < 8000
                                 ? "#ff9800"
                                 : "#4caf50",
                           }}
@@ -271,14 +254,14 @@ export function BouquetRush({
                       </div>
                     </div>
                     <div className="br-order-flowers">
-                      {order.flowers.map((flower, i) => (
+                      {currentOrder.flowers.map((flower, i) => (
                         <span key={i} className="br-order-flower">
                           {flower.emoji}
                         </span>
                       ))}
                     </div>
                   </div>
-                ))}
+                )}
               </div>
 
               {/* Current Bouquet Being Built */}

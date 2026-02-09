@@ -28,6 +28,8 @@ export function WaterfallHop({
   const gameLoopRef = useRef<number | null>(null);
   const lastSpawnRef = useRef(0);
   const nextStreamIdRef = useRef(0);
+  const playerPositionRef = useRef(1); // Track player position in ref for game loop
+  const failedRef = useRef(false);
 
   const GAME_DURATION = 30000; // 30 seconds
   const startTimeRef = useRef(0);
@@ -68,9 +70,9 @@ export function WaterfallHop({
     if (phase !== "playing" || failed) return;
 
     setPlayerPosition((prev) => {
-      if (direction === "left") return Math.max(0, prev - 1);
-      if (direction === "right") return Math.min(2, prev + 1);
-      return prev;
+      const newPos = direction === "left" ? Math.max(0, prev - 1) : direction === "right" ? Math.min(2, prev + 1) : prev;
+      playerPositionRef.current = newPos; // Keep ref in sync
+      return newPos;
     });
   };
 
@@ -98,8 +100,11 @@ export function WaterfallHop({
     startTimeRef.current = Date.now();
     lastSpawnRef.current = 0;
     nextStreamIdRef.current = 0;
+    failedRef.current = false;
 
     const loop = () => {
+      if (failedRef.current) return; // Stop loop if failed
+
       const now = Date.now();
       const elapsed = now - startTimeRef.current;
       const remaining = Math.max(0, GAME_DURATION - elapsed);
@@ -132,9 +137,10 @@ export function WaterfallHop({
           }))
           .filter((stream) => stream.distance < 110); // Remove streams past bottom
 
-        // Check collisions
-        const collision = checkCollision(updated, playerPosition);
-        if (collision) {
+        // Check collisions using ref to avoid dependency
+        const collision = checkCollision(updated, playerPositionRef.current);
+        if (collision && !failedRef.current) {
+          failedRef.current = true;
           setFailed(true);
           setTimeout(() => {
             setPhase("complete");
@@ -144,9 +150,7 @@ export function WaterfallHop({
         return updated;
       });
 
-      if (!failed) {
-        gameLoopRef.current = requestAnimationFrame(loop);
-      }
+      gameLoopRef.current = requestAnimationFrame(loop);
     };
 
     gameLoopRef.current = requestAnimationFrame(loop);
@@ -156,7 +160,7 @@ export function WaterfallHop({
         cancelAnimationFrame(gameLoopRef.current);
       }
     };
-  }, [phase, playerPosition, failed, generateStream, checkCollision]);
+  }, [phase, generateStream, checkCollision]);
 
   // Keyboard controls
   useEffect(() => {
@@ -176,9 +180,11 @@ export function WaterfallHop({
   const startGame = () => {
     setPhase("playing");
     setPlayerPosition(1);
+    playerPositionRef.current = 1;
     setWaterStreams([]);
     setScore(0);
     setFailed(false);
+    failedRef.current = false;
     setTimeRemaining(GAME_DURATION);
   };
 
