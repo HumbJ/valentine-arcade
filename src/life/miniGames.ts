@@ -132,11 +132,11 @@ export const TRIP_MINI_GAMES: TripGames[] = [
     emoji: "🌸",
     games: [
       {
-        id: "flowerMatch",
-        title: "Flower Match",
-        emoji: "🌸",
-        description: "Match pairs of flowers",
-        component: "FlowerMatch",
+        id: "bouquetRush",
+        title: "Bouquet Rush",
+        emoji: "💐",
+        description: "Fulfill flower orders quickly",
+        component: "BouquetRush",
       },
       {
         id: "waterfallHop",

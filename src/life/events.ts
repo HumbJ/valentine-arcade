@@ -1021,9 +1021,9 @@ export const SEATTLE2_FLOWERFIELD: LifeEvent = {
       label: "Take it all in →",
       effects: [
         {
-          type: "flowerMatch",
-          title: "Flower Match",
-          subtitle: "Match the blooming flowers!",
+          type: "bouquetRush",
+          title: "Bouquet Rush",
+          subtitle: "Fulfill flower orders quickly!",
         },
         { type: "burst", deck: "seattle2_flowerfield" },
         { type: "goto", eventId: "seattle2_food" },

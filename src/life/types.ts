@@ -110,7 +110,7 @@ export type Effect =
     }
   // Seattle Trip 2 mini-game effects
   | {
-      type: "flowerMatch";
+      type: "bouquetRush";
       title?: string;
       subtitle?: string;
     }

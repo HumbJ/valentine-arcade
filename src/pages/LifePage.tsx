@@ -30,7 +30,7 @@ import { OceanSpotting } from "../life/OceanSpotting";
 import { IslandDrive } from "../life/IslandDrive";
 import { ShellMerge } from "../life/ShellMerge";
 import { LeiPattern } from "../life/LeiPattern";
-import { FlowerMatch } from "../life/FlowerMatch";
+import { BouquetRush } from "../life/BouquetRush";
 import { WaterfallHop } from "../life/WaterfallHop";
 
 
@@ -112,8 +112,8 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
   const [pendingAfterLeiPattern, setPendingAfterLeiPattern] = useState<Effect[] | null>(null);
 
   // Seattle Trip 2 mini-game states
-  const [flowerMatchGate, setFlowerMatchGate] = useState<null | { title?: string; subtitle?: string }>(null);
-  const [pendingAfterFlowerMatch, setPendingAfterFlowerMatch] = useState<Effect[] | null>(null);
+  const [bouquetRushGate, setBouquetRushGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterBouquetRush, setPendingAfterBouquetRush] = useState<Effect[] | null>(null);
   const [waterfallHopGate, setWaterfallHopGate] = useState<null | { title?: string; subtitle?: string }>(null);
   const [pendingAfterWaterfallHop, setPendingAfterWaterfallHop] = useState<Effect[] | null>(null);
 
@@ -419,16 +419,16 @@ if (picnicEff && picnicEff.type === "picnicDate") {
       return;
     }
 
-    // 2.22) Flower match gate (Seattle 2 flowerfield)
-    const flowerMatchEff = effects.find(
-      (e): e is Extract<Effect, { type: "flowerMatch" }> => e.type === "flowerMatch"
+    // 2.22) Bouquet rush gate (Seattle 2 flowerfield)
+    const bouquetRushEff = effects.find(
+      (e): e is Extract<Effect, { type: "bouquetRush" }> => e.type === "bouquetRush"
     );
-    if (flowerMatchEff) {
-      setFlowerMatchGate({
-        title: flowerMatchEff.title,
-        subtitle: flowerMatchEff.subtitle,
+    if (bouquetRushEff) {
+      setBouquetRushGate({
+        title: bouquetRushEff.title,
+        subtitle: bouquetRushEff.subtitle,
       });
-      setPendingAfterFlowerMatch(effects.filter((e) => e.type !== "flowerMatch"));
+      setPendingAfterBouquetRush(effects.filter((e) => e.type !== "bouquetRush"));
       return;
     }
 
@@ -782,11 +782,11 @@ function finishReflectionSave(text: string) {
     runEffects(rest);
   }
 
-  function finishFlowerMatch() {
-    setFlowerMatchGate(null);
-    if (!pendingAfterFlowerMatch) return;
-    const rest = pendingAfterFlowerMatch;
-    setPendingAfterFlowerMatch(null);
+  function finishBouquetRush() {
+    setBouquetRushGate(null);
+    if (!pendingAfterBouquetRush) return;
+    const rest = pendingAfterBouquetRush;
+    setPendingAfterBouquetRush(null);
     runEffects(rest);
   }
 
@@ -1168,11 +1168,11 @@ function finishReflectionSave(text: string) {
         />
       )}
 
-      {flowerMatchGate && (
-        <FlowerMatch
-          title={flowerMatchGate.title}
-          subtitle={flowerMatchGate.subtitle}
-          onDone={finishFlowerMatch}
+      {bouquetRushGate && (
+        <BouquetRush
+          title={bouquetRushGate.title}
+          subtitle={bouquetRushGate.subtitle}
+          onDone={finishBouquetRush}
         />
       )}
 
