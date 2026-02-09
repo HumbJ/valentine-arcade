@@ -36,7 +36,7 @@ export function WaterfallHop({
   // Generate next water stream position
   const generateStream = useCallback((): WaterStream => {
     const position = Math.floor(Math.random() * 3); // 0, 1, or 2
-    const speed = 1.2 + Math.random() * 0.8; // 1.2-2.0 speed multiplier
+    const speed = 0.6 + Math.random() * 0.4; // 0.6-1.0 speed multiplier
     return {
       id: nextStreamIdRef.current++,
       position,
@@ -97,7 +97,7 @@ export function WaterfallHop({
       }
 
       // Increase difficulty over time
-      const difficulty = Math.min(2.5, 1 + elapsed / 15000);
+      const difficulty = Math.min(1.5, 1 + elapsed / 15000);
 
       // Spawn water streams (faster as game progresses)
       if (now - lastSpawnRef.current > 800 / difficulty) {
@@ -110,7 +110,7 @@ export function WaterfallHop({
         const updated = prev
           .map((stream) => ({
             ...stream,
-            distance: stream.distance + 1.2 * stream.speed * difficulty,
+            distance: stream.distance + 0.6 * stream.speed * difficulty,
           }))
           .filter((stream) => stream.distance < 110); // Remove streams past bottom
 
