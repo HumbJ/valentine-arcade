@@ -26,8 +26,8 @@ const FLOWERS: Flower[] = [
   { id: "hibiscus", emoji: "🌺", color: "#d81b60", name: "Hibiscus" },
 ];
 
-const GAME_DURATION = 60000; // 60 seconds
-const BASE_ORDER_TIME = 15000; // 15 seconds per order
+const GAME_DURATION = 30000; // 30 seconds
+const BASE_ORDER_TIME = 12000; // 12 seconds per order
 
 export function BouquetRush({
   title,
@@ -141,11 +141,15 @@ export function BouquetRush({
         return;
       }
 
-      // Spawn new orders periodically (every 5-8 seconds if there's room)
-      if (orders.length < 3 && now - lastSpawnTimeRef.current > 5000 + Math.random() * 3000) {
-        setOrders((prev) => [...prev, generateOrder()]);
-        lastSpawnTimeRef.current = now;
-      }
+      // Spawn new orders periodically (every 4-7 seconds if there's room)
+      // Check current orders length inside the state update to avoid dependency
+      setOrders((currentOrders) => {
+        if (currentOrders.length < 3 && now - lastSpawnTimeRef.current > 4000 + Math.random() * 3000) {
+          lastSpawnTimeRef.current = now;
+          return [...currentOrders, generateOrder()];
+        }
+        return currentOrders;
+      });
 
       // Update order timers
       setOrders((prev) => {
@@ -174,7 +178,7 @@ export function BouquetRush({
         cancelAnimationFrame(gameLoopRef.current);
       }
     };
-  }, [phase, orders.length, generateOrder]);
+  }, [phase, generateOrder]);
 
   // Start game
   const startGame = () => {
