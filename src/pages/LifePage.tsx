@@ -30,6 +30,8 @@ import { OceanSpotting } from "../life/OceanSpotting";
 import { IslandDrive } from "../life/IslandDrive";
 import { ShellMerge } from "../life/ShellMerge";
 import { LeiPattern } from "../life/LeiPattern";
+import { FlowerMatch } from "../life/FlowerMatch";
+import { WaterfallHop } from "../life/WaterfallHop";
 
 
 
@@ -109,6 +111,12 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
   const [leiPatternGate, setLeiPatternGate] = useState<null | { title?: string; subtitle?: string }>(null);
   const [pendingAfterLeiPattern, setPendingAfterLeiPattern] = useState<Effect[] | null>(null);
 
+  // Seattle Trip 2 mini-game states
+  const [flowerMatchGate, setFlowerMatchGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterFlowerMatch, setPendingAfterFlowerMatch] = useState<Effect[] | null>(null);
+  const [waterfallHopGate, setWaterfallHopGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterWaterfallHop, setPendingAfterWaterfallHop] = useState<Effect[] | null>(null);
+
   const event = useMemo(() => getEventById(save.currentEventId), [save.currentEventId]);
 
   // Filter out completed trips from vacation_tease menu
@@ -116,7 +124,7 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
     if (!event || event.id !== "vacation_tease") return event;
 
     const completedTrips = save.completedEvents || [];
-    const tripChoiceIds = ["disneyland", "seattle1", "roadtrip", "hawaii"];
+    const tripChoiceIds = ["disneyland", "seattle1", "roadtrip", "hawaii", "seattle2"];
 
     const filteredChoices = event.choices.filter(
       (choice) => !tripChoiceIds.includes(choice.id) || !completedTrips.includes(choice.id)
@@ -408,6 +416,32 @@ if (picnicEff && picnicEff.type === "picnicDate") {
         subtitle: leiPatternEff.subtitle,
       });
       setPendingAfterLeiPattern(effects.filter((e) => e.type !== "leiPattern"));
+      return;
+    }
+
+    // 2.22) Flower match gate (Seattle 2 flowerfield)
+    const flowerMatchEff = effects.find(
+      (e): e is Extract<Effect, { type: "flowerMatch" }> => e.type === "flowerMatch"
+    );
+    if (flowerMatchEff) {
+      setFlowerMatchGate({
+        title: flowerMatchEff.title,
+        subtitle: flowerMatchEff.subtitle,
+      });
+      setPendingAfterFlowerMatch(effects.filter((e) => e.type !== "flowerMatch"));
+      return;
+    }
+
+    // 2.23) Waterfall hop gate (Seattle 2 waterfalls)
+    const waterfallHopEff = effects.find(
+      (e): e is Extract<Effect, { type: "waterfallHop" }> => e.type === "waterfallHop"
+    );
+    if (waterfallHopEff) {
+      setWaterfallHopGate({
+        title: waterfallHopEff.title,
+        subtitle: waterfallHopEff.subtitle,
+      });
+      setPendingAfterWaterfallHop(effects.filter((e) => e.type !== "waterfallHop"));
       return;
     }
 
@@ -745,6 +779,22 @@ function finishReflectionSave(text: string) {
     if (!pendingAfterLeiPattern) return;
     const rest = pendingAfterLeiPattern;
     setPendingAfterLeiPattern(null);
+    runEffects(rest);
+  }
+
+  function finishFlowerMatch() {
+    setFlowerMatchGate(null);
+    if (!pendingAfterFlowerMatch) return;
+    const rest = pendingAfterFlowerMatch;
+    setPendingAfterFlowerMatch(null);
+    runEffects(rest);
+  }
+
+  function finishWaterfallHop() {
+    setWaterfallHopGate(null);
+    if (!pendingAfterWaterfallHop) return;
+    const rest = pendingAfterWaterfallHop;
+    setPendingAfterWaterfallHop(null);
     runEffects(rest);
   }
 
@@ -1115,6 +1165,22 @@ function finishReflectionSave(text: string) {
           title={leiPatternGate.title}
           subtitle={leiPatternGate.subtitle}
           onDone={finishLeiPattern}
+        />
+      )}
+
+      {flowerMatchGate && (
+        <FlowerMatch
+          title={flowerMatchGate.title}
+          subtitle={flowerMatchGate.subtitle}
+          onDone={finishFlowerMatch}
+        />
+      )}
+
+      {waterfallHopGate && (
+        <WaterfallHop
+          title={waterfallHopGate.title}
+          subtitle={waterfallHopGate.subtitle}
+          onDone={finishWaterfallHop}
         />
       )}
 

@@ -5,6 +5,8 @@ import { OceanSpotting } from "../life/OceanSpotting";
 import { IslandDrive } from "../life/IslandDrive";
 import { ShellMerge } from "../life/ShellMerge";
 import { LeiPattern } from "../life/LeiPattern";
+import { FlowerMatch } from "../life/FlowerMatch";
+import { WaterfallHop } from "../life/WaterfallHop";
 import { SpotTheClues } from "../life/SpotTheClues";
 import { PerfectMoment } from "../life/PerfectMoment";
 import { GiggleGauge } from "../life/GiggleGauge";
@@ -124,6 +126,12 @@ export function MiniGamesPage() {
       )}
       {activeGame === "LeiPattern" && (
         <LeiPattern title="Lei Pattern" onDone={handleGameDone} />
+      )}
+      {activeGame === "FlowerMatch" && (
+        <FlowerMatch title="Flower Match" onDone={handleGameDone} />
+      )}
+      {activeGame === "WaterfallHop" && (
+        <WaterfallHop title="Waterfall Hop" onDone={handleGameDone} />
       )}
       {activeGame === "SpotTheClues" && (
         <SpotTheClues title="Spot the Clues" onDone={handleGameDone} />

@@ -968,6 +968,137 @@ export const HAWAII_REFLECTION: LifeEvent = {
 };
 
 // ============================================
+// SEATTLE TRIP 2
+// ============================================
+
+const SEATTLE2_TRIP_START: LifeEvent = {
+  id: "seattle2_trip_start",
+  title: "Seattle Trip II 🌸",
+  text: "Back to the Northwest, but this time we know where we're going. New adventures in familiar places, and the kind of comfort that comes from returning somewhere that already feels like home.",
+  choices: [
+    {
+      id: "begin",
+      label: "Let's go back ✈️",
+      effects: [
+        { type: "log", text: "Seattle Trip II begins! The Northwest welcomes us again." },
+        { type: "goto", eventId: "seattle2_arrival" },
+      ],
+    },
+  ],
+};
+
+export const SEATTLE2_ARRIVAL: LifeEvent = {
+  id: "seattle2_arrival",
+  title: "Arrival",
+  text: "Landing again. The air smells the same, but everything feels different when you're coming back. We're not tourists this time — we're returning.",
+  choices: [
+    {
+      id: "continue",
+      label: "We're back →",
+      effects: [
+        { type: "burst", deck: "seattle2_arrival" },
+        {
+          type: "reflectionPrompt",
+          id: "seattle2_arrival",
+          arc: "seattle2",
+          title: "Returning",
+          subtitle: "Landing again",
+          prompt: "How does it feel to come back to Seattle?",
+        },
+        { type: "goto", eventId: "seattle2_flowerfield" },
+      ],
+    },
+  ],
+};
+
+export const SEATTLE2_FLOWERFIELD: LifeEvent = {
+  id: "seattle2_flowerfield",
+  title: "Flower Fields",
+  text: "Endless rows of tulips, every color imaginable. We walk between them, and it feels like stepping into a painting. The kind of beautiful that makes you stop and just breathe.",
+  choices: [
+    {
+      id: "continue",
+      label: "Take it all in →",
+      effects: [
+        {
+          type: "flowerMatch",
+          title: "Flower Match",
+          subtitle: "Match the blooming flowers!",
+        },
+        { type: "burst", deck: "seattle2_flowerfield" },
+        { type: "goto", eventId: "seattle2_food" },
+      ],
+    },
+  ],
+};
+
+export const SEATTLE2_FOOD: LifeEvent = {
+  id: "seattle2_food",
+  title: "Food",
+  text: "We try everything. New spots, old favorites, and the kind of meals that turn into stories. Every bite tastes a little better when you're here together.",
+  choices: [
+    {
+      id: "continue",
+      label: "Keep eating →",
+      effects: [
+        { type: "burst", deck: "seattle2_food" },
+        { type: "goto", eventId: "seattle2_waterfalls" },
+      ],
+    },
+  ],
+};
+
+export const SEATTLE2_WATERFALLS: LifeEvent = {
+  id: "seattle2_waterfalls",
+  title: "Waterfalls",
+  text: "The sound of water crashing down, mist in the air, and rocks to climb. We hop across, laughing when we almost slip, and the world feels wild and perfect.",
+  choices: [
+    {
+      id: "continue",
+      label: "Jump across →",
+      effects: [
+        {
+          type: "waterfallHop",
+          title: "Waterfall Hop",
+          subtitle: "Jump across the rocks!",
+        },
+        { type: "burst", deck: "seattle2_waterfalls" },
+        { type: "goto", eventId: "seattle2_reflection" },
+      ],
+    },
+  ],
+};
+
+export const SEATTLE2_REFLECTION: LifeEvent = {
+  id: "seattle2_reflection",
+  title: "Reflection",
+  text: "The trip is winding down, but we're already thinking about coming back again. Some places just pull you in.",
+  choices: [
+    {
+      id: "reflect",
+      label: "One last moment",
+      effects: [
+        { type: "burst", deck: "seattle2_reflection" },
+        {
+          type: "reflectionPrompt",
+          id: "seattle2_end",
+          arc: "seattle2",
+          title: "Until Next Time",
+          subtitle: "Before we leave",
+          prompt: "What made this trip special?",
+        },
+        { type: "stat", key: "love", delta: 10 },
+        { type: "stat", key: "happiness", delta: 12 },
+        { type: "stat", key: "memories", delta: 13 },
+        { type: "unlockPlace", placeId: "seattle2" },
+        { type: "log", text: "Seattle Trip II: flowers, waterfalls, and the feeling of coming home." },
+        { type: "gotoHome", markComplete: "seattle2" },
+      ],
+    },
+  ],
+};
+
+// ============================================
 // RANDOM POP-UP MINI-EVENTS
 // ============================================
 
@@ -1582,6 +1713,14 @@ export const LIFE_EVENTS: LifeEvent[] = [
     { type: "goto", eventId: "hawaii_trip_start" },
   ],
 },
+{
+  id: "seattle2",
+  label: "Seattle Trip II 🌸 (flowers + waterfalls + coming back)",
+  effects: [
+    { type: "log", text: "Seattle called us back… and we couldn't resist." },
+    { type: "goto", eventId: "seattle2_trip_start" },
+  ],
+},
       {
         id: "cozy",
         label: "Cozy cabin 🏔 (quiet + warm + slow mornings)",
@@ -1728,6 +1867,13 @@ HAWAII_EXPLORE2,
 HAWAII_BEACH,
 HAWAII_LUAU,
 HAWAII_REFLECTION,
+// Seattle Trip 2 events
+SEATTLE2_TRIP_START,
+SEATTLE2_ARRIVAL,
+SEATTLE2_FLOWERFIELD,
+SEATTLE2_FOOD,
+SEATTLE2_WATERFALLS,
+SEATTLE2_REFLECTION,
 // Random pop-up events
 RANDOM_MOVIE_NIGHT,
 MOVIE_MYSTERY,

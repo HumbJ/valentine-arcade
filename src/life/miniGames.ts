@@ -126,6 +126,27 @@ export const TRIP_MINI_GAMES: TripGames[] = [
       },
     ],
   },
+  {
+    tripId: "seattle2",
+    tripTitle: "Seattle Trip II",
+    emoji: "🌸",
+    games: [
+      {
+        id: "flowerMatch",
+        title: "Flower Match",
+        emoji: "🌸",
+        description: "Match pairs of flowers",
+        component: "FlowerMatch",
+      },
+      {
+        id: "waterfallHop",
+        title: "Waterfall Hop",
+        emoji: "💧",
+        description: "Jump across the rocks",
+        component: "WaterfallHop",
+      },
+    ],
+  },
 ];
 
 // Other mini-games not tied to trips

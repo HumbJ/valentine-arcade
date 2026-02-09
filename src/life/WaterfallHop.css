@@ -1,0 +1,248 @@
+/* Waterfall Hop game styles */
+
+.wh-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.wh-wrap {
+  position: relative;
+  background: linear-gradient(180deg, #a8dadc 0%, #457b9d 50%, #1d3557 100%);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 450px;
+  width: 100%;
+  min-height: 600px;
+  box-shadow: 0 20px 60px rgba(69, 123, 157, 0.5);
+  overflow: hidden;
+}
+
+.wh-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 550px;
+}
+
+.wh-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 2px 12px rgba(29, 53, 87, 0.8);
+}
+
+.wh-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Intro */
+.wh-intro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.wh-intro-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 360px;
+}
+
+/* Playing phase */
+.wh-playing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.wh-stats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.wh-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wh-stat-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.25rem;
+}
+
+.wh-stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(29, 53, 87, 0.6);
+}
+
+.wh-game-area {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: linear-gradient(180deg, rgba(168, 218, 220, 0.3) 0%, rgba(29, 53, 87, 0.3) 100%);
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.wh-rock {
+  position: absolute;
+  font-size: 2rem;
+  transition: none;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.wh-player {
+  position: absolute;
+  bottom: 10%;
+  font-size: 2.5rem;
+  transition: left 0.2s ease-out;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+  z-index: 10;
+}
+
+.wh-player.failed {
+  animation: whPlayerFall 0.5s ease-in forwards;
+}
+
+@keyframes whPlayerFall {
+  0% {
+    transform: translateX(-50%) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(100px) rotate(90deg);
+    opacity: 0;
+  }
+}
+
+.wh-landing-zone {
+  position: absolute;
+  bottom: 10%;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: rgba(76, 175, 80, 0.2);
+  border-top: 2px dashed rgba(76, 175, 80, 0.5);
+  border-bottom: 2px dashed rgba(76, 175, 80, 0.5);
+  pointer-events: none;
+}
+
+.wh-controls {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.wh-control-btn {
+  flex: 1;
+  background: linear-gradient(135deg, #457b9d, #1d3557);
+  color: #fff;
+  border: none;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(29, 53, 87, 0.4);
+}
+
+.wh-control-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(29, 53, 87, 0.5);
+}
+
+/* Complete phase */
+.wh-complete {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.wh-complete-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: whCompleteBounce 1s ease-out;
+}
+
+@keyframes whCompleteBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.wh-final-score {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 12px rgba(29, 53, 87, 0.8);
+}
+
+.wh-complete-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  max-width: 320px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Buttons */
+.wh-btn {
+  background: linear-gradient(135deg, #457b9d, #1d3557);
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(29, 53, 87, 0.4);
+}
+
+.wh-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(29, 53, 87, 0.5);
+}
+
+.wh-btn.primary {
+  background: linear-gradient(135deg, #1d3557, #457b9d);
+}

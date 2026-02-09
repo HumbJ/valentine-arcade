@@ -1,0 +1,242 @@
+/* Flower Match memory game styles */
+
+.fm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.fm-wrap {
+  position: relative;
+  background: linear-gradient(180deg, #ffc0e3 0%, #ffb5d8 30%, #ff9fc8 100%);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  max-width: 500px;
+  width: 100%;
+  min-height: 500px;
+  box-shadow: 0 20px 60px rgba(255, 143, 200, 0.5);
+  overflow: hidden;
+}
+
+.fm-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 450px;
+}
+
+.fm-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 2px 12px rgba(255, 111, 158, 0.6);
+}
+
+.fm-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Intro */
+.fm-intro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.fm-intro-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 360px;
+}
+
+/* Playing phase */
+.fm-playing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.fm-stats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.fm-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fm-stat-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.25rem;
+}
+
+.fm-stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(255, 111, 158, 0.4);
+}
+
+.fm-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  max-width: 400px;
+  width: 100%;
+}
+
+.fm-card {
+  aspect-ratio: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  perspective: 1000px;
+  padding: 0;
+}
+
+.fm-card:disabled {
+  cursor: default;
+}
+
+.fm-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
+}
+
+.fm-card.flipped .fm-card-inner {
+  transform: rotateY(180deg);
+}
+
+.fm-card-front,
+.fm-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  font-size: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.fm-card-front {
+  background: linear-gradient(135deg, #ff6b9d, #ff8fb3);
+  color: #fff;
+  font-weight: 700;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.fm-card-back {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 240, 245, 0.95));
+  border: 2px solid rgba(255, 107, 157, 0.6);
+  transform: rotateY(180deg);
+}
+
+.fm-card.matched .fm-card-back {
+  background: linear-gradient(135deg, #90ee90, #98fb98);
+  border-color: #4caf50;
+  animation: fmMatchPulse 0.5s ease-out;
+}
+
+@keyframes fmMatchPulse {
+  0%, 100% {
+    transform: rotateY(180deg) scale(1);
+  }
+  50% {
+    transform: rotateY(180deg) scale(1.1);
+  }
+}
+
+/* Complete phase */
+.fm-complete {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.fm-complete-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: fmCompleteBounce 1s ease-out;
+}
+
+@keyframes fmCompleteBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.fm-final-score {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 12px rgba(255, 111, 158, 0.6);
+}
+
+.fm-complete-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  max-width: 320px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Buttons */
+.fm-btn {
+  background: linear-gradient(135deg, #ff8fa3, #ff6b8a);
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(255, 143, 163, 0.4);
+}
+
+.fm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 143, 163, 0.5);
+}
+
+.fm-btn.primary {
+  background: linear-gradient(135deg, #ff6b8a, #ff8fa3);
+}

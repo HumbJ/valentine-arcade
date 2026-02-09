@@ -170,6 +170,20 @@ MEMORIES["hawaii_explore2"] = deckFromGlob(hawaiiExplore2);
 MEMORIES["hawaii_beach"] = deckFromGlob(hawaiiBeach);
 MEMORIES["hawaii_luau"] = deckFromGlob(hawaiiLuau);
 MEMORIES["hawaii_reflection"] = deckFromGlob(hawaiiReflection);
+
+// --- Seattle Trip 2 decks --------------------------------------------------------
+const seattle2Arrival = import.meta.glob("../assets/photos/trips/seattle2/arrival/*", { eager: true });
+const seattle2Flowerfield = import.meta.glob("../assets/photos/trips/seattle2/flowerfield/*", { eager: true });
+const seattle2Food = import.meta.glob("../assets/photos/trips/seattle2/food/*", { eager: true });
+const seattle2Waterfalls = import.meta.glob("../assets/photos/trips/seattle2/waterfalls/*", { eager: true });
+const seattle2Reflection = import.meta.glob("../assets/photos/trips/seattle2/reflection/*", { eager: true });
+
+MEMORIES["seattle2_arrival"] = deckFromGlob(seattle2Arrival);
+MEMORIES["seattle2_flowerfield"] = deckFromGlob(seattle2Flowerfield);
+MEMORIES["seattle2_food"] = deckFromGlob(seattle2Food);
+MEMORIES["seattle2_waterfalls"] = deckFromGlob(seattle2Waterfalls);
+MEMORIES["seattle2_reflection"] = deckFromGlob(seattle2Reflection);
+
 MEMORIES["roadtrip_ontheroad_01"] = allOnTheRoad.filter(m => m.id.includes("01")); // SD -> Joshua Tree
 MEMORIES["roadtrip_ontheroad_02"] = allOnTheRoad.filter(m => m.id.includes("02")); // Joshua Tree -> Sequoia
 MEMORIES["roadtrip_ontheroad_03"] = allOnTheRoad.filter(m => m.id.includes("03")); // Sequoia -> Kings Canyon
@@ -196,6 +210,16 @@ MEMORIES["seattle1"] = [
   ...(MEMORIES["seattle1_food"] ?? []),
   ...(MEMORIES["seattle1_quiet"] ?? []),
   ...(MEMORIES["seattle1_reflect"] ?? []),
+];
+
+// --- Seattle Trip 2 combined "scrapbook" deck (for Map replay) -------------
+
+MEMORIES["seattle2"] = [
+  ...(MEMORIES["seattle2_arrival"] ?? []),
+  ...(MEMORIES["seattle2_flowerfield"] ?? []),
+  ...(MEMORIES["seattle2_food"] ?? []),
+  ...(MEMORIES["seattle2_waterfalls"] ?? []),
+  ...(MEMORIES["seattle2_reflection"] ?? []),
 ];
 
 

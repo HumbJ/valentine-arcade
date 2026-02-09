@@ -64,4 +64,17 @@ export const TRIPS: Trip[] = [
       { id: "reflection", title: "Last Morning", deck: "hawaii_reflection" },
     ],
   },
+  {
+    id: "seattle2",
+    title: "Seattle Trip II",
+    subtitle: "Back to the Northwest",
+    emoji: "🌸",
+    sections: [
+      { id: "arrival", title: "Arrival", deck: "seattle2_arrival" },
+      { id: "flowerfield", title: "Flower Fields", deck: "seattle2_flowerfield" },
+      { id: "food", title: "Food", deck: "seattle2_food" },
+      { id: "waterfalls", title: "Waterfalls", deck: "seattle2_waterfalls" },
+      { id: "reflection", title: "Reflection", deck: "seattle2_reflection" },
+    ],
+  },
 ];

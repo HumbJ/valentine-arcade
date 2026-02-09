@@ -107,6 +107,17 @@ export type Effect =
       type: "leiPattern";
       title?: string;
       subtitle?: string;
+    }
+  // Seattle Trip 2 mini-game effects
+  | {
+      type: "flowerMatch";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "waterfallHop";
+      title?: string;
+      subtitle?: string;
     };
 
 
