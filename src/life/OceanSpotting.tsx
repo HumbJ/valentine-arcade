@@ -38,8 +38,9 @@ export function OceanSpotting({
   const nextCreatureId = useRef(0);
   const spawnTimerRef = useRef<NodeJS.Timeout | null>(null);
   const hideTimersRef = useRef<Map<number, NodeJS.Timeout>>(new Map());
-  const gameTimerRef = useRef<NodeJS.Timeout | null>(null);
   const gameStartTimeRef = useRef<number>(0);
+  const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isSpawningRef = useRef(false);
 
   // Start the game
   const startGame = () => {
@@ -49,50 +50,8 @@ export function OceanSpotting({
     setCreatures([]);
     nextCreatureId.current = 0;
     gameStartTimeRef.current = Date.now();
+    isSpawningRef.current = false;
   };
-
-  // Spawn a new creature
-  const spawnCreature = useCallback(() => {
-    setCreatures((currentCreatures) => {
-      const creatureType = CREATURE_TYPES[Math.floor(Math.random() * CREATURE_TYPES.length)];
-      const availableSpots = Array.from({ length: TOTAL_SPOTS }, (_, i) => i).filter(
-        (spot) => !currentCreatures.some((c) => c.visible && c.spot === spot)
-      );
-
-      if (availableSpots.length === 0) {
-        // Try again in a moment if no spots available
-        spawnTimerRef.current = setTimeout(spawnCreature, 300);
-        return currentCreatures;
-      }
-
-      const spot = availableSpots[Math.floor(Math.random() * availableSpots.length)];
-      const creatureId = nextCreatureId.current++;
-
-      const newCreature: Creature = {
-        id: creatureId,
-        type: creatureType.type,
-        emoji: creatureType.emoji,
-        spot,
-        visible: true,
-        caught: false,
-      };
-
-      // Hide after duration
-      const hideTimer = setTimeout(() => {
-        setCreatures((prev) =>
-          prev.map((c) => (c.id === creatureId ? { ...c, visible: false } : c))
-        );
-      }, creatureType.duration);
-
-      hideTimersRef.current.set(creatureId, hideTimer);
-
-      // Spawn next creature
-      const nextDelay = 800 + Math.random() * 1200; // 800-2000ms
-      spawnTimerRef.current = setTimeout(spawnCreature, nextDelay);
-
-      return [...currentCreatures.filter((c) => c.visible || c.caught), newCreature];
-    });
-  }, []);
 
   // Handle catching a creature
   const catchCreature = useCallback((creatureId: number) => {
@@ -115,34 +74,80 @@ export function OceanSpotting({
     );
   }, []);
 
-  // Start spawning and timer when game begins
+  // Game logic
   useEffect(() => {
-    if (phase === "playing") {
-      // Start spawning creatures
-      spawnCreature();
+    if (phase !== "playing") return;
 
-      // Update timer every 100ms
-      const timerInterval = setInterval(() => {
-        const elapsed = Date.now() - gameStartTimeRef.current;
-        const remaining = Math.max(0, GAME_DURATION - elapsed);
-        setTimeRemaining(remaining);
+    gameStartTimeRef.current = Date.now();
+    isSpawningRef.current = true;
 
-        if (remaining <= 0) {
-          clearInterval(timerInterval);
-          setPhase("complete");
+    // Spawn creatures
+    const spawnCreature = () => {
+      if (!isSpawningRef.current) return;
+
+      setCreatures((currentCreatures) => {
+        const creatureType = CREATURE_TYPES[Math.floor(Math.random() * CREATURE_TYPES.length)];
+        const availableSpots = Array.from({ length: TOTAL_SPOTS }, (_, i) => i).filter(
+          (spot) => !currentCreatures.some((c) => c.visible && c.spot === spot)
+        );
+
+        if (availableSpots.length === 0) {
+          spawnTimerRef.current = setTimeout(spawnCreature, 300);
+          return currentCreatures;
         }
-      }, 100);
 
-      return () => {
-        clearInterval(timerInterval);
-        if (spawnTimerRef.current) {
-          clearTimeout(spawnTimerRef.current);
-        }
-        hideTimersRef.current.forEach((timer) => clearTimeout(timer));
-        hideTimersRef.current.clear();
-      };
-    }
-  }, [phase, spawnCreature]);
+        const spot = availableSpots[Math.floor(Math.random() * availableSpots.length)];
+        const creatureId = nextCreatureId.current++;
+
+        const newCreature: Creature = {
+          id: creatureId,
+          type: creatureType.type,
+          emoji: creatureType.emoji,
+          spot,
+          visible: true,
+          caught: false,
+        };
+
+        // Hide after duration
+        const hideTimer = setTimeout(() => {
+          setCreatures((prev) =>
+            prev.map((c) => (c.id === creatureId ? { ...c, visible: false } : c))
+          );
+        }, creatureType.duration);
+
+        hideTimersRef.current.set(creatureId, hideTimer);
+
+        // Spawn next creature
+        const nextDelay = 800 + Math.random() * 1200;
+        spawnTimerRef.current = setTimeout(spawnCreature, nextDelay);
+
+        return [...currentCreatures.filter((c) => c.visible), newCreature];
+      });
+    };
+
+    // Start spawning
+    spawnCreature();
+
+    // Update timer
+    timerIntervalRef.current = setInterval(() => {
+      const elapsed = Date.now() - gameStartTimeRef.current;
+      const remaining = Math.max(0, GAME_DURATION - elapsed);
+      setTimeRemaining(remaining);
+
+      if (remaining <= 0) {
+        isSpawningRef.current = false;
+        setPhase("complete");
+      }
+    }, 100);
+
+    return () => {
+      isSpawningRef.current = false;
+      if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
+      if (spawnTimerRef.current) clearTimeout(spawnTimerRef.current);
+      hideTimersRef.current.forEach((timer) => clearTimeout(timer));
+      hideTimersRef.current.clear();
+    };
+  }, [phase]);
 
   return (
     <div className="os-overlay">

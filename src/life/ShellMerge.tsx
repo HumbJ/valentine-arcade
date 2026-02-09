@@ -3,7 +3,7 @@ import "./ShellMerge.css";
 
 type GamePhase = "intro" | "playing";
 
-type ShellType = "tiny" | "small" | "medium" | "large" | "huge";
+type ShellType = "tiny" | "small" | "medium" | "large" | "huge" | "giant";
 
 interface Shell {
   id: number;
@@ -18,11 +18,12 @@ interface Shell {
 }
 
 const SHELL_TYPES: Record<ShellType, { emoji: string; next?: ShellType; radius: number; score: number }> = {
-  tiny: { emoji: "🐚", next: "small", radius: 20, score: 1 },
-  small: { emoji: "🦪", next: "medium", radius: 25, score: 3 },
-  medium: { emoji: "🐙", next: "large", radius: 30, score: 8 },
-  large: { emoji: "🦑", next: "huge", radius: 35, score: 20 },
-  huge: { emoji: "🦈", next: undefined, radius: 42, score: 50 },
+  tiny: { emoji: "🐚", next: "small", radius: 18, score: 1 },
+  small: { emoji: "🦪", next: "medium", radius: 22, score: 3 },
+  medium: { emoji: "🐙", next: "large", radius: 26, score: 8 },
+  large: { emoji: "🦑", next: "huge", radius: 30, score: 20 },
+  huge: { emoji: "🦈", next: "giant", radius: 35, score: 40 },
+  giant: { emoji: "🐋", next: undefined, radius: 40, score: 80 },
 };
 
 const GAME_WIDTH = 320;
@@ -73,6 +74,7 @@ export function ShellMerge({
 
       let newShells = [...currentShells];
       const toMerge: Set<number> = new Set();
+      const mergedShells: Shell[] = [];
 
       // Update positions with physics
       newShells = newShells.map((shell) => {
@@ -129,27 +131,28 @@ export function ShellMerge({
 
               const nextType = SHELL_TYPES[newShells[i].type].next!;
               const mergedShell: Shell = {
-                id: nextId,
+                id: Date.now() + Math.random(), // unique ID
                 type: nextType,
                 emoji: SHELL_TYPES[nextType].emoji,
                 x: (newShells[i].x + newShells[j].x) / 2,
                 y: (newShells[i].y + newShells[j].y) / 2,
-                vx: 0,
-                vy: 0,
+                vx: (newShells[i].vx + newShells[j].vx) / 2,
+                vy: (newShells[i].vy + newShells[j].vy) / 2,
                 radius: SHELL_TYPES[nextType].radius,
                 merging: true,
               };
 
-              setNextId((id) => id + 1);
+              mergedShells.push(mergedShell);
               setScore((s) => s + SHELL_TYPES[nextType].score);
 
-              // Add merged shell and remove old ones after marking
+              // Clear merging flag after animation
               setTimeout(() => {
-                setShells((shells) => {
-                  const filtered = shells.filter((s) => s.id !== newShells[i].id && s.id !== newShells[j].id);
-                  return [...filtered, { ...mergedShell, merging: false }];
-                });
-              }, 100);
+                setShells((shells) =>
+                  shells.map((s) =>
+                    s.id === mergedShell.id ? { ...s, merging: false } : s
+                  )
+                );
+              }, 300);
 
               break;
             } else {
@@ -182,9 +185,9 @@ export function ShellMerge({
         }
       }
 
-      // Remove shells marked for merging
+      // Remove shells marked for merging and add merged shells
       if (toMerge.size > 0) {
-        return newShells.filter((_, i) => !toMerge.has(i));
+        return [...newShells.filter((_, i) => !toMerge.has(i)), ...mergedShells];
       }
 
       return newShells;
@@ -193,7 +196,7 @@ export function ShellMerge({
     if (gameLoopActive.current) {
       animationFrameRef.current = requestAnimationFrame(gameLoop);
     }
-  }, [nextId]);
+  }, []);
 
   // Start/stop game loop
   useEffect(() => {
