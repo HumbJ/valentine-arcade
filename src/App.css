@@ -1016,6 +1016,10 @@ html, body {
   padding: 16px;
   text-align: center;
   transition: all 0.15s ease;
+  cursor: pointer;
+  appearance: none;
+  font-family: inherit;
+  width: 100%;
 }
 
 .game-card.locked {
@@ -1023,14 +1027,14 @@ html, body {
   cursor: not-allowed;
 }
 
-.game-card:not(.locked) {
-  cursor: pointer;
-}
-
-.game-card:not(.locked):hover {
+.game-card:hover {
   transform: translateY(-2px);
   border-color: rgba(255, 143, 177, 0.5);
   box-shadow: 0 4px 12px rgba(255, 143, 177, 0.2);
+}
+
+.game-card:active {
+  transform: translateY(0);
 }
 
 .game-emoji {
