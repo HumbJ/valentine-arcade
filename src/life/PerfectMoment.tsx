@@ -47,28 +47,20 @@ export function PerfectMoment({
     setMomentVisible(false);
     setCaptureWindow(false);
 
-    // Fade in the moment
+    // Brief delay, then show the pulsating ring
     const t1 = setTimeout(() => {
       setMomentVisible(true);
       startTimeRef.current = Date.now();
 
-      // Open capture window after 1.2s (peak of animation)
+      // Auto-miss after 3 seconds if no click
       const t2 = setTimeout(() => {
-        setCaptureWindow(true);
-
-        // Close capture window after 2s
-        const t3 = setTimeout(() => {
-          setCaptureWindow(false);
-          if (feedbackRef.current === null) {
-            // Missed it
-            setFeedback("missed");
-            feedbackRef.current = "missed";
-            const t4 = setTimeout(nextRound, 1500);
-            timersRef.current.push(t4);
-          }
-        }, 2000);
-        timersRef.current.push(t3);
-      }, 1200);
+        if (feedbackRef.current === null) {
+          setFeedback("missed");
+          feedbackRef.current = "missed";
+          const t3 = setTimeout(nextRound, 1500);
+          timersRef.current.push(t3);
+        }
+      }, 3000);
       timersRef.current.push(t2);
     }, 500);
     timersRef.current.push(t1);
@@ -76,29 +68,33 @@ export function PerfectMoment({
 
   // Handle capture attempt
   const handleCapture = useCallback(() => {
-    if (feedbackRef.current !== null) return;
+    if (feedbackRef.current !== null || !momentVisible) return;
 
     // Clear any pending timers since user captured
     timersRef.current.forEach(clearTimeout);
     timersRef.current = [];
 
-    if (captureWindow) {
-      // Perfect timing!
+    // Calculate timing based on elapsed time
+    const elapsed = Date.now() - startTimeRef.current;
+
+    // Perfect window: 1.9s to 2.1s (when ring overlaps center)
+    // Good window: 1.6s to 2.4s (close to perfect)
+    if (elapsed >= 1900 && elapsed <= 2100) {
       setFeedback("perfect");
       feedbackRef.current = "perfect";
       setScore((prev) => prev + 2);
-    } else if (momentVisible) {
-      // Okay timing
+    } else if (elapsed >= 1600 && elapsed <= 2400) {
       setFeedback("good");
       feedbackRef.current = "good";
       setScore((prev) => prev + 1);
     } else {
-      return; // Don't advance if clicked before moment visible
+      setFeedback("missed");
+      feedbackRef.current = "missed";
     }
 
     const t = setTimeout(nextRound, 1500);
     timersRef.current.push(t);
-  }, [momentVisible, captureWindow]);
+  }, [momentVisible]);
 
   // Move to next round
   const nextRound = () => {
@@ -106,7 +102,7 @@ export function PerfectMoment({
       setPhase("complete");
     } else {
       setCurrentRound((prev) => prev + 1);
-      startRound();
+      // Don't call startRound here - useEffect will handle it when currentRound changes
     }
   };
 
@@ -163,30 +159,31 @@ export function PerfectMoment({
                 Score: {score}
               </div>
 
-              <div className={`pm-moment-zone ${momentVisible ? "visible" : ""} ${captureWindow ? "peak" : ""}`}>
-                {currentMoment && (
-                  <>
-                    <div className="pm-moment-emoji">{currentMoment.emoji}</div>
-                    <div className="pm-moment-text">{currentMoment.text}</div>
-                  </>
+              <div className="pm-moment-header">
+                <div className="pm-moment-emoji">{currentMoment.emoji}</div>
+                <div className="pm-moment-text">{currentMoment.text}</div>
+              </div>
+
+              <div className="pm-timing-zone" onClick={handleCapture}>
+                {/* Center target circle */}
+                <div className="pm-target-circle"></div>
+
+                {/* Pulsating ring that shrinks from edge to center */}
+                {momentVisible && !feedback && (
+                  <div className="pm-pulsating-ring"></div>
                 )}
 
-                {captureWindow && (
-                  <div className="pm-perfect-ring"></div>
+                {/* Feedback overlay */}
+                {feedback && (
+                  <div className={`pm-feedback ${feedback}`}>
+                    {feedback === "perfect" ? "Perfect! 💗" : feedback === "good" ? "Nice! ✓" : "Missed..."}
+                  </div>
                 )}
               </div>
 
-              {feedback && (
-                <div className={`pm-feedback ${feedback}`}>
-                  {feedback === "perfect" ? "Perfect! 💗" : feedback === "good" ? "Nice! ✓" : "Missed..."}
-                </div>
-              )}
-
-              {!feedback && momentVisible && (
-                <button className="pm-capture-btn" onClick={handleCapture}>
-                  Capture 📸
-                </button>
-              )}
+              <div className="pm-hint">
+                Tap when the ring overlaps the center!
+              </div>
 
               <div className="pm-round-indicator">
                 Moment {currentRound + 1} / {totalRounds}

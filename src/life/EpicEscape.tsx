@@ -86,7 +86,7 @@ export function EpicEscape({
       setPhase("complete");
     } else {
       setCurrentRound((prev) => prev + 1);
-      startRound();
+      // Don't call startRound here - useEffect will handle it when currentRound changes
     }
   };
 
