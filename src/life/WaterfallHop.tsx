@@ -33,9 +33,27 @@ export function WaterfallHop({
   const startTimeRef = useRef(0);
   const [timeRemaining, setTimeRemaining] = useState(GAME_DURATION);
 
-  // Generate next water stream position
-  const generateStream = useCallback((): WaterStream => {
-    const position = Math.floor(Math.random() * 3); // 0, 1, or 2
+  // Generate next water stream position (smart spawning to avoid boxing player out)
+  const generateStream = useCallback((activeStreams: WaterStream[]): WaterStream => {
+    // Check which positions have recent active streams (in upper 40% of screen)
+    const blockedPositions = new Set(
+      activeStreams
+        .filter((s) => s.distance < 40)
+        .map((s) => s.position)
+    );
+
+    // If all 3 positions would be blocked, pick a random open one
+    let position: number;
+    if (blockedPositions.size >= 2) {
+      // Find available positions
+      const available = [0, 1, 2].filter((p) => !blockedPositions.has(p));
+      position = available.length > 0
+        ? available[Math.floor(Math.random() * available.length)]
+        : Math.floor(Math.random() * 3);
+    } else {
+      position = Math.floor(Math.random() * 3);
+    }
+
     const speed = 0.6 + Math.random() * 0.4; // 0.6-1.0 speed multiplier
     return {
       id: nextStreamIdRef.current++,
@@ -58,8 +76,8 @@ export function WaterfallHop({
 
   // Check collisions
   const checkCollision = useCallback((streamList: WaterStream[], playerPos: number) => {
-    const PLAYER_ZONE_START = 88; // Tighter hitbox around player position
-    const PLAYER_ZONE_END = 95;
+    const PLAYER_ZONE_START = 90; // Very tight hitbox around player
+    const PLAYER_ZONE_END = 94;
 
     for (const stream of streamList) {
       // Check if water stream hits the player zone
@@ -101,7 +119,7 @@ export function WaterfallHop({
 
       // Spawn water streams (faster as game progresses)
       if (now - lastSpawnRef.current > 800 / difficulty) {
-        setWaterStreams((prev) => [...prev, generateStream()]);
+        setWaterStreams((prev) => [...prev, generateStream(prev)]);
         lastSpawnRef.current = now;
       }
 

@@ -108,8 +108,14 @@ export function BouquetRush({
       setScore((s) => s + baseScore + timeBonus);
       setOrdersCompleted((c) => c + 1);
 
-      // Remove the completed order
-      setOrders((prev) => prev.slice(1));
+      // Remove the completed order and immediately spawn a new one if there's room
+      setOrders((prev) => {
+        const remaining = prev.slice(1);
+        if (remaining.length < 3) {
+          return [...remaining, generateOrder()];
+        }
+        return remaining;
+      });
     } else {
       // Wrong! Just clear and let them try again (small penalty)
       setScore((s) => Math.max(0, s - 10));
