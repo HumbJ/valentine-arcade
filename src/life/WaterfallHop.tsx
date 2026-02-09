@@ -58,8 +58,8 @@ export function WaterfallHop({
 
   // Check collisions
   const checkCollision = useCallback((streamList: WaterStream[], playerPos: number) => {
-    const PLAYER_ZONE_START = 85; // Player is at 85-100% of screen
-    const PLAYER_ZONE_END = 100;
+    const PLAYER_ZONE_START = 88; // Tighter hitbox around player position
+    const PLAYER_ZONE_END = 95;
 
     for (const stream of streamList) {
       // Check if water stream hits the player zone
