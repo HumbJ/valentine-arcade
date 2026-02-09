@@ -77,13 +77,13 @@ export function PerfectMoment({
     // Calculate timing based on elapsed time
     const elapsed = Date.now() - startTimeRef.current;
 
-    // Perfect window: 1.9s to 2.1s (when ring overlaps center)
-    // Good window: 1.6s to 2.4s (close to perfect)
-    if (elapsed >= 1900 && elapsed <= 2100) {
+    // Perfect window: 2.4s to 2.7s (when ring overlaps center circle)
+    // Good window: 2.1s to 2.9s (close to center)
+    if (elapsed >= 2400 && elapsed <= 2700) {
       setFeedback("perfect");
       feedbackRef.current = "perfect";
       setScore((prev) => prev + 2);
-    } else if (elapsed >= 1600 && elapsed <= 2400) {
+    } else if (elapsed >= 2100 && elapsed <= 2900) {
       setFeedback("good");
       feedbackRef.current = "good";
       setScore((prev) => prev + 1);
@@ -179,10 +179,6 @@ export function PerfectMoment({
                     {feedback === "perfect" ? "Perfect! 💗" : feedback === "good" ? "Nice! ✓" : "Missed..."}
                   </div>
                 )}
-              </div>
-
-              <div className="pm-hint">
-                Tap when the ring overlaps the center!
               </div>
 
               <div className="pm-round-indicator">
