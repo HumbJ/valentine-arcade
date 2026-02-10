@@ -154,7 +154,20 @@ export const SEATTLE_1_REFLECTION_PROMPT: LifeEvent = {
     {
       id: "skip",
       label: "Maybe later",
-      effects: [{ type: "goto", eventId: "end_demo" }],
+      effects: [
+        // Skip reflection but still give rewards and complete the trip
+        { type: "stat", key: "love", delta: 14 },
+        { type: "stat", key: "happiness", delta: 10 },
+        { type: "stat", key: "memories", delta: 12 },
+        { type: "unlockPlace", placeId: "seattle1" },
+        { type: "unlockDateNights", tripId: "seattle1" },
+        {
+          type: "log",
+          text:
+            "Seattle Trip I: our first big adventure — exploring the world and learning how easy it can feel to be together.",
+        },
+        { type: "gotoHome", markComplete: "seattle1" },
+      ],
     },
   ],
 };

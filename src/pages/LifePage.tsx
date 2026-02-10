@@ -7,6 +7,7 @@ import type { Effect } from "../life/types";
 import { JigsawGate } from "../life/JigsawGate";
 import { PLACES } from "../life/places";
 import { MapDiscoverGate } from "../life/MapDiscoverGate";
+import { getDateNightsByUnlock } from "../life/dateNights";
 import { FOOD_GAMES } from "../life/foodGames";
 import { FoodOrderGate } from "../life/FoodOrderGate";
 import { ReflectionGate } from "../life/ReflectionGate";
@@ -138,12 +139,13 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
 
   function showRewardsFromEffects(effects: Effect[]) {
     const shouldShow = effects.some(
-      (e) => e.type === "unlockPlace" || (e.type === "stat" && e.key === "memories")
+      (e) => e.type === "unlockPlace" || e.type === "unlockDateNights" || (e.type === "stat" && e.key === "memories")
     );
     if (!shouldShow) return;
 
     const stat: Partial<Record<"love" | "happiness" | "memories", number>> = {};
     const unlocked: string[] = [];
+    const unlockedDateNights: string[] = [];
 
     for (const e of effects) {
       if (e.type === "stat") {
@@ -153,6 +155,7 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
         stat[k] = (stat[k] ?? 0) + e.delta;
       }
       if (e.type === "unlockPlace") unlocked.push(e.placeId);
+      if (e.type === "unlockDateNights") unlockedDateNights.push(e.tripId);
     }
 
     const lines: string[] = [];
@@ -170,6 +173,19 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
       unlocked.forEach((id) => {
         const p = map.get(id);
         lines.push(`Unlocked: ${p ? `${p.emoji} ${p.title}` : id}`);
+      });
+    }
+
+    if (unlockedDateNights.length) {
+      unlockedDateNights.forEach((tripId) => {
+        const dateNights = getDateNightsByUnlock(tripId);
+        if (dateNights.length > 0) {
+          lines.push("");
+          lines.push(`✨ Date Nights Unlocked! ✨`);
+          dateNights.forEach((dn) => {
+            lines.push(`${dn.emoji} ${dn.title}`);
+          });
+        }
       });
     }
 

@@ -41,6 +41,7 @@ export function OceanSpotting({
   const gameStartTimeRef = useRef<number>(0);
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const isSpawningRef = useRef(false);
+  const caughtCreaturesRef = useRef<Set<number>>(new Set());
 
   // Start the game
   const startGame = () => {
@@ -49,36 +50,49 @@ export function OceanSpotting({
     setTimeRemaining(GAME_DURATION);
     setCreatures([]);
     nextCreatureId.current = 0;
-    gameStartTimeRef.current = Date.now();
+    gameStartTimeRef.current = 0; // Reset to 0, will be set in useEffect
     isSpawningRef.current = false;
+    caughtCreaturesRef.current.clear();
   };
 
   // Handle catching a creature
   const catchCreature = useCallback((creatureId: number) => {
-    setCreatures((prev) =>
-      prev.map((c) => {
-        if (c.id === creatureId && c.visible && !c.caught) {
-          setScore((s) => s + 1);
+    // Prevent spam-clicking the same creature
+    if (caughtCreaturesRef.current.has(creatureId)) {
+      return;
+    }
 
-          // Clear hide timer
-          const timer = hideTimersRef.current.get(creatureId);
-          if (timer) {
-            clearTimeout(timer);
-            hideTimersRef.current.delete(creatureId);
-          }
+    setCreatures((prev) => {
+      const creature = prev.find((c) => c.id === creatureId);
+      if (!creature || !creature.visible || creature.caught) {
+        return prev;
+      }
 
-          return { ...c, caught: true, visible: false };
-        }
-        return c;
-      })
-    );
+      // Mark as caught in ref immediately to prevent spam-clicking
+      caughtCreaturesRef.current.add(creatureId);
+      setScore((s) => s + 1);
+
+      // Clear hide timer
+      const timer = hideTimersRef.current.get(creatureId);
+      if (timer) {
+        clearTimeout(timer);
+        hideTimersRef.current.delete(creatureId);
+      }
+
+      return prev.map((c) =>
+        c.id === creatureId ? { ...c, caught: true, visible: false } : c
+      );
+    });
   }, []);
 
   // Game logic
   useEffect(() => {
     if (phase !== "playing") return;
 
-    gameStartTimeRef.current = Date.now();
+    // Don't reset the start time if already set
+    if (gameStartTimeRef.current === 0) {
+      gameStartTimeRef.current = Date.now();
+    }
     isSpawningRef.current = true;
 
     // Spawn creatures
@@ -130,12 +144,25 @@ export function OceanSpotting({
 
     // Update timer
     timerIntervalRef.current = setInterval(() => {
+      // Safety check - don't update if not spawning
+      if (!isSpawningRef.current) {
+        if (timerIntervalRef.current) {
+          clearInterval(timerIntervalRef.current);
+          timerIntervalRef.current = null;
+        }
+        return;
+      }
+
       const elapsed = Date.now() - gameStartTimeRef.current;
       const remaining = Math.max(0, GAME_DURATION - elapsed);
       setTimeRemaining(remaining);
 
       if (remaining <= 0) {
         isSpawningRef.current = false;
+        if (timerIntervalRef.current) {
+          clearInterval(timerIntervalRef.current);
+          timerIntervalRef.current = null;
+        }
         setPhase("complete");
       }
     }, 100);
