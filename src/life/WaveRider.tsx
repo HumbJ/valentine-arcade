@@ -139,9 +139,17 @@ export function WaveRider({
 
       surfer.y += surfer.velocity * deltaTime;
 
-      // Check for collisions (with margin for surfer size)
-      const hitTopOrBottom = surfer.y <= SURFER_SIZE || surfer.y >= (1 - SURFER_SIZE);
+      // Clamp surfer to screen bounds (don't die, just stop at edges)
+      if (surfer.y < SURFER_SIZE) {
+        surfer.y = SURFER_SIZE;
+        surfer.velocity = 0;
+      }
+      if (surfer.y > 1 - SURFER_SIZE) {
+        surfer.y = 1 - SURFER_SIZE;
+        surfer.velocity = 0;
+      }
 
+      // Check for wave collisions (ONLY way to die)
       const hitWave = wavesRef.current.some((wave) => {
         const surferInWaveX = SURFER_X > wave.x - 20 && SURFER_X < wave.x + WAVE_WIDTH + 20;
         if (!surferInWaveX) return false;
@@ -156,7 +164,7 @@ export function WaveRider({
         return !surferInGap; // Collision if NOT in gap
       });
 
-      if (hitTopOrBottom || hitWave) {
+      if (hitWave) {
         isRunningRef.current = false;
         setPhase("complete");
         return;
