@@ -25,7 +25,7 @@ const FLAP_POWER = -0.035;
 const WAVE_WIDTH = 80;
 const INITIAL_WAVE_SPEED = 3;
 const WAVE_SPAWN_DISTANCE = 250; // pixels between waves
-const GAP_SIZE = 0.25; // size of gap as fraction of canvas height
+const GAP_SIZE = 0.30; // size of gap as fraction of canvas height (slightly larger for easier gameplay)
 
 export function WaveRider({
   title,
@@ -147,7 +147,10 @@ export function WaveRider({
 
         const gapTop = wave.gapY - wave.gapSize / 2;
         const gapBottom = wave.gapY + wave.gapSize / 2;
-        const surferInGap = surfer.y > gapTop && surfer.y < gapBottom;
+        // Check if surfer's hitbox (with size) fits through the gap
+        const surferTop = surfer.y - SURFER_SIZE;
+        const surferBottom = surfer.y + SURFER_SIZE;
+        const surferInGap = surferTop > gapTop && surferBottom < gapBottom;
 
         return !surferInGap; // Collision if NOT in gap
       });
