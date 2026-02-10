@@ -26,7 +26,7 @@ const MAX_VELOCITY = 0.004; // Tight velocity cap for precise control
 const WAVE_WIDTH = 80;
 const INITIAL_WAVE_SPEED = 3;
 const WAVE_SPAWN_DISTANCE = 250; // pixels between waves
-const GAP_SIZE = 0.38; // Even larger gap for more forgiving gameplay
+const GAP_SIZE = 0.40; // Even larger gap for more forgiving gameplay
 
 export function WaveRider({
   title,
