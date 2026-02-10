@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { loadSave } from "../life/save";
 import { TRIP_MINI_GAMES, OTHER_MINI_GAMES } from "../life/miniGames";
-import { OceanSpotting } from "../life/OceanSpotting";
+import { WaveRider } from "../life/WaveRider";
 import { IslandDrive } from "../life/IslandDrive";
 import { ShellMerge } from "../life/ShellMerge";
 import { LeiPattern } from "../life/LeiPattern";
@@ -115,8 +115,8 @@ export function MiniGamesPage() {
       )}
 
       {/* Game Overlays */}
-      {activeGame === "OceanSpotting" && (
-        <OceanSpotting title="Ocean Spotting" onDone={handleGameDone} />
+      {activeGame === "WaveRider" && (
+        <WaveRider title="Wave Rider" onDone={handleGameDone} />
       )}
       {activeGame === "IslandDrive" && (
         <IslandDrive title="Island Drive" onDone={handleGameDone} />

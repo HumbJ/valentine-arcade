@@ -104,11 +104,11 @@ export const TRIP_MINI_GAMES: TripGames[] = [
         component: "IslandDrive",
       },
       {
-        id: "oceanSpotting",
-        title: "Ocean Spotting",
-        emoji: "🐬",
-        description: "Spot sea creatures",
-        component: "OceanSpotting",
+        id: "waveRider",
+        title: "Wave Rider",
+        emoji: "🏄",
+        description: "Navigate through the waves",
+        component: "WaveRider",
       },
       {
         id: "shellMerge",
