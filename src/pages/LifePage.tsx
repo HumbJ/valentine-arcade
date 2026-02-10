@@ -537,32 +537,7 @@ if (reviewEff) {
       return;
     }
 
-    // 6) Check for gotoHome - navigate to home hub
-    const gotoHomeEff = effects.find(
-      (e): e is Extract<Effect, { type: "gotoHome" }> => e.type === "gotoHome"
-    );
-    if (gotoHomeEff) {
-      // Apply all other effects first
-      const otherEffects = effects.filter((e) => e.type !== "gotoHome");
-      setSave((prev: typeof save) => {
-        let next = otherEffects.length > 0 ? applyEffects(prev, otherEffects) : prev;
-        // Reset to hub state and optionally mark event complete
-        next = {
-          ...next,
-          currentEventId: "hub",
-          completedEvents: gotoHomeEff.markComplete
-            ? [...(next.completedEvents ?? []), gotoHomeEff.markComplete]
-            : (next.completedEvents ?? []),
-        };
-        persistSave(next);
-        return next;
-      });
-      // Navigate to home after a brief delay
-      setTimeout(() => navigate("/"), 100);
-      return;
-    }
-
-    // 7) Apply remaining effects
+    // 6) Apply remaining effects (including gotoHome which checks for interlude)
     setSave((prev: typeof save) => {
       const next = applyEffects(prev, effects);
       persistSave(next);
