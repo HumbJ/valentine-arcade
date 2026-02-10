@@ -60,7 +60,8 @@ export function WaveRider({
     isPressedRef.current = false;
     scoreRef.current = 0;
     waveSpeedRef.current = INITIAL_WAVE_SPEED;
-    lastWaveXRef.current = CANVAS_WIDTH;
+    // Start with lastWaveX further ahead so the first wave spawns with delay
+    lastWaveXRef.current = CANVAS_WIDTH + WAVE_SPAWN_DISTANCE;
   };
 
   const flap = useCallback(() => {
