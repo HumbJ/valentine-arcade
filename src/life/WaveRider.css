@@ -1,0 +1,155 @@
+.wr-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.wr-wrap {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.wr-content {
+  text-align: center;
+}
+
+.wr-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.wr-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+}
+
+.wr-intro {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.wr-intro-text {
+  color: white;
+  font-size: 1rem;
+  line-height: 1.8;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.wr-btn {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.wr-btn.primary {
+  background: white;
+  color: #667eea;
+}
+
+.wr-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.wr-playing {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.wr-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.wr-score {
+  color: #FFD700;
+}
+
+.wr-combo {
+  color: #FF6B6B;
+  min-width: 120px;
+  font-size: 1.2rem;
+}
+
+.wr-timer {
+  color: white;
+}
+
+.wr-canvas {
+  border-radius: 8px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  background: #87CEEB;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.wr-canvas:active {
+  transform: scale(0.99);
+}
+
+.wr-instructions {
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.wr-complete {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.wr-final-score {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #FFD700;
+  margin-bottom: 1rem;
+}
+
+.wr-complete-text {
+  color: white;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

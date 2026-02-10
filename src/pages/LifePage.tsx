@@ -27,7 +27,7 @@ import { SpotTheClues } from "../life/SpotTheClues";
 import { PerfectMoment } from "../life/PerfectMoment";
 import { GiggleGauge } from "../life/GiggleGauge";
 import { EpicEscape } from "../life/EpicEscape";
-import { OceanSpotting } from "../life/OceanSpotting";
+import { WaveRider } from "../life/WaveRider";
 import { IslandDrive } from "../life/IslandDrive";
 import { ShellMerge } from "../life/ShellMerge";
 import { LeiPattern } from "../life/LeiPattern";
@@ -103,8 +103,8 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
   const [pendingAfterEpicEscape, setPendingAfterEpicEscape] = useState<Effect[] | null>(null);
 
   // Hawaii trip mini-game states
-  const [oceanSpottingGate, setOceanSpottingGate] = useState<null | { title?: string; subtitle?: string }>(null);
-  const [pendingAfterOceanSpotting, setPendingAfterOceanSpotting] = useState<Effect[] | null>(null);
+  const [waveRiderGate, setWaveRiderGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterWaveRider, setPendingAfterWaveRider] = useState<Effect[] | null>(null);
   const [islandDriveGate, setIslandDriveGate] = useState<null | { title?: string; subtitle?: string }>(null);
   const [pendingAfterIslandDrive, setPendingAfterIslandDrive] = useState<Effect[] | null>(null);
   const [shellMergeGate, setShellMergeGate] = useState<null | { title?: string; subtitle?: string }>(null);
@@ -405,16 +405,16 @@ if (picnicEff && picnicEff.type === "picnicDate") {
       return;
     }
 
-    // 2.17) Ocean spotting gate (Hawaii boating)
-    const oceanSpottingEff = effects.find(
+    // 2.17) Wave Rider gate (Hawaii boating)
+    const waveRiderEff = effects.find(
       (e): e is Extract<Effect, { type: "oceanSpotting" }> => e.type === "oceanSpotting"
     );
-    if (oceanSpottingEff) {
-      setOceanSpottingGate({
-        title: oceanSpottingEff.title,
-        subtitle: oceanSpottingEff.subtitle,
+    if (waveRiderEff) {
+      setWaveRiderGate({
+        title: waveRiderEff.title,
+        subtitle: waveRiderEff.subtitle,
       });
-      setPendingAfterOceanSpotting(effects.filter((e) => e.type !== "oceanSpotting"));
+      setPendingAfterWaveRider(effects.filter((e) => e.type !== "oceanSpotting"));
       return;
     }
 
@@ -763,11 +763,11 @@ function finishReflectionSave(text: string) {
     runEffects(rest);
   }
 
-  function finishOceanSpotting() {
-    setOceanSpottingGate(null);
-    if (!pendingAfterOceanSpotting) return;
-    const rest = pendingAfterOceanSpotting;
-    setPendingAfterOceanSpotting(null);
+  function finishWaveRider() {
+    setWaveRiderGate(null);
+    if (!pendingAfterWaveRider) return;
+    const rest = pendingAfterWaveRider;
+    setPendingAfterWaveRider(null);
     runEffects(rest);
   }
 
@@ -1149,11 +1149,11 @@ function finishReflectionSave(text: string) {
         />
       )}
 
-      {oceanSpottingGate && (
-        <OceanSpotting
-          title={oceanSpottingGate.title}
-          subtitle={oceanSpottingGate.subtitle}
-          onDone={finishOceanSpotting}
+      {waveRiderGate && (
+        <WaveRider
+          title={waveRiderGate.title}
+          subtitle={waveRiderGate.subtitle}
+          onDone={finishWaveRider}
         />
       )}
 
