@@ -20,8 +20,9 @@ const CANVAS_WIDTH = 600;
 const CANVAS_HEIGHT = 400;
 const SURFER_X = 100; // Fixed x position for surfer
 const SURFER_SIZE = 0.05; // Surfer hitbox size as fraction of canvas (40px / 400px ≈ 0.1, but we use 0.05 for margin)
-const GRAVITY = 0.0015;
-const FLAP_POWER = -0.035;
+const GRAVITY = 0.0008; // Reduced gravity for more gradual falling
+const FLAP_POWER = -0.012; // Much gentler upward force
+const MAX_VELOCITY = 0.02; // Limit max speed to prevent instant jumps
 const WAVE_WIDTH = 80;
 const INITIAL_WAVE_SPEED = 3;
 const WAVE_SPAWN_DISTANCE = 250; // pixels between waves
@@ -136,6 +137,9 @@ export function WaveRider({
       } else {
         surfer.velocity += GRAVITY * deltaTime;
       }
+
+      // Clamp velocity to prevent instant jumps
+      surfer.velocity = Math.max(-MAX_VELOCITY, Math.min(MAX_VELOCITY, surfer.velocity));
 
       surfer.y += surfer.velocity * deltaTime;
 
