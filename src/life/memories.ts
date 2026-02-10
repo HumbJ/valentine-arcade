@@ -222,7 +222,62 @@ MEMORIES["seattle2"] = [
   ...(MEMORIES["seattle2_reflection"] ?? []),
 ];
 
+// --- Date Night decks (unlocked as trips progress) ---------------------------
+const dateAquarium = import.meta.glob("../assets/photos/dates/datenights/aquarium/*", { eager: true });
+const dateBar = import.meta.glob("../assets/photos/dates/datenights/bar/*", { eager: true });
+const dateBreakfast1 = import.meta.glob("../assets/photos/dates/datenights/breakfast1/*", { eager: true });
+const dateChristmasGlobe = import.meta.glob("../assets/photos/dates/datenights/christmasglobe/*", { eager: true });
+const dateConcert1Jonas = import.meta.glob("../assets/photos/dates/datenights/concert1jonas/*", { eager: true });
+const dateConcertJhene = import.meta.glob("../assets/photos/dates/datenights/concertjhene/*", { eager: true });
+const dateConcertKehlani = import.meta.glob("../assets/photos/dates/datenights/concertkehlani/*", { eager: true });
+const dateDessert1 = import.meta.glob("../assets/photos/dates/datenights/dessert1/*", { eager: true });
+const dateDessert2 = import.meta.glob("../assets/photos/dates/datenights/dessert2/*", { eager: true });
+const dateFriends1 = import.meta.glob("../assets/photos/dates/datenights/friends1/*", { eager: true });
+const dateFriends2 = import.meta.glob("../assets/photos/dates/datenights/friends2/*", { eager: true });
+const dateFriendsKbbq = import.meta.glob("../assets/photos/dates/datenights/friendskbbq/*", { eager: true });
+const dateFriendsSteakhouse = import.meta.glob("../assets/photos/dates/datenights/friendssteakhouse/*", { eager: true });
+const dateHalloween = import.meta.glob("../assets/photos/dates/datenights/halloween/*", { eager: true });
+const dateHitokuchi = import.meta.glob("../assets/photos/dates/datenights/hitokuchi/*", { eager: true });
+const dateItalian1 = import.meta.glob("../assets/photos/dates/datenights/italian1/*", { eager: true });
+const dateJordanBirthday = import.meta.glob("../assets/photos/dates/datenights/jordanbirthday/*", { eager: true });
+const dateLunch = import.meta.glob("../assets/photos/dates/datenights/lunch/*", { eager: true });
+const dateOakGlenn = import.meta.glob("../assets/photos/dates/datenights/oakglenn/*", { eager: true });
+const dateOllieBirthday = import.meta.glob("../assets/photos/dates/datenights/olliebirthday/*", { eager: true });
+const dateOmikase = import.meta.glob("../assets/photos/dates/datenights/omikase/*", { eager: true });
+const datePinning = import.meta.glob("../assets/photos/dates/datenights/pinning/*", { eager: true });
+const datePokemonDayIn = import.meta.glob("../assets/photos/dates/datenights/pokemondayin/*", { eager: true });
+const dateSchoolFriends = import.meta.glob("../assets/photos/dates/datenights/schoolfriends/*", { eager: true });
+const dateSeaworld = import.meta.glob("../assets/photos/dates/datenights/seaworld/*", { eager: true });
+const dateValentinesDay = import.meta.glob("../assets/photos/dates/datenights/valentinesday/*", { eager: true });
+const dateZoo1 = import.meta.glob("../assets/photos/dates/datenights/zoo1/*", { eager: true });
 
+MEMORIES["date_aquarium"] = deckFromGlob(dateAquarium);
+MEMORIES["date_bar"] = deckFromGlob(dateBar);
+MEMORIES["date_breakfast1"] = deckFromGlob(dateBreakfast1);
+MEMORIES["date_christmasglobe"] = deckFromGlob(dateChristmasGlobe);
+MEMORIES["date_concert1jonas"] = deckFromGlob(dateConcert1Jonas);
+MEMORIES["date_concertjhene"] = deckFromGlob(dateConcertJhene);
+MEMORIES["date_concertkehlani"] = deckFromGlob(dateConcertKehlani);
+MEMORIES["date_dessert1"] = deckFromGlob(dateDessert1);
+MEMORIES["date_dessert2"] = deckFromGlob(dateDessert2);
+MEMORIES["date_friends1"] = deckFromGlob(dateFriends1);
+MEMORIES["date_friends2"] = deckFromGlob(dateFriends2);
+MEMORIES["date_friendskbbq"] = deckFromGlob(dateFriendsKbbq);
+MEMORIES["date_friendssteakhouse"] = deckFromGlob(dateFriendsSteakhouse);
+MEMORIES["date_halloween"] = deckFromGlob(dateHalloween);
+MEMORIES["date_hitokuchi"] = deckFromGlob(dateHitokuchi);
+MEMORIES["date_italian1"] = deckFromGlob(dateItalian1);
+MEMORIES["date_jordanbirthday"] = deckFromGlob(dateJordanBirthday);
+MEMORIES["date_lunch"] = deckFromGlob(dateLunch);
+MEMORIES["date_oakglenn"] = deckFromGlob(dateOakGlenn);
+MEMORIES["date_olliebirthday"] = deckFromGlob(dateOllieBirthday);
+MEMORIES["date_omikase"] = deckFromGlob(dateOmikase);
+MEMORIES["date_pinning"] = deckFromGlob(datePinning);
+MEMORIES["date_pokemondayin"] = deckFromGlob(datePokemonDayIn);
+MEMORIES["date_schoolfriends"] = deckFromGlob(dateSchoolFriends);
+MEMORIES["date_seaworld"] = deckFromGlob(dateSeaworld);
+MEMORIES["date_valentinesday"] = deckFromGlob(dateValentinesDay);
+MEMORIES["date_zoo1"] = deckFromGlob(dateZoo1);
 
 export function getMemorySrc(deck: string, id: string): string | null {
   const arr = MEMORIES[deck] ?? [];
