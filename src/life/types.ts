@@ -118,6 +118,11 @@ export type Effect =
       type: "waterfallHop";
       title?: string;
       subtitle?: string;
+    }
+  // Date night unlocking
+  | {
+      type: "unlockDateNights";
+      tripId: "seattle1" | "hawaii" | "seattle2" | "roadtrip" | "newyork";
     };
 
 

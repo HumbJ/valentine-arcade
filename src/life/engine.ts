@@ -1,5 +1,6 @@
 import type { Effect, LifeEvent, SaveData, Stats } from "./types";
 import { LIFE_EVENTS } from "./events";
+import { getDateNightsByUnlock } from "./dateNights";
 
 const clamp01 = (n: number) => Math.max(0, Math.min(100, n));
 
@@ -40,6 +41,22 @@ if (
 
     if (!next.placesUnlocked.includes(eff.placeId)) {
       next.placesUnlocked = [eff.placeId, ...next.placesUnlocked];
+    }
+    continue;
+  }
+
+  if (eff.type === "unlockDateNights") {
+    // Initialize unlockedDateNights if it doesn't exist
+    next.unlockedDateNights = Array.isArray(next.unlockedDateNights) ? next.unlockedDateNights : [];
+
+    // Get all date nights that should be unlocked for this trip
+    const dateNightsToUnlock = getDateNightsByUnlock(eff.tripId);
+
+    // Add any that aren't already unlocked
+    for (const dateNight of dateNightsToUnlock) {
+      if (!next.unlockedDateNights.includes(dateNight.id)) {
+        next.unlockedDateNights = [...next.unlockedDateNights, dateNight.id];
+      }
     }
     continue;
   }
