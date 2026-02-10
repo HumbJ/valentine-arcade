@@ -34,6 +34,9 @@ if (
   continue;
 }
 
+// experienceDateNight is tracked separately - don't skip it
+// (it needs to be processed to update save data)
+
 
   if (eff.type === "unlockPlace") {
     // Defensive: older saves might not have this field yet
@@ -61,6 +64,17 @@ if (
     continue;
   }
 
+  if (eff.type === "experienceDateNight") {
+    // Initialize experiencedDateNights if it doesn't exist
+    next.experiencedDateNights = Array.isArray(next.experiencedDateNights) ? next.experiencedDateNights : [];
+
+    // Mark this date night as experienced
+    if (!next.experiencedDateNights.includes(eff.dateNightId)) {
+      next.experiencedDateNights = [...next.experiencedDateNights, eff.dateNightId];
+    }
+    continue;
+  }
+
   if (eff.type === "log") {
     next.log = [{ t: Date.now(), text: eff.text }, ...next.log].slice(0, 50);
     next.stats = { ...next.stats, memories: next.stats.memories + 1 };
@@ -73,13 +87,28 @@ if (
   }
 
   if (eff.type === "gotoHome") {
-    next.currentEventId = "hub";
+    // Mark event as complete if requested
     if (eff.markComplete) {
       next.completedEvents = Array.isArray(next.completedEvents) ? next.completedEvents : [];
       if (!next.completedEvents.includes(eff.markComplete)) {
         next.completedEvents = [...next.completedEvents, eff.markComplete];
       }
     }
+
+    // Check if there are unlocked but not-yet-experienced date nights
+    const unlockedDateNights = next.unlockedDateNights || [];
+    const experiencedDateNights = next.experiencedDateNights || [];
+    const availableDateNights = unlockedDateNights.filter(
+      (id) => !experiencedDateNights.includes(id)
+    );
+
+    // If there are available date nights, go to interlude instead of hub
+    if (availableDateNights.length > 0) {
+      next.currentEventId = "date_night_interlude";
+    } else {
+      next.currentEventId = "hub";
+    }
+
     continue;
   }
 }

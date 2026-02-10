@@ -1407,6 +1407,7 @@ export const DATE_BREAKFAST1: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_breakfast1" },
+      { type: "experienceDateNight", dateNightId: "date_breakfast1" },
       { type: "gotoHome" },
     ],
   }],
@@ -1421,6 +1422,7 @@ export const DATE_LUNCH: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_lunch" },
+      { type: "experienceDateNight", dateNightId: "date_lunch" },
       { type: "gotoHome" },
     ],
   }],
@@ -1435,6 +1437,7 @@ export const DATE_DESSERT1: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_dessert1" },
+      { type: "experienceDateNight", dateNightId: "date_dessert1" },
       { type: "gotoHome" },
     ],
   }],
@@ -1449,6 +1452,7 @@ export const DATE_BAR: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_bar" },
+      { type: "experienceDateNight", dateNightId: "date_bar" },
       { type: "gotoHome" },
     ],
   }],
@@ -1463,6 +1467,7 @@ export const DATE_ITALIAN1: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_italian1" },
+      { type: "experienceDateNight", dateNightId: "date_italian1" },
       { type: "gotoHome" },
     ],
   }],
@@ -1477,6 +1482,7 @@ export const DATE_POKEMONDAYIN: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_pokemondayin" },
+      { type: "experienceDateNight", dateNightId: "date_pokemondayin" },
       { type: "gotoHome" },
     ],
   }],
@@ -1491,6 +1497,7 @@ export const DATE_ZOO1: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_zoo1" },
+      { type: "experienceDateNight", dateNightId: "date_zoo1" },
       { type: "gotoHome" },
     ],
   }],
@@ -1505,6 +1512,7 @@ export const DATE_AQUARIUM: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_aquarium" },
+      { type: "experienceDateNight", dateNightId: "date_aquarium" },
       { type: "gotoHome" },
     ],
   }],
@@ -1519,6 +1527,7 @@ export const DATE_SEAWORLD: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_seaworld" },
+      { type: "experienceDateNight", dateNightId: "date_seaworld" },
       { type: "gotoHome" },
     ],
   }],
@@ -1533,6 +1542,7 @@ export const DATE_DESSERT2: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_dessert2" },
+      { type: "experienceDateNight", dateNightId: "date_dessert2" },
       { type: "gotoHome" },
     ],
   }],
@@ -1547,6 +1557,7 @@ export const DATE_OMIKASE: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_omikase" },
+      { type: "experienceDateNight", dateNightId: "date_omikase" },
       { type: "gotoHome" },
     ],
   }],
@@ -1561,6 +1572,7 @@ export const DATE_HITOKUCHI: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_hitokuchi" },
+      { type: "experienceDateNight", dateNightId: "date_hitokuchi" },
       { type: "gotoHome" },
     ],
   }],
@@ -1575,6 +1587,7 @@ export const DATE_CHRISTMASGLOBE: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_christmasglobe" },
+      { type: "experienceDateNight", dateNightId: "date_christmasglobe" },
       { type: "gotoHome" },
     ],
   }],
@@ -1589,6 +1602,7 @@ export const DATE_HALLOWEEN: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_halloween" },
+      { type: "experienceDateNight", dateNightId: "date_halloween" },
       { type: "gotoHome" },
     ],
   }],
@@ -1603,6 +1617,7 @@ export const DATE_PINNING: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_pinning" },
+      { type: "experienceDateNight", dateNightId: "date_pinning" },
       { type: "gotoHome" },
     ],
   }],
@@ -1617,6 +1632,7 @@ export const DATE_OAKGLENN: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_oakglenn" },
+      { type: "experienceDateNight", dateNightId: "date_oakglenn" },
       { type: "gotoHome" },
     ],
   }],
@@ -1631,6 +1647,7 @@ export const DATE_FRIENDSKBBQ: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_friendskbbq" },
+      { type: "experienceDateNight", dateNightId: "date_friendskbbq" },
       { type: "gotoHome" },
     ],
   }],
@@ -1645,6 +1662,7 @@ export const DATE_FRIENDSSTEAKHOUSE: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_friendssteakhouse" },
+      { type: "experienceDateNight", dateNightId: "date_friendssteakhouse" },
       { type: "gotoHome" },
     ],
   }],
@@ -1659,6 +1677,7 @@ export const DATE_CONCERTKEHLANI: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_concertkehlani" },
+      { type: "experienceDateNight", dateNightId: "date_concertkehlani" },
       { type: "gotoHome" },
     ],
   }],
@@ -1673,6 +1692,7 @@ export const DATE_CONCERTJHENE: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_concertjhene" },
+      { type: "experienceDateNight", dateNightId: "date_concertjhene" },
       { type: "gotoHome" },
     ],
   }],
@@ -1687,6 +1707,7 @@ export const DATE_CONCERT1JONAS: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_concert1jonas" },
+      { type: "experienceDateNight", dateNightId: "date_concert1jonas" },
       { type: "gotoHome" },
     ],
   }],
@@ -1701,6 +1722,7 @@ export const DATE_FRIENDS1: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_friends1" },
+      { type: "experienceDateNight", dateNightId: "date_friends1" },
       { type: "gotoHome" },
     ],
   }],
@@ -1715,6 +1737,7 @@ export const DATE_FRIENDS2: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_friends2" },
+      { type: "experienceDateNight", dateNightId: "date_friends2" },
       { type: "gotoHome" },
     ],
   }],
@@ -1729,6 +1752,7 @@ export const DATE_SCHOOLFRIENDS: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_schoolfriends" },
+      { type: "experienceDateNight", dateNightId: "date_schoolfriends" },
       { type: "gotoHome" },
     ],
   }],
@@ -1743,6 +1767,7 @@ export const DATE_VALENTINESDAY: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_valentinesday" },
+      { type: "experienceDateNight", dateNightId: "date_valentinesday" },
       { type: "gotoHome" },
     ],
   }],
@@ -1757,6 +1782,7 @@ export const DATE_JORDANBIRTHDAY: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_jordanbirthday" },
+      { type: "experienceDateNight", dateNightId: "date_jordanbirthday" },
       { type: "gotoHome" },
     ],
   }],
@@ -1771,9 +1797,162 @@ export const DATE_OLLIEBIRTHDAY: LifeEvent = {
     label: "Look back 📸",
     effects: [
       { type: "burst", deck: "date_olliebirthday" },
+      { type: "experienceDateNight", dateNightId: "date_olliebirthday" },
       { type: "gotoHome" },
     ],
   }],
+};
+
+// ============================================
+// DATE NIGHT INTERLUDE
+// ============================================
+
+// This event is shown after completing a trip when there are unlocked but not-yet-experienced date nights
+// It will be dynamically filtered in LifePage.tsx to show only available date nights
+export const DATE_NIGHT_INTERLUDE: LifeEvent = {
+  id: "date_night_interlude",
+  title: "Time Passes at Home",
+  text: "Back in San Diego, life continues with its own rhythm. Date nights, quiet moments, and building memories together.",
+  choices: [
+    // These choices will be dynamically generated in LifePage.tsx based on unlocked date nights
+    // Each date night becomes a choice that leads to its event
+    // Placeholder choices for all possible date nights:
+    {
+      id: "date_breakfast1",
+      label: "🥞 Morning Brunch",
+      effects: [{ type: "goto", eventId: "date_breakfast1" }],
+    },
+    {
+      id: "date_lunch",
+      label: "🍱 Lunch Date",
+      effects: [{ type: "goto", eventId: "date_lunch" }],
+    },
+    {
+      id: "date_dessert1",
+      label: "🍰 Sweet Treats",
+      effects: [{ type: "goto", eventId: "date_dessert1" }],
+    },
+    {
+      id: "date_bar",
+      label: "🍸 Evening Drinks",
+      effects: [{ type: "goto", eventId: "date_bar" }],
+    },
+    {
+      id: "date_italian1",
+      label: "🍝 Italian Night",
+      effects: [{ type: "goto", eventId: "date_italian1" }],
+    },
+    {
+      id: "date_pokemondayin",
+      label: "⚡ Pokemon Day In",
+      effects: [{ type: "goto", eventId: "date_pokemondayin" }],
+    },
+    {
+      id: "date_zoo1",
+      label: "🦁 Zoo Adventure",
+      effects: [{ type: "goto", eventId: "date_zoo1" }],
+    },
+    {
+      id: "date_aquarium",
+      label: "🐠 Aquarium Visit",
+      effects: [{ type: "goto", eventId: "date_aquarium" }],
+    },
+    {
+      id: "date_seaworld",
+      label: "🐬 SeaWorld Day",
+      effects: [{ type: "goto", eventId: "date_seaworld" }],
+    },
+    {
+      id: "date_dessert2",
+      label: "🍨 Dessert Spot",
+      effects: [{ type: "goto", eventId: "date_dessert2" }],
+    },
+    {
+      id: "date_omikase",
+      label: "🍣 Omakase Night",
+      effects: [{ type: "goto", eventId: "date_omikase" }],
+    },
+    {
+      id: "date_hitokuchi",
+      label: "🍶 Hitokuchi",
+      effects: [{ type: "goto", eventId: "date_hitokuchi" }],
+    },
+    {
+      id: "date_christmasglobe",
+      label: "🎄 Christmas Globes",
+      effects: [{ type: "goto", eventId: "date_christmasglobe" }],
+    },
+    {
+      id: "date_halloween",
+      label: "🎃 Halloween Night",
+      effects: [{ type: "goto", eventId: "date_halloween" }],
+    },
+    {
+      id: "date_pinning",
+      label: "🎓 Pinning Ceremony",
+      effects: [{ type: "goto", eventId: "date_pinning" }],
+    },
+    {
+      id: "date_oakglenn",
+      label: "🍎 Oak Glen",
+      effects: [{ type: "goto", eventId: "date_oakglenn" }],
+    },
+    {
+      id: "date_friendskbbq",
+      label: "🥘 Korean BBQ with Friends",
+      effects: [{ type: "goto", eventId: "date_friendskbbq" }],
+    },
+    {
+      id: "date_friendssteakhouse",
+      label: "🥩 Steakhouse Night",
+      effects: [{ type: "goto", eventId: "date_friendssteakhouse" }],
+    },
+    {
+      id: "date_concertkehlani",
+      label: "🎤 Kehlani Concert",
+      effects: [{ type: "goto", eventId: "date_concertkehlani" }],
+    },
+    {
+      id: "date_concertjhene",
+      label: "🎵 Jhené Aiko Concert",
+      effects: [{ type: "goto", eventId: "date_concertjhene" }],
+    },
+    {
+      id: "date_concert1jonas",
+      label: "🎸 Jonas Brothers Concert",
+      effects: [{ type: "goto", eventId: "date_concert1jonas" }],
+    },
+    {
+      id: "date_friends1",
+      label: "⚾ Baseball Game",
+      effects: [{ type: "goto", eventId: "date_friends1" }],
+    },
+    {
+      id: "date_friends2",
+      label: "⚾ Another Baseball Game",
+      effects: [{ type: "goto", eventId: "date_friends2" }],
+    },
+    {
+      id: "date_schoolfriends",
+      label: "👥 School Friends",
+      effects: [{ type: "goto", eventId: "date_schoolfriends" }],
+    },
+    {
+      id: "date_valentinesday",
+      label: "💝 Valentine's Day",
+      effects: [{ type: "goto", eventId: "date_valentinesday" }],
+    },
+    {
+      id: "date_jordanbirthday",
+      label: "🎂 Jordan's Birthday",
+      effects: [{ type: "goto", eventId: "date_jordanbirthday" }],
+    },
+    {
+      id: "date_olliebirthday",
+      label: "🎈 Ollie's 1st Birthday",
+      effects: [{ type: "goto", eventId: "date_olliebirthday" }],
+    },
+  ],
 };
 
 export const LIFE_EVENTS: LifeEvent[] = [
@@ -2284,7 +2463,8 @@ RANDOM_PIZZA_NIGHT,
 RANDOM_COZY_NIGHT,
 RANDOM_FRIEND_TEXT,
 RANDOM_ADVENTURE_CALL,
-// Date night events
+// Date night interlude and events
+DATE_NIGHT_INTERLUDE,
 DATE_BREAKFAST1,
 DATE_LUNCH,
 DATE_DESSERT1,

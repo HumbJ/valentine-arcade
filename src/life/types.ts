@@ -123,6 +123,10 @@ export type Effect =
   | {
       type: "unlockDateNights";
       tripId: "seattle1" | "hawaii" | "seattle2" | "roadtrip" | "newyork";
+    }
+  | {
+      type: "experienceDateNight";
+      dateNightId: string;
     };
 
 
@@ -148,6 +152,7 @@ export type SaveData = {
   reflections: ReflectionEntry[];
   completedEvents: string[]; // track completed event arcs
   unlockedDateNights?: string[]; // track unlocked date night memories
+  experiencedDateNights?: string[]; // track date nights that have been experienced in story
 };
 
 

@@ -121,21 +121,43 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
   const event = useMemo(() => getEventById(save.currentEventId), [save.currentEventId]);
 
   // Filter out completed trips from vacation_tease menu
+  // and filter date night interlude to show only available date nights
   const filteredEvent = useMemo(() => {
-    if (!event || event.id !== "vacation_tease") return event;
+    if (!event) return event;
 
-    const completedTrips = save.completedEvents || [];
-    const tripChoiceIds = ["disneyland", "seattle1", "roadtrip", "hawaii", "seattle2"];
+    // Filter vacation_tease to remove completed trips
+    if (event.id === "vacation_tease") {
+      const completedTrips = save.completedEvents || [];
+      const tripChoiceIds = ["disneyland", "seattle1", "roadtrip", "hawaii", "seattle2"];
 
-    const filteredChoices = event.choices.filter(
-      (choice) => !tripChoiceIds.includes(choice.id) || !completedTrips.includes(choice.id)
-    );
+      const filteredChoices = event.choices.filter(
+        (choice) => !tripChoiceIds.includes(choice.id) || !completedTrips.includes(choice.id)
+      );
 
-    return {
-      ...event,
-      choices: filteredChoices,
-    };
-  }, [event, save.completedEvents]);
+      return {
+        ...event,
+        choices: filteredChoices,
+      };
+    }
+
+    // Filter date_night_interlude to show only unlocked but not-yet-experienced date nights
+    if (event.id === "date_night_interlude") {
+      const unlockedDateNights = save.unlockedDateNights || [];
+      const experiencedDateNights = save.experiencedDateNights || [];
+
+      // Show only choices for date nights that are unlocked but not yet experienced
+      const filteredChoices = event.choices.filter(
+        (choice) => unlockedDateNights.includes(choice.id) && !experiencedDateNights.includes(choice.id)
+      );
+
+      return {
+        ...event,
+        choices: filteredChoices,
+      };
+    }
+
+    return event;
+  }, [event, save.completedEvents, save.unlockedDateNights, save.experiencedDateNights]);
 
   function showRewardsFromEffects(effects: Effect[]) {
     const shouldShow = effects.some(
