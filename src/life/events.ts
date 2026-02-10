@@ -780,7 +780,7 @@ export const ROAD_TRIP_FINALE: LifeEvent = {
         { type: "stat", key: "happiness", delta: 8 },
         { type: "stat", key: "memories", delta: 5 },
         { type: "unlockPlace", placeId: "roadtrip" },
-        { type: "unlockDateNights", tripId: "roadtrip" },
+  { type: "unlockDateNights", tripId: "roadtrip" },
         { type: "log", text: "California Road Trip: parks, coast, pastries, and us." },
         { type: "gotoHome", markComplete: "roadtrip" },
       ],
@@ -962,7 +962,7 @@ export const HAWAII_REFLECTION: LifeEvent = {
         { type: "stat", key: "happiness", delta: 14 },
         { type: "stat", key: "memories", delta: 15 },
         { type: "unlockPlace", placeId: "hawaii" },
-        { type: "unlockDateNights", tripId: "hawaii" },
+  { type: "unlockDateNights", tripId: "hawaii" },
         { type: "log", text: "Hawaii: island magic, ocean dreams, and endless aloha." },
         { type: "gotoHome", markComplete: "hawaii" },
       ],
@@ -1094,7 +1094,7 @@ export const SEATTLE2_REFLECTION: LifeEvent = {
         { type: "stat", key: "happiness", delta: 12 },
         { type: "stat", key: "memories", delta: 13 },
         { type: "unlockPlace", placeId: "seattle2" },
-        { type: "unlockDateNights", tripId: "seattle2" },
+  { type: "unlockDateNights", tripId: "seattle2" },
         { type: "log", text: "Seattle Trip II: flowers, waterfalls, and the feeling of coming home." },
         { type: "gotoHome", markComplete: "seattle2" },
       ],
@@ -1377,6 +1377,390 @@ const RANDOM_ADVENTURE_CALL: LifeEvent = {
       ],
     },
   ],
+};
+
+
+// ===============================
+// DATE NIGHT EVENTS
+// ===============================
+// Simple photo viewing events that unlock as trips progress
+
+export const DATE_BREAKFAST1: LifeEvent = {
+  id: "date_breakfast1",
+  title: "Morning Brunch",
+  text: "Starting the day right with good food and better company.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_breakfast1" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_LUNCH: LifeEvent = {
+  id: "date_lunch",
+  title: "Lunch Date",
+  text: "A quiet afternoon together.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_lunch" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_DESSERT1: LifeEvent = {
+  id: "date_dessert1",
+  title: "Sweet Treats",
+  text: "Indulging our sweet tooth.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_dessert1" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_BAR: LifeEvent = {
+  id: "date_bar",
+  title: "Evening Drinks",
+  text: "Unwinding after a long week.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_bar" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_ITALIAN1: LifeEvent = {
+  id: "date_italian1",
+  title: "Italian Night",
+  text: "Classic Italian cuisine and candlelight.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_italian1" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_POKEMONDAYIN: LifeEvent = {
+  id: "date_pokemondayin",
+  title: "Pokemon Day In",
+  text: "A cozy day at home catching 'em all.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_pokemondayin" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_ZOO1: LifeEvent = {
+  id: "date_zoo1",
+  title: "Zoo Adventure",
+  text: "Exploring the animal kingdom together.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_zoo1" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_AQUARIUM: LifeEvent = {
+  id: "date_aquarium",
+  title: "Aquarium Visit",
+  text: "Mesmerized by the underwater world.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_aquarium" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_SEAWORLD: LifeEvent = {
+  id: "date_seaworld",
+  title: "SeaWorld Day",
+  text: "Marine life and ocean adventures.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_seaworld" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_DESSERT2: LifeEvent = {
+  id: "date_dessert2",
+  title: "Dessert Spot",
+  text: "Finding new favorite sweet spots.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_dessert2" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_OMIKASE: LifeEvent = {
+  id: "date_omikase",
+  title: "Omakase Night",
+  text: "Trusting the chef's choice.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_omikase" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_HITOKUCHI: LifeEvent = {
+  id: "date_hitokuchi",
+  title: "Hitokuchi",
+  text: "Japanese izakaya experience.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_hitokuchi" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_CHRISTMASGLOBE: LifeEvent = {
+  id: "date_christmasglobe",
+  title: "Christmas Globes",
+  text: "Holiday magic and twinkling lights.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_christmasglobe" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_HALLOWEEN: LifeEvent = {
+  id: "date_halloween",
+  title: "Halloween Night",
+  text: "Spooky season celebrations.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_halloween" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_PINNING: LifeEvent = {
+  id: "date_pinning",
+  title: "Pinning Ceremony",
+  text: "A proud moment celebrated together.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_pinning" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_OAKGLENN: LifeEvent = {
+  id: "date_oakglenn",
+  title: "Oak Glen",
+  text: "Apple picking in the fall.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_oakglenn" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_FRIENDSKBBQ: LifeEvent = {
+  id: "date_friendskbbq",
+  title: "Korean BBQ with Friends",
+  text: "Good food and great company.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_friendskbbq" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_FRIENDSSTEAKHOUSE: LifeEvent = {
+  id: "date_friendssteakhouse",
+  title: "Steakhouse Night",
+  text: "Celebrating with friends.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_friendssteakhouse" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_CONCERTKEHLANI: LifeEvent = {
+  id: "date_concertkehlani",
+  title: "Kehlani Concert",
+  text: "Vibing to the music together.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_concertkehlani" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_CONCERTJHENE: LifeEvent = {
+  id: "date_concertjhene",
+  title: "Jhené Aiko Concert",
+  text: "Lost in the melodies.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_concertjhene" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_CONCERT1JONAS: LifeEvent = {
+  id: "date_concert1jonas",
+  title: "Jonas Brothers Concert",
+  text: "Reliving the nostalgia.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_concert1jonas" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_FRIENDS1: LifeEvent = {
+  id: "date_friends1",
+  title: "Baseball Game",
+  text: "Cheering on the home team.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_friends1" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_FRIENDS2: LifeEvent = {
+  id: "date_friends2",
+  title: "Another Baseball Game",
+  text: "We never get tired of this.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_friends2" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_SCHOOLFRIENDS: LifeEvent = {
+  id: "date_schoolfriends",
+  title: "School Friends",
+  text: "Catching up with old friends.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_schoolfriends" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_VALENTINESDAY: LifeEvent = {
+  id: "date_valentinesday",
+  title: "Valentine's Day",
+  text: "Celebrating our love.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_valentinesday" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_JORDANBIRTHDAY: LifeEvent = {
+  id: "date_jordanbirthday",
+  title: "Jordan's Birthday",
+  text: "Another year, another celebration.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_jordanbirthday" },
+      { type: "gotoHome" },
+    ],
+  }],
+};
+
+export const DATE_OLLIEBIRTHDAY: LifeEvent = {
+  id: "date_olliebirthday",
+  title: "Ollie's 1st Birthday",
+  text: "Celebrating with Vanessa's best friend's family.",
+  choices: [{
+    id: "view",
+    label: "Look back 📸",
+    effects: [
+      { type: "burst", deck: "date_olliebirthday" },
+      { type: "gotoHome" },
+    ],
+  }],
 };
 
 export const LIFE_EVENTS: LifeEvent[] = [
