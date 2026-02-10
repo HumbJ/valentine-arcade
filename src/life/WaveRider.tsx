@@ -20,13 +20,13 @@ const CANVAS_WIDTH = 600;
 const CANVAS_HEIGHT = 400;
 const SURFER_X = 100; // Fixed x position for surfer
 const SURFER_SIZE = 0.05; // Surfer hitbox size as fraction of canvas (40px / 400px ≈ 0.1, but we use 0.05 for margin)
-const GRAVITY = 0.000015; // Extremely slow gravity for Flappy Bird-style hover control
+const GRAVITY = 0.00001; // Very slow gravity for precise hover control
 const FLAP_POWER = -0.0015; // Gentle upward force balanced with gravity for hovering
 const MAX_VELOCITY = 0.004; // Tight velocity cap for precise control
 const WAVE_WIDTH = 80;
 const INITIAL_WAVE_SPEED = 3;
 const WAVE_SPAWN_DISTANCE = 250; // pixels between waves
-const GAP_SIZE = 0.30; // size of gap as fraction of canvas height (slightly larger for easier gameplay)
+const GAP_SIZE = 0.35; // Larger gap for more forgiving gameplay
 
 export function WaveRider({
   title,
