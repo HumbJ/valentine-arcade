@@ -142,6 +142,7 @@ export type SaveData = {
   placesUnlocked: string[];
   reflections: ReflectionEntry[];
   completedEvents: string[]; // track completed event arcs
+  unlockedDateNights?: string[]; // track unlocked date night memories
 };
 
 

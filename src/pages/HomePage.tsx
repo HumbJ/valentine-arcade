@@ -44,8 +44,8 @@ export function HomePage() {
         navigate("/food");
         break;
       case "phone":
-        // Friends / random events
-        navigate("/friends");
+        // Date night memories
+        navigate("/memories");
         break;
     }
   };
