@@ -140,6 +140,7 @@ export const SEATTLE_1_REFLECTION_PROMPT: LifeEvent = {
   { type: "stat", key: "memories", delta: 12 },
 
   { type: "unlockPlace", placeId: "seattle1" },
+  { type: "unlockDateNights", tripId: "seattle1" },
   {
     type: "log",
     text:
@@ -779,6 +780,7 @@ export const ROAD_TRIP_FINALE: LifeEvent = {
         { type: "stat", key: "happiness", delta: 8 },
         { type: "stat", key: "memories", delta: 5 },
         { type: "unlockPlace", placeId: "roadtrip" },
+        { type: "unlockDateNights", tripId: "roadtrip" },
         { type: "log", text: "California Road Trip: parks, coast, pastries, and us." },
         { type: "gotoHome", markComplete: "roadtrip" },
       ],
@@ -960,6 +962,7 @@ export const HAWAII_REFLECTION: LifeEvent = {
         { type: "stat", key: "happiness", delta: 14 },
         { type: "stat", key: "memories", delta: 15 },
         { type: "unlockPlace", placeId: "hawaii" },
+        { type: "unlockDateNights", tripId: "hawaii" },
         { type: "log", text: "Hawaii: island magic, ocean dreams, and endless aloha." },
         { type: "gotoHome", markComplete: "hawaii" },
       ],
@@ -1091,6 +1094,7 @@ export const SEATTLE2_REFLECTION: LifeEvent = {
         { type: "stat", key: "happiness", delta: 12 },
         { type: "stat", key: "memories", delta: 13 },
         { type: "unlockPlace", placeId: "seattle2" },
+        { type: "unlockDateNights", tripId: "seattle2" },
         { type: "log", text: "Seattle Trip II: flowers, waterfalls, and the feeling of coming home." },
         { type: "gotoHome", markComplete: "seattle2" },
       ],
