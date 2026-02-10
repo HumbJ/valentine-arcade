@@ -1401,10 +1401,10 @@ const RANDOM_ADVENTURE_CALL: LifeEvent = {
 export const DATE_BREAKFAST1: LifeEvent = {
   id: "date_breakfast1",
   title: "Morning Brunch",
-  text: "Starting the day right with good food and better company.",
+  text: "Lazy Sunday mornings. Pancakes, mimosas, and conversations that stretch into the afternoon. This is how we start the best days.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_breakfast1" },
       { type: "experienceDateNight", dateNightId: "date_breakfast1" },
@@ -1416,10 +1416,10 @@ export const DATE_BREAKFAST1: LifeEvent = {
 export const DATE_LUNCH: LifeEvent = {
   id: "date_lunch",
   title: "Lunch Date",
-  text: "A quiet afternoon together.",
+  text: "A quiet break in the middle of the day. Just us, good food, and the kind of easy conversation that makes everything feel lighter.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_lunch" },
       { type: "experienceDateNight", dateNightId: "date_lunch" },
@@ -1434,7 +1434,7 @@ export const DATE_DESSERT1: LifeEvent = {
   text: "Indulging our sweet tooth.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_dessert1" },
       { type: "experienceDateNight", dateNightId: "date_dessert1" },
@@ -1449,7 +1449,7 @@ export const DATE_BAR: LifeEvent = {
   text: "Unwinding after a long week.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_bar" },
       { type: "experienceDateNight", dateNightId: "date_bar" },
@@ -1464,7 +1464,7 @@ export const DATE_ITALIAN1: LifeEvent = {
   text: "Classic Italian cuisine and candlelight.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_italian1" },
       { type: "experienceDateNight", dateNightId: "date_italian1" },
@@ -1479,7 +1479,7 @@ export const DATE_POKEMONDAYIN: LifeEvent = {
   text: "A cozy day at home catching 'em all.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_pokemondayin" },
       { type: "experienceDateNight", dateNightId: "date_pokemondayin" },
@@ -1494,7 +1494,7 @@ export const DATE_ZOO1: LifeEvent = {
   text: "Exploring the animal kingdom together.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_zoo1" },
       { type: "experienceDateNight", dateNightId: "date_zoo1" },
@@ -1509,7 +1509,7 @@ export const DATE_AQUARIUM: LifeEvent = {
   text: "Mesmerized by the underwater world.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_aquarium" },
       { type: "experienceDateNight", dateNightId: "date_aquarium" },
@@ -1524,7 +1524,7 @@ export const DATE_SEAWORLD: LifeEvent = {
   text: "Marine life and ocean adventures.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_seaworld" },
       { type: "experienceDateNight", dateNightId: "date_seaworld" },
@@ -1539,7 +1539,7 @@ export const DATE_DESSERT2: LifeEvent = {
   text: "Finding new favorite sweet spots.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_dessert2" },
       { type: "experienceDateNight", dateNightId: "date_dessert2" },
@@ -1554,7 +1554,7 @@ export const DATE_OMIKASE: LifeEvent = {
   text: "Trusting the chef's choice.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_omikase" },
       { type: "experienceDateNight", dateNightId: "date_omikase" },
@@ -1569,7 +1569,7 @@ export const DATE_HITOKUCHI: LifeEvent = {
   text: "Japanese izakaya experience.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_hitokuchi" },
       { type: "experienceDateNight", dateNightId: "date_hitokuchi" },
@@ -1584,7 +1584,7 @@ export const DATE_CHRISTMASGLOBE: LifeEvent = {
   text: "Holiday magic and twinkling lights.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_christmasglobe" },
       { type: "experienceDateNight", dateNightId: "date_christmasglobe" },
@@ -1599,7 +1599,7 @@ export const DATE_HALLOWEEN: LifeEvent = {
   text: "Spooky season celebrations.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_halloween" },
       { type: "experienceDateNight", dateNightId: "date_halloween" },
@@ -1614,7 +1614,7 @@ export const DATE_PINNING: LifeEvent = {
   text: "A proud moment celebrated together.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_pinning" },
       { type: "experienceDateNight", dateNightId: "date_pinning" },
@@ -1629,7 +1629,7 @@ export const DATE_OAKGLENN: LifeEvent = {
   text: "Apple picking in the fall.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_oakglenn" },
       { type: "experienceDateNight", dateNightId: "date_oakglenn" },
@@ -1644,7 +1644,7 @@ export const DATE_FRIENDSKBBQ: LifeEvent = {
   text: "Good food and great company.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_friendskbbq" },
       { type: "experienceDateNight", dateNightId: "date_friendskbbq" },
@@ -1659,7 +1659,7 @@ export const DATE_FRIENDSSTEAKHOUSE: LifeEvent = {
   text: "Celebrating with friends.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_friendssteakhouse" },
       { type: "experienceDateNight", dateNightId: "date_friendssteakhouse" },
@@ -1674,7 +1674,7 @@ export const DATE_CONCERTKEHLANI: LifeEvent = {
   text: "Vibing to the music together.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_concertkehlani" },
       { type: "experienceDateNight", dateNightId: "date_concertkehlani" },
@@ -1689,7 +1689,7 @@ export const DATE_CONCERTJHENE: LifeEvent = {
   text: "Lost in the melodies.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_concertjhene" },
       { type: "experienceDateNight", dateNightId: "date_concertjhene" },
@@ -1704,7 +1704,7 @@ export const DATE_CONCERT1JONAS: LifeEvent = {
   text: "Reliving the nostalgia.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_concert1jonas" },
       { type: "experienceDateNight", dateNightId: "date_concert1jonas" },
@@ -1719,7 +1719,7 @@ export const DATE_FRIENDS1: LifeEvent = {
   text: "Cheering on the home team.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_friends1" },
       { type: "experienceDateNight", dateNightId: "date_friends1" },
@@ -1734,7 +1734,7 @@ export const DATE_FRIENDS2: LifeEvent = {
   text: "We never get tired of this.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_friends2" },
       { type: "experienceDateNight", dateNightId: "date_friends2" },
@@ -1749,7 +1749,7 @@ export const DATE_SCHOOLFRIENDS: LifeEvent = {
   text: "Catching up with old friends.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_schoolfriends" },
       { type: "experienceDateNight", dateNightId: "date_schoolfriends" },
@@ -1764,7 +1764,7 @@ export const DATE_VALENTINESDAY: LifeEvent = {
   text: "Celebrating our love.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_valentinesday" },
       { type: "experienceDateNight", dateNightId: "date_valentinesday" },
@@ -1779,7 +1779,7 @@ export const DATE_JORDANBIRTHDAY: LifeEvent = {
   text: "Another year, another celebration.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_jordanbirthday" },
       { type: "experienceDateNight", dateNightId: "date_jordanbirthday" },
@@ -1794,7 +1794,7 @@ export const DATE_OLLIEBIRTHDAY: LifeEvent = {
   text: "Celebrating with Vanessa's best friend's family.",
   choices: [{
     id: "view",
-    label: "Look back 📸",
+    label: "Relive it 📸",
     effects: [
       { type: "burst", deck: "date_olliebirthday" },
       { type: "experienceDateNight", dateNightId: "date_olliebirthday" },

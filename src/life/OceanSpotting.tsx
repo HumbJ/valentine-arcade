@@ -45,12 +45,25 @@ export function OceanSpotting({
 
   // Start the game
   const startGame = () => {
+    // Clear all timers first
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
+    if (spawnTimerRef.current) {
+      clearTimeout(spawnTimerRef.current);
+      spawnTimerRef.current = null;
+    }
+    hideTimersRef.current.forEach((timer) => clearTimeout(timer));
+    hideTimersRef.current.clear();
+
+    // Reset all state
     setPhase("playing");
     setScore(0);
     setTimeRemaining(GAME_DURATION);
     setCreatures([]);
     nextCreatureId.current = 0;
-    gameStartTimeRef.current = 0; // Reset to 0, will be set in useEffect
+    gameStartTimeRef.current = 0;
     isSpawningRef.current = false;
     caughtCreaturesRef.current.clear();
   };
@@ -62,15 +75,15 @@ export function OceanSpotting({
       return;
     }
 
+    // Mark as caught in ref immediately to prevent spam-clicking
+    caughtCreaturesRef.current.add(creatureId);
+    setScore((s) => s + 1);
+
     setCreatures((prev) => {
       const creature = prev.find((c) => c.id === creatureId);
-      if (!creature || !creature.visible || creature.caught) {
+      if (!creature || !creature.visible) {
         return prev;
       }
-
-      // Mark as caught in ref immediately to prevent spam-clicking
-      caughtCreaturesRef.current.add(creatureId);
-      setScore((s) => s + 1);
 
       // Clear hide timer
       const timer = hideTimersRef.current.get(creatureId);
@@ -89,10 +102,8 @@ export function OceanSpotting({
   useEffect(() => {
     if (phase !== "playing") return;
 
-    // Don't reset the start time if already set
-    if (gameStartTimeRef.current === 0) {
-      gameStartTimeRef.current = Date.now();
-    }
+    // Set start time once
+    gameStartTimeRef.current = Date.now();
     isSpawningRef.current = true;
 
     // Spawn creatures
@@ -212,14 +223,15 @@ export function OceanSpotting({
               <div className="os-ocean">
                 {Array.from({ length: TOTAL_SPOTS }).map((_, spotIndex) => {
                   const creature = creatures.find((c) => c.spot === spotIndex && c.visible);
+                  const isCaught = creature && caughtCreaturesRef.current.has(creature.id);
 
                   return (
                     <div key={spotIndex} className="os-spot">
-                      {creature && (
+                      {creature && !isCaught && (
                         <button
-                          className={`os-creature ${creature.caught ? "caught" : ""}`}
+                          className="os-creature"
                           onClick={() => catchCreature(creature.id)}
-                          disabled={creature.caught}
+                          style={{ pointerEvents: isCaught ? 'none' : 'auto' }}
                         >
                           {creature.emoji}
                         </button>
