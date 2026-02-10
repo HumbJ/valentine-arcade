@@ -1431,7 +1431,7 @@ export const DATE_LUNCH: LifeEvent = {
 export const DATE_DESSERT1: LifeEvent = {
   id: "date_dessert1",
   title: "Sweet Treats",
-  text: "Indulging our sweet tooth.",
+  text: "Life's too short not to have dessert. We find the sweetest spots and make them ours, one bite at a time.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1446,7 +1446,7 @@ export const DATE_DESSERT1: LifeEvent = {
 export const DATE_BAR: LifeEvent = {
   id: "date_bar",
   title: "Evening Drinks",
-  text: "Unwinding after a long week.",
+  text: "The week's done, and we're finally here. Low lights, good drinks, and the kind of unwinding that only happens together.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1461,7 +1461,7 @@ export const DATE_BAR: LifeEvent = {
 export const DATE_ITALIAN1: LifeEvent = {
   id: "date_italian1",
   title: "Italian Night",
-  text: "Classic Italian cuisine and candlelight.",
+  text: "Candlelight, pasta, and that feeling like we're in our own little world. Italian nights always feel romantic.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1476,7 +1476,7 @@ export const DATE_ITALIAN1: LifeEvent = {
 export const DATE_POKEMONDAYIN: LifeEvent = {
   id: "date_pokemondayin",
   title: "Pokemon Day In",
-  text: "A cozy day at home catching 'em all.",
+  text: "Sometimes the best dates are the ones where we don't go anywhere. Just us, cozy at home, catching Pokémon and being dorky together.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1491,7 +1491,7 @@ export const DATE_POKEMONDAYIN: LifeEvent = {
 export const DATE_ZOO1: LifeEvent = {
   id: "date_zoo1",
   title: "Zoo Adventure",
-  text: "Exploring the animal kingdom together.",
+  text: "Walking through the zoo, hand in hand, making up stories about the animals. Every exhibit becomes an adventure when you're here.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1506,7 +1506,7 @@ export const DATE_ZOO1: LifeEvent = {
 export const DATE_AQUARIUM: LifeEvent = {
   id: "date_aquarium",
   title: "Aquarium Visit",
-  text: "Mesmerized by the underwater world.",
+  text: "The blue glow of the tanks, fish gliding past, and that peaceful feeling of being underwater. We could watch this forever.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1521,7 +1521,7 @@ export const DATE_AQUARIUM: LifeEvent = {
 export const DATE_SEAWORLD: LifeEvent = {
   id: "date_seaworld",
   title: "SeaWorld Day",
-  text: "Marine life and ocean adventures.",
+  text: "Dolphins, sea lions, and that kid-like excitement in your eyes. These marine adventures always bring out the best smiles.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1536,7 +1536,7 @@ export const DATE_SEAWORLD: LifeEvent = {
 export const DATE_DESSERT2: LifeEvent = {
   id: "date_dessert2",
   title: "Dessert Spot",
-  text: "Finding new favorite sweet spots.",
+  text: "We found another gem. Every new dessert spot feels like a tiny celebration, a sweet moment just for us.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1551,7 +1551,7 @@ export const DATE_DESSERT2: LifeEvent = {
 export const DATE_OMIKASE: LifeEvent = {
   id: "date_omikase",
   title: "Omakase Night",
-  text: "Trusting the chef's choice.",
+  text: "Trusting the chef, trying new flavors, and watching your reactions to each piece. Omakase nights are always special.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1566,7 +1566,7 @@ export const DATE_OMIKASE: LifeEvent = {
 export const DATE_HITOKUCHI: LifeEvent = {
   id: "date_hitokuchi",
   title: "Hitokuchi",
-  text: "Japanese izakaya experience.",
+  text: "Small plates, warm sake, and that cozy izakaya vibe. We share everything and make the meal last as long as we can.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1581,7 +1581,7 @@ export const DATE_HITOKUCHI: LifeEvent = {
 export const DATE_CHRISTMASGLOBE: LifeEvent = {
   id: "date_christmasglobe",
   title: "Christmas Globes",
-  text: "Holiday magic and twinkling lights.",
+  text: "Holiday lights everywhere, the air cold but our hands warm together. Christmas just hits different when we're walking through it.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1596,7 +1596,7 @@ export const DATE_CHRISTMASGLOBE: LifeEvent = {
 export const DATE_HALLOWEEN: LifeEvent = {
   id: "date_halloween",
   title: "Halloween Night",
-  text: "Spooky season celebrations.",
+  text: "Spooky season with you is the best season. Costumes, candy, and that playful energy that makes everything more fun.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1611,7 +1611,7 @@ export const DATE_HALLOWEEN: LifeEvent = {
 export const DATE_PINNING: LifeEvent = {
   id: "date_pinning",
   title: "Pinning Ceremony",
-  text: "A proud moment celebrated together.",
+  text: "This was your moment, and I got to be there. Watching you achieve this, feeling proud, knowing we're building our future together.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1626,7 +1626,7 @@ export const DATE_PINNING: LifeEvent = {
 export const DATE_OAKGLENN: LifeEvent = {
   id: "date_oakglenn",
   title: "Oak Glen",
-  text: "Apple picking in the fall.",
+  text: "Fall in California means Oak Glen. Apple picking, cider donuts, and that crisp air that makes everything feel like a postcard.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1641,7 +1641,7 @@ export const DATE_OAKGLENN: LifeEvent = {
 export const DATE_FRIENDSKBBQ: LifeEvent = {
   id: "date_friendskbbq",
   title: "Korean BBQ with Friends",
-  text: "Good food and great company.",
+  text: "Korean BBQ with the crew. We're all crowded around the table, grilling meat, laughing too loud, and making memories that'll last.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1656,7 +1656,7 @@ export const DATE_FRIENDSKBBQ: LifeEvent = {
 export const DATE_FRIENDSSTEAKHOUSE: LifeEvent = {
   id: "date_friendssteakhouse",
   title: "Steakhouse Night",
-  text: "Celebrating with friends.",
+  text: "Fancy night out with friends. Good steak, better company, and those conversations that make you remember why these people matter.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1671,7 +1671,7 @@ export const DATE_FRIENDSSTEAKHOUSE: LifeEvent = {
 export const DATE_CONCERTKEHLANI: LifeEvent = {
   id: "date_concertkehlani",
   title: "Kehlani Concert",
-  text: "Vibing to the music together.",
+  text: "Kehlani's voice fills the venue and we're singing every word. These concert nights with you are pure magic.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1686,7 +1686,7 @@ export const DATE_CONCERTKEHLANI: LifeEvent = {
 export const DATE_CONCERTJHENE: LifeEvent = {
   id: "date_concertjhene",
   title: "Jhené Aiko Concert",
-  text: "Lost in the melodies.",
+  text: "Jhené's melodies wash over us and everything feels softer, deeper. We're lost in the music and each other.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1701,7 +1701,7 @@ export const DATE_CONCERTJHENE: LifeEvent = {
 export const DATE_CONCERT1JONAS: LifeEvent = {
   id: "date_concert1jonas",
   title: "Jonas Brothers Concert",
-  text: "Reliving the nostalgia.",
+  text: "Jonas Brothers throwback! We're singing along to our childhood and it feels like being young again, but better because you're here.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1716,7 +1716,7 @@ export const DATE_CONCERT1JONAS: LifeEvent = {
 export const DATE_FRIENDS1: LifeEvent = {
   id: "date_friends1",
   title: "Baseball Game",
-  text: "Cheering on the home team.",
+  text: "Baseball game with the squad. Peanuts, beer, and cheering way too loud. We might not always watch the game, but we're always having fun.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1731,7 +1731,7 @@ export const DATE_FRIENDS1: LifeEvent = {
 export const DATE_FRIENDS2: LifeEvent = {
   id: "date_friends2",
   title: "Another Baseball Game",
-  text: "We never get tired of this.",
+  text: "Another game, another perfect day at the stadium. These baseball traditions with friends never get old.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1746,7 +1746,7 @@ export const DATE_FRIENDS2: LifeEvent = {
 export const DATE_SCHOOLFRIENDS: LifeEvent = {
   id: "date_schoolfriends",
   title: "School Friends",
-  text: "Catching up with old friends.",
+  text: "Catching up with old friends, swapping stories, remembering who we used to be while celebrating who we've become.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1761,7 +1761,7 @@ export const DATE_SCHOOLFRIENDS: LifeEvent = {
 export const DATE_VALENTINESDAY: LifeEvent = {
   id: "date_valentinesday",
   title: "Valentine's Day",
-  text: "Celebrating our love.",
+  text: "Our day. Roses, chocolate, and all the romantic clichés that somehow feel perfect when they're with you.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1776,7 +1776,7 @@ export const DATE_VALENTINESDAY: LifeEvent = {
 export const DATE_JORDANBIRTHDAY: LifeEvent = {
   id: "date_jordanbirthday",
   title: "Jordan's Birthday",
-  text: "Another year, another celebration.",
+  text: "Another year, another celebration of you. Your birthday always feels special because you make every day special.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1791,7 +1791,7 @@ export const DATE_JORDANBIRTHDAY: LifeEvent = {
 export const DATE_OLLIEBIRTHDAY: LifeEvent = {
   id: "date_olliebirthday",
   title: "Ollie's 1st Birthday",
-  text: "Celebrating with Vanessa's best friend's family.",
+  text: "Ollie's first birthday! We're celebrating with Vanessa's best friend's family, and it's one of those sweet moments that remind us what matters.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
