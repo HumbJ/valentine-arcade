@@ -19,6 +19,7 @@ interface Surfer {
 const CANVAS_WIDTH = 600;
 const CANVAS_HEIGHT = 400;
 const SURFER_X = 100; // Fixed x position for surfer
+const SURFER_SIZE = 0.05; // Surfer hitbox size as fraction of canvas (40px / 400px ≈ 0.1, but we use 0.05 for margin)
 const GRAVITY = 0.0015;
 const FLAP_POWER = -0.035;
 const WAVE_WIDTH = 80;
@@ -137,8 +138,8 @@ export function WaveRider({
 
       surfer.y += surfer.velocity * deltaTime;
 
-      // Check for collisions
-      const hitTopOrBottom = surfer.y <= 0 || surfer.y >= 1;
+      // Check for collisions (with margin for surfer size)
+      const hitTopOrBottom = surfer.y <= SURFER_SIZE || surfer.y >= (1 - SURFER_SIZE);
 
       const hitWave = wavesRef.current.some((wave) => {
         const surferInWaveX = SURFER_X > wave.x - 20 && SURFER_X < wave.x + WAVE_WIDTH + 20;
