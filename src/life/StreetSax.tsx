@@ -117,6 +117,7 @@ export function StreetSax({
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const backgroundMusicRef = useRef<{ stop: () => void } | null>(null);
   const isRunningRef = useRef(false);
   const notesRef = useRef<Note[]>([]);
   const nextNoteIdRef = useRef(0);
@@ -148,6 +149,69 @@ export function StreetSax({
     oscillator.stop(ctx.currentTime + duration);
   }, []);
 
+  // Play background music loop
+  const playBackgroundMusic = useCallback(() => {
+    if (!audioContextRef.current) return;
+
+    const ctx = audioContextRef.current;
+    const startTime = ctx.currentTime;
+    const bpm = 120;
+    const beatDuration = 60 / bpm;
+    const totalDuration = SONG_DURATION;
+
+    // Jazz chord progression (ii-V-I in C)
+    const chordProgression = [
+      { root: 196.00, third: 233.08, fifth: 293.66 }, // Dm (D-F-A)
+      { root: 196.00, third: 246.94, fifth: 293.66 }, // G7 (G-B-D)
+      { root: 130.81, third: 164.81, fifth: 196.00 }, // C (C-E-G)
+      { root: 220.00, third: 261.63, fifth: 329.63 }, // Am (A-C-E)
+    ];
+
+    const oscillators: OscillatorNode[] = [];
+    const gains: GainNode[] = [];
+
+    // Play repeating chord progression
+    for (let time = 0; time < totalDuration; time += beatDuration * 4) {
+      chordProgression.forEach((chord, i) => {
+        const chordTime = startTime + time + i * beatDuration;
+
+        // Play each note in the chord
+        [chord.root, chord.third, chord.fifth].forEach((freq) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.frequency.value = freq;
+          osc.type = "sine";
+
+          gain.gain.setValueAtTime(0, chordTime);
+          gain.gain.linearRampToValueAtTime(0.08, chordTime + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.01, chordTime + beatDuration * 0.8);
+
+          osc.start(chordTime);
+          osc.stop(chordTime + beatDuration);
+
+          oscillators.push(osc);
+          gains.push(gain);
+        });
+      });
+    }
+
+    return {
+      stop: () => {
+        oscillators.forEach((osc) => {
+          try {
+            osc.stop();
+          } catch (e) {
+            // Already stopped
+          }
+        });
+      },
+    };
+  }, []);
+
   const startGame = useCallback(() => {
     setPhase("countdown");
     setCountdown(3);
@@ -171,12 +235,16 @@ export function StreetSax({
           setScore(0);
           setCombo(0);
           setAccuracy({ perfect: 0, good: 0, miss: 0 });
+
+          // Start background music
+          backgroundMusicRef.current = playBackgroundMusic();
+
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
-  }, []);
+  }, [playBackgroundMusic]);
 
   // Handle key presses
   useEffect(() => {
@@ -314,6 +382,11 @@ export function StreetSax({
       // Check if song is over
       if (gameTime >= SONG_DURATION + 2 && notesRef.current.length === 0) {
         isRunningRef.current = false;
+        // Stop background music
+        if (backgroundMusicRef.current) {
+          backgroundMusicRef.current.stop();
+          backgroundMusicRef.current = null;
+        }
         setPhase("complete");
         return;
       }
@@ -395,6 +468,11 @@ export function StreetSax({
 
     return () => {
       if (animationId) cancelAnimationFrame(animationId);
+      // Stop background music on cleanup
+      if (backgroundMusicRef.current) {
+        backgroundMusicRef.current.stop();
+        backgroundMusicRef.current = null;
+      }
     };
   }, [phase]);
 
@@ -411,6 +489,9 @@ export function StreetSax({
             <div className="streetsax-intro">
               <p className="streetsax-instructions">
                 🎷 Feel the rhythm of the city streets!
+              </p>
+              <p className="streetsax-instructions">
+                Hit notes to the beat of the jazz music
               </p>
               <p className="streetsax-instructions">
                 Press keys when notes hit the golden line

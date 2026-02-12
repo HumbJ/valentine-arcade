@@ -212,14 +212,17 @@ export function SubwayRunner({
       // Draw everything
       ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-      // Draw background (subway tracks)
-      ctx.fillStyle = "#1a1a1a";
+      // Draw background (subway tunnel)
+      const gradient = ctx.createLinearGradient(0, 0, 0, CANVAS_HEIGHT);
+      gradient.addColorStop(0, "#2a2a2a");
+      gradient.addColorStop(1, "#1a1a1a");
+      ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-      // Draw lane lines
-      ctx.strokeStyle = "#ffcc00";
+      // Draw lane markers (subway tiles)
+      ctx.strokeStyle = "rgba(255, 204, 0, 0.3)";
       ctx.lineWidth = 2;
-      ctx.setLineDash([10, 10]);
+      ctx.setLineDash([20, 20]);
 
       for (let i = 1; i < 3; i++) {
         const x = LANE_WIDTH * i + (CANVAS_WIDTH - LANE_WIDTH * 3) / 2;
@@ -230,31 +233,30 @@ export function SubwayRunner({
       }
       ctx.setLineDash([]);
 
-      // Draw obstacles
+      // Draw obstacles with emojis
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
       obstaclesRef.current.forEach((obs) => {
-        const perspective = 1 - obs.z / CANVAS_HEIGHT;
-        const size = 30 + perspective * 30;
+        const perspective = Math.max(0.3, 1 - obs.z / CANVAS_HEIGHT);
+        const size = 20 + perspective * 40;
         const x = LANE_WIDTH * obs.lane + LANE_WIDTH / 2 + (CANVAS_WIDTH - LANE_WIDTH * 3) / 2;
         const y = CANVAS_HEIGHT - 80 - (CANVAS_HEIGHT - obs.z) * 0.5;
 
+        ctx.font = `${size}px serif`;
         if (obs.type === "barrier") {
-          ctx.fillStyle = "#ff4444";
-          ctx.fillRect(x - size / 2, y - size / 2, size, size);
+          ctx.fillText("🚧", x, y);
         } else {
-          ctx.fillStyle = "#44ff44";
-          ctx.beginPath();
-          ctx.arc(x, y, size / 2, 0, Math.PI * 2);
-          ctx.fill();
+          ctx.fillText("⚠️", x, y);
         }
       });
 
-      // Draw player
+      // Draw player with emoji
       const playerX = LANE_WIDTH * player.lane + LANE_WIDTH / 2 + (CANVAS_WIDTH - LANE_WIDTH * 3) / 2;
-      const jumpHeight = player.isJumping ? Math.sin(player.jumpProgress * Math.PI) * 40 : 0;
+      const jumpHeight = player.isJumping ? Math.sin(player.jumpProgress * Math.PI) * 50 : 0;
       const playerY = CANVAS_HEIGHT - 80 - jumpHeight;
 
-      ctx.fillStyle = "#4488ff";
-      ctx.fillRect(playerX - 20, playerY - 30, 40, 40);
+      ctx.font = "50px serif";
+      ctx.fillText("🏃", playerX, playerY);
 
       // Draw score
       ctx.fillStyle = "#ffffff";
