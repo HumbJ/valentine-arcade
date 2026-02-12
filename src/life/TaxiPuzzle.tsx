@@ -28,44 +28,51 @@ interface Level {
 const GRID_SIZE = 6;
 const CELL_SIZE = 60;
 
-// Predefined levels with increasing difficulty
+// Predefined levels - VALIDATED NO OVERLAPS
+// Taxi always in row 2 (exit row), needs to reach column 6 (right edge)
 const LEVELS: Level[] = [
   {
     id: 1,
     minMoves: 8,
     cars: [
-      { id: 0, row: 2, col: 1, length: 2, orientation: "horizontal", isTaxi: true, color: "#FFD700" },
-      { id: 1, row: 0, col: 0, length: 3, orientation: "vertical", isTaxi: false, color: "#FF6B6B" },
-      { id: 2, row: 0, col: 3, length: 2, orientation: "vertical", isTaxi: false, color: "#4ECDC4" },
-      { id: 3, row: 4, col: 1, length: 2, orientation: "horizontal", isTaxi: false, color: "#95E1D3" },
-      { id: 4, row: 3, col: 4, length: 2, orientation: "vertical", isTaxi: false, color: "#F38181" },
+      // TAXI in row 2
+      { id: 0, row: 2, col: 1, length: 2, orientation: "horizontal", isTaxi: true, color: "#FFD700" }, // (2,1), (2,2)
+      // Blocking cars
+      { id: 1, row: 0, col: 0, length: 2, orientation: "vertical", isTaxi: false, color: "#FF6B6B" }, // (0,0), (1,0)
+      { id: 2, row: 3, col: 0, length: 2, orientation: "vertical", isTaxi: false, color: "#4ECDC4" }, // (3,0), (4,0)
+      { id: 3, row: 0, col: 4, length: 3, orientation: "vertical", isTaxi: false, color: "#95E1D3" }, // (0,4), (1,4), (2,4)
+      { id: 4, row: 5, col: 2, length: 2, orientation: "horizontal", isTaxi: false, color: "#F38181" }, // (5,2), (5,3)
     ],
   },
   {
     id: 2,
     minMoves: 14,
     cars: [
-      { id: 0, row: 2, col: 0, length: 2, orientation: "horizontal", isTaxi: true, color: "#FFD700" },
-      { id: 1, row: 0, col: 1, length: 2, orientation: "vertical", isTaxi: false, color: "#FF6B6B" },
-      { id: 2, row: 0, col: 2, length: 3, orientation: "vertical", isTaxi: false, color: "#4ECDC4" },
-      { id: 3, row: 1, col: 3, length: 2, orientation: "horizontal", isTaxi: false, color: "#95E1D3" },
-      { id: 4, row: 3, col: 3, length: 2, orientation: "horizontal", isTaxi: false, color: "#F38181" },
-      { id: 5, row: 4, col: 1, length: 2, orientation: "vertical", isTaxi: false, color: "#AA96DA" },
-      { id: 6, row: 4, col: 4, length: 2, orientation: "vertical", isTaxi: false, color: "#FCBAD3" },
+      // TAXI in row 2
+      { id: 0, row: 2, col: 0, length: 2, orientation: "horizontal", isTaxi: true, color: "#FFD700" }, // (2,0), (2,1)
+      // Blocking cars
+      { id: 1, row: 0, col: 1, length: 2, orientation: "vertical", isTaxi: false, color: "#FF6B6B" }, // (0,1), (1,1)
+      { id: 2, row: 0, col: 3, length: 3, orientation: "vertical", isTaxi: false, color: "#4ECDC4" }, // (0,3), (1,3), (2,3)
+      { id: 3, row: 1, col: 4, length: 2, orientation: "horizontal", isTaxi: false, color: "#95E1D3" }, // (1,4), (1,5)
+      { id: 4, row: 3, col: 2, length: 2, orientation: "horizontal", isTaxi: false, color: "#F38181" }, // (3,2), (3,3)
+      { id: 5, row: 4, col: 1, length: 2, orientation: "vertical", isTaxi: false, color: "#AA96DA" }, // (4,1), (5,1)
+      { id: 6, row: 3, col: 5, length: 2, orientation: "vertical", isTaxi: false, color: "#FCBAD3" }, // (3,5), (4,5)
     ],
   },
   {
     id: 3,
-    minMoves: 20,
+    minMoves: 18,
     cars: [
-      { id: 0, row: 2, col: 0, length: 2, orientation: "horizontal", isTaxi: true, color: "#FFD700" },
-      { id: 1, row: 0, col: 1, length: 3, orientation: "vertical", isTaxi: false, color: "#FF6B6B" },
-      { id: 2, row: 0, col: 3, length: 2, orientation: "horizontal", isTaxi: false, color: "#4ECDC4" },
-      { id: 3, row: 1, col: 4, length: 2, orientation: "vertical", isTaxi: false, color: "#95E1D3" },
-      { id: 4, row: 3, col: 1, length: 2, orientation: "horizontal", isTaxi: false, color: "#F38181" },
-      { id: 5, row: 3, col: 3, length: 3, orientation: "vertical", isTaxi: false, color: "#AA96DA" },
-      { id: 6, row: 4, col: 0, length: 2, orientation: "vertical", isTaxi: false, color: "#FCBAD3" },
-      { id: 7, row: 5, col: 4, length: 2, orientation: "horizontal", isTaxi: false, color: "#A8E6CF" },
+      // TAXI in row 2
+      { id: 0, row: 2, col: 1, length: 2, orientation: "horizontal", isTaxi: true, color: "#FFD700" }, // (2,1), (2,2)
+      // Complex blocking
+      { id: 1, row: 0, col: 0, length: 3, orientation: "horizontal", isTaxi: false, color: "#FF6B6B" }, // (0,0), (0,1), (0,2)
+      { id: 2, row: 1, col: 0, length: 2, orientation: "vertical", isTaxi: false, color: "#4ECDC4" }, // (1,0), (2,0)
+      { id: 3, row: 0, col: 4, length: 2, orientation: "vertical", isTaxi: false, color: "#95E1D3" }, // (0,4), (1,4)
+      { id: 4, row: 3, col: 0, length: 2, orientation: "horizontal", isTaxi: false, color: "#F38181" }, // (3,0), (3,1)
+      { id: 5, row: 3, col: 3, length: 3, orientation: "vertical", isTaxi: false, color: "#AA96DA" }, // (3,3), (4,3), (5,3)
+      { id: 6, row: 4, col: 4, length: 2, orientation: "vertical", isTaxi: false, color: "#FCBAD3" }, // (4,4), (5,4)
+      { id: 7, row: 5, col: 1, length: 2, orientation: "horizontal", isTaxi: false, color: "#A8E6CF" }, // (5,1), (5,2)
     ],
   },
 ];

@@ -11,6 +11,8 @@ import { SpotTheClues } from "../life/SpotTheClues";
 import { PerfectMoment } from "../life/PerfectMoment";
 import { GiggleGauge } from "../life/GiggleGauge";
 import { EpicEscape } from "../life/EpicEscape";
+import { TaxiPuzzle } from "../life/TaxiPuzzle";
+import { StreetSax } from "../life/StreetSax";
 
 export function MiniGamesPage() {
   const [save, setSave] = useState(() => loadSave());
@@ -144,6 +146,12 @@ export function MiniGamesPage() {
       )}
       {activeGame === "EpicEscape" && (
         <EpicEscape title="Epic Escape" onDone={handleGameDone} />
+      )}
+      {activeGame === "TaxiPuzzle" && (
+        <TaxiPuzzle title="NYC Traffic Jam" onDone={handleGameDone} />
+      )}
+      {activeGame === "StreetSax" && (
+        <StreetSax title="Street Saxophone" onDone={handleGameDone} />
       )}
     </div>
   );

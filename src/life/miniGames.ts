@@ -147,6 +147,27 @@ export const TRIP_MINI_GAMES: TripGames[] = [
       },
     ],
   },
+  {
+    tripId: "newyork_reflection",
+    tripTitle: "New York",
+    emoji: "🗽",
+    games: [
+      {
+        id: "taxiPuzzle",
+        title: "NYC Traffic Jam",
+        emoji: "🚕",
+        description: "Slide cars to free the taxi",
+        component: "TaxiPuzzle",
+      },
+      {
+        id: "streetSax",
+        title: "Street Saxophone",
+        emoji: "🎷",
+        description: "Hit the notes to the rhythm",
+        component: "StreetSax",
+      },
+    ],
+  },
 ];
 
 // Other mini-games not tied to trips
