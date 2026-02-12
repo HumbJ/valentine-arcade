@@ -50,7 +50,6 @@ export function SubwayRunner({
   });
   const obstaclesRef = useRef<Obstacle[]>([]);
   const nextObstacleIdRef = useRef(0);
-  const lastSpawnZRef = useRef(0);
   const targetLaneRef = useRef<Lane>(1);
   const jumpStartTimeRef = useRef(0);
 
@@ -66,7 +65,6 @@ export function SubwayRunner({
     targetLaneRef.current = 1;
     obstaclesRef.current = [];
     nextObstacleIdRef.current = 0;
-    lastSpawnZRef.current = CANVAS_HEIGHT;
     isRunningRef.current = true;
     setPhase("playing");
   }, []);
@@ -172,8 +170,11 @@ export function SubwayRunner({
         return true;
       });
 
-      // Spawn new obstacles
-      if (lastSpawnZRef.current - obstaclesRef.current[obstaclesRef.current.length - 1]?.z > OBSTACLE_SPAWN_DISTANCE || obstaclesRef.current.length === 0) {
+      // Spawn new obstacles - check if last obstacle has moved far enough
+      const lastObstacle = obstaclesRef.current[obstaclesRef.current.length - 1];
+      const shouldSpawn = !lastObstacle || lastObstacle.z < CANVAS_HEIGHT - OBSTACLE_SPAWN_DISTANCE;
+
+      if (shouldSpawn) {
         const randomLane = Math.floor(Math.random() * 3) as Lane;
         const randomType = Math.random() > 0.5 ? "barrier" : "sign";
 
@@ -183,8 +184,6 @@ export function SubwayRunner({
           z: CANVAS_HEIGHT,
           type: randomType,
         });
-
-        lastSpawnZRef.current = CANVAS_HEIGHT;
       }
 
       // Check collisions
