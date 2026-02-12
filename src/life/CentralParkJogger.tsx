@@ -21,7 +21,7 @@ const PLAYER_SIZE = 40;
 const PLAYER_X = 150;
 const GAME_SPEED = 0.3; // Speed obstacles move toward player
 const JUMP_VELOCITY = -4.0; // High jumps to clear obstacles
-const GRAVITY = 0.03;
+const GRAVITY = 0.05;
 const GAME_DURATION = 45; // seconds
 
 const OBSTACLE_EMOJIS = {
