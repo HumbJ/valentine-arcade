@@ -20,7 +20,7 @@ const GROUND_Y = 320;
 const PLAYER_SIZE = 40;
 const PLAYER_X = 150;
 const GAME_SPEED = 0.3; // Speed obstacles move toward player
-const JUMP_VELOCITY = -0.8;
+const JUMP_VELOCITY = -1.2; // Increased for higher jumps
 const GRAVITY = 0.03;
 const GAME_DURATION = 45; // seconds
 
@@ -234,11 +234,11 @@ export function CentralParkJogger({
       ctx.lineTo(CANVAS_WIDTH, GROUND_Y);
       ctx.stroke();
 
-      // Draw player (running person emoji)
+      // Draw player (running person emoji facing right)
       ctx.font = `${PLAYER_SIZE}px serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "bottom";
-      ctx.fillText("🏃", PLAYER_X + PLAYER_SIZE / 2, playerYRef.current);
+      ctx.fillText("🏃‍➡️", PLAYER_X + PLAYER_SIZE / 2, playerYRef.current);
 
       // Draw obstacles
       obstaclesRef.current.forEach((obs) => {
