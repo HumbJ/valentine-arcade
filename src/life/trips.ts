@@ -77,4 +77,22 @@ export const TRIPS: Trip[] = [
       { id: "reflection", title: "Reflection", deck: "seattle2_reflection" },
     ],
   },
+  {
+    id: "newyork",
+    title: "New York",
+    subtitle: "The city that never sleeps",
+    emoji: "🗽",
+    sections: [
+      { id: "arrival", title: "Arrival", deck: "newyork_arrival" },
+      { id: "empirestate", title: "Empire State", deck: "newyork_empirestate" },
+      { id: "explore1", title: "Exploring the City", deck: "newyork_explore1" },
+      { id: "museums", title: "Museums", deck: "newyork_museums" },
+      { id: "art", title: "Art", deck: "newyork_art" },
+      { id: "tennis", title: "Tennis", deck: "newyork_tennis" },
+      { id: "summitone", title: "Summit One", deck: "newyork_summitone" },
+      { id: "explore2", title: "More Adventures", deck: "newyork_explore2" },
+      { id: "food", title: "Food", deck: "newyork_food" },
+      { id: "reflection", title: "Reflection", deck: "newyork_reflection" },
+    ],
+  },
 ];

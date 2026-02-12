@@ -33,6 +33,8 @@ import { ShellMerge } from "../life/ShellMerge";
 import { LeiPattern } from "../life/LeiPattern";
 import { BouquetRush } from "../life/BouquetRush";
 import { WaterfallHop } from "../life/WaterfallHop";
+import { SubwayRunner } from "../life/SubwayRunner";
+import { TaxiPuzzle } from "../life/TaxiPuzzle";
 
 
 
@@ -117,6 +119,12 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
   const [pendingAfterBouquetRush, setPendingAfterBouquetRush] = useState<Effect[] | null>(null);
   const [waterfallHopGate, setWaterfallHopGate] = useState<null | { title?: string; subtitle?: string }>(null);
   const [pendingAfterWaterfallHop, setPendingAfterWaterfallHop] = useState<Effect[] | null>(null);
+
+  // New York trip mini-game states
+  const [subwayRunnerGate, setSubwayRunnerGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterSubwayRunner, setPendingAfterSubwayRunner] = useState<Effect[] | null>(null);
+  const [taxiPuzzleGate, setTaxiPuzzleGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterTaxiPuzzle, setPendingAfterTaxiPuzzle] = useState<Effect[] | null>(null);
 
   const event = useMemo(() => getEventById(save.currentEventId), [save.currentEventId]);
 
@@ -483,6 +491,32 @@ if (picnicEff && picnicEff.type === "picnicDate") {
       return;
     }
 
+    // 2.24) Subway runner gate (New York explore1)
+    const subwayRunnerEff = effects.find(
+      (e): e is Extract<Effect, { type: "subwayRunner" }> => e.type === "subwayRunner"
+    );
+    if (subwayRunnerEff) {
+      setSubwayRunnerGate({
+        title: subwayRunnerEff.title,
+        subtitle: subwayRunnerEff.subtitle,
+      });
+      setPendingAfterSubwayRunner(effects.filter((e) => e.type !== "subwayRunner"));
+      return;
+    }
+
+    // 2.25) Taxi puzzle gate (New York explore2)
+    const taxiPuzzleEff = effects.find(
+      (e): e is Extract<Effect, { type: "taxiPuzzle" }> => e.type === "taxiPuzzle"
+    );
+    if (taxiPuzzleEff) {
+      setTaxiPuzzleGate({
+        title: taxiPuzzleEff.title,
+        subtitle: taxiPuzzleEff.subtitle,
+      });
+      setPendingAfterTaxiPuzzle(effects.filter((e) => e.type !== "taxiPuzzle"));
+      return;
+    }
+
     // 3) Reflection gate intercept
 const reflEff = effects.find(
   (e): e is Extract<Effect, { type: "reflectionPrompt" }> => e.type === "reflectionPrompt"
@@ -808,6 +842,22 @@ function finishReflectionSave(text: string) {
     if (!pendingAfterWaterfallHop) return;
     const rest = pendingAfterWaterfallHop;
     setPendingAfterWaterfallHop(null);
+    runEffects(rest);
+  }
+
+  function finishSubwayRunner() {
+    setSubwayRunnerGate(null);
+    if (!pendingAfterSubwayRunner) return;
+    const rest = pendingAfterSubwayRunner;
+    setPendingAfterSubwayRunner(null);
+    runEffects(rest);
+  }
+
+  function finishTaxiPuzzle() {
+    setTaxiPuzzleGate(null);
+    if (!pendingAfterTaxiPuzzle) return;
+    const rest = pendingAfterTaxiPuzzle;
+    setPendingAfterTaxiPuzzle(null);
     runEffects(rest);
   }
 
@@ -1194,6 +1244,22 @@ function finishReflectionSave(text: string) {
           title={waterfallHopGate.title}
           subtitle={waterfallHopGate.subtitle}
           onDone={finishWaterfallHop}
+        />
+      )}
+
+      {subwayRunnerGate && (
+        <SubwayRunner
+          title={subwayRunnerGate.title}
+          subtitle={subwayRunnerGate.subtitle}
+          onDone={finishSubwayRunner}
+        />
+      )}
+
+      {taxiPuzzleGate && (
+        <TaxiPuzzle
+          title={taxiPuzzleGate.title}
+          subtitle={taxiPuzzleGate.subtitle}
+          onDone={finishTaxiPuzzle}
         />
       )}
 

@@ -1,0 +1,131 @@
+.taxi-puzzle-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  padding: 2rem;
+}
+
+.taxi-puzzle-container {
+  max-width: 700px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.taxi-puzzle-header {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  padding: 2rem;
+  text-align: center;
+  color: #333;
+}
+
+.taxi-puzzle-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.taxi-puzzle-subtitle {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  opacity: 0.95;
+}
+
+.taxi-puzzle-content {
+  padding: 2rem;
+}
+
+.taxi-puzzle-intro,
+.taxi-puzzle-complete {
+  text-align: center;
+}
+
+.taxi-puzzle-instructions {
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  color: #333;
+}
+
+.taxi-puzzle-btn {
+  padding: 0.875rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0.5rem;
+  background: #f5f5f5;
+  color: #333;
+  border: 2px solid #ddd;
+}
+
+.taxi-puzzle-btn.primary {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #333;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+  border: none;
+}
+
+.taxi-puzzle-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+}
+
+.taxi-puzzle-btn.primary:active {
+  transform: translateY(0);
+}
+
+.taxi-puzzle-btn:hover {
+  background: #e8e8e8;
+  border-color: #ccc;
+}
+
+.taxi-puzzle-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.taxi-puzzle-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.taxi-puzzle-stat {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  padding: 0.5rem 1rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+}
+
+.taxi-puzzle-hint {
+  margin: 1rem 0;
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+  min-height: 1.5rem;
+}
+
+.taxi-puzzle-final-score {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #FFA500;
+  margin-bottom: 1rem;
+}
+
+.taxi-puzzle-complete-text {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 2rem;
+}

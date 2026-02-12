@@ -184,6 +184,29 @@ MEMORIES["seattle2_food"] = deckFromGlob(seattle2Food);
 MEMORIES["seattle2_waterfalls"] = deckFromGlob(seattle2Waterfalls);
 MEMORIES["seattle2_reflection"] = deckFromGlob(seattle2Reflection);
 
+// --- New York Trip decks --------------------------------------------------------
+const newyorkArrival = import.meta.glob("../assets/photos/trips/newyork/arrival/*", { eager: true });
+const newyorkEmpirestate = import.meta.glob("../assets/photos/trips/newyork/empirestate/*", { eager: true });
+const newyorkExplore1 = import.meta.glob("../assets/photos/trips/newyork/explore1/*", { eager: true });
+const newyorkMuseums = import.meta.glob("../assets/photos/trips/newyork/museums/*", { eager: true });
+const newyorkArt = import.meta.glob("../assets/photos/trips/newyork/art/*", { eager: true });
+const newyorkTennis = import.meta.glob("../assets/photos/trips/newyork/tennis/*", { eager: true });
+const newyorkSummitone = import.meta.glob("../assets/photos/trips/newyork/summitone/*", { eager: true });
+const newyorkExplore2 = import.meta.glob("../assets/photos/trips/newyork/explore2/*", { eager: true });
+const newyorkFood = import.meta.glob("../assets/photos/trips/newyork/food/*", { eager: true });
+const newyorkReflection = import.meta.glob("../assets/photos/trips/newyork/reflection/*", { eager: true });
+
+MEMORIES["newyork_arrival"] = deckFromGlob(newyorkArrival);
+MEMORIES["newyork_empirestate"] = deckFromGlob(newyorkEmpirestate);
+MEMORIES["newyork_explore1"] = deckFromGlob(newyorkExplore1);
+MEMORIES["newyork_museums"] = deckFromGlob(newyorkMuseums);
+MEMORIES["newyork_art"] = deckFromGlob(newyorkArt);
+MEMORIES["newyork_tennis"] = deckFromGlob(newyorkTennis);
+MEMORIES["newyork_summitone"] = deckFromGlob(newyorkSummitone);
+MEMORIES["newyork_explore2"] = deckFromGlob(newyorkExplore2);
+MEMORIES["newyork_food"] = deckFromGlob(newyorkFood);
+MEMORIES["newyork_reflection"] = deckFromGlob(newyorkReflection);
+
 MEMORIES["roadtrip_ontheroad_01"] = allOnTheRoad.filter(m => m.id.includes("01")); // SD -> Joshua Tree
 MEMORIES["roadtrip_ontheroad_02"] = allOnTheRoad.filter(m => m.id.includes("02")); // Joshua Tree -> Sequoia
 MEMORIES["roadtrip_ontheroad_03"] = allOnTheRoad.filter(m => m.id.includes("03")); // Sequoia -> Kings Canyon

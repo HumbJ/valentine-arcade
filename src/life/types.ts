@@ -119,6 +119,17 @@ export type Effect =
       title?: string;
       subtitle?: string;
     }
+  // New York trip mini-game effects
+  | {
+      type: "subwayRunner";
+      title?: string;
+      subtitle?: string;
+    }
+  | {
+      type: "taxiPuzzle";
+      title?: string;
+      subtitle?: string;
+    }
   // Date night unlocking
   | {
       type: "unlockDateNights";
