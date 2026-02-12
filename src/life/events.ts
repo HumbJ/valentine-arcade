@@ -1290,6 +1290,11 @@ export const NEWYORK_FOOD: LifeEvent = {
       id: "continue",
       label: "One more bite →",
       effects: [
+        {
+          type: "streetSax",
+          title: "Street Performer",
+          subtitle: "Feel the rhythm of the city!",
+        },
         { type: "burst", deck: "newyork_food" },
         { type: "goto", eventId: "newyork_reflection" },
       ],

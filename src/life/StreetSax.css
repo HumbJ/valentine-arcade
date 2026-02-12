@@ -1,0 +1,182 @@
+.streetsax-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+}
+
+.streetsax-container {
+  max-width: 700px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.streetsax-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  text-align: center;
+  color: white;
+}
+
+.streetsax-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.streetsax-subtitle {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  opacity: 0.95;
+}
+
+.streetsax-content {
+  padding: 2rem;
+}
+
+.streetsax-intro,
+.streetsax-complete,
+.streetsax-countdown {
+  text-align: center;
+}
+
+.streetsax-instructions {
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  color: #333;
+}
+
+.streetsax-keys {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.streetsax-key {
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.streetsax-btn {
+  padding: 0.875rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0.5rem;
+}
+
+.streetsax-btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.streetsax-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.streetsax-btn.primary:active {
+  transform: translateY(0);
+}
+
+.streetsax-countdown {
+  padding: 4rem 0;
+}
+
+.streetsax-countdown-number {
+  font-size: 6rem;
+  font-weight: bold;
+  color: #667eea;
+  animation: countdown-pulse 1s ease-in-out;
+}
+
+@keyframes countdown-pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.streetsax-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.streetsax-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.streetsax-stat {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  padding: 0.5rem 1rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+}
+
+.streetsax-canvas {
+  border: 4px solid #667eea;
+  border-radius: 8px;
+  background: #1a1a1a;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.streetsax-accuracy {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.streetsax-final-score {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 1rem;
+}
+
+.streetsax-final-accuracy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.streetsax-complete-text {
+  font-size: 1.3rem;
+  color: #333;
+  margin: 2rem 0;
+  font-weight: 500;
+}

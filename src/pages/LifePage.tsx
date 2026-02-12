@@ -35,6 +35,7 @@ import { BouquetRush } from "../life/BouquetRush";
 import { WaterfallHop } from "../life/WaterfallHop";
 import { SubwayRunner } from "../life/SubwayRunner";
 import { TaxiPuzzle } from "../life/TaxiPuzzle";
+import { StreetSax } from "../life/StreetSax";
 
 
 
@@ -125,6 +126,8 @@ const [pendingAfterReflection, setPendingAfterReflection] = useState<Effect[] | 
   const [pendingAfterSubwayRunner, setPendingAfterSubwayRunner] = useState<Effect[] | null>(null);
   const [taxiPuzzleGate, setTaxiPuzzleGate] = useState<null | { title?: string; subtitle?: string }>(null);
   const [pendingAfterTaxiPuzzle, setPendingAfterTaxiPuzzle] = useState<Effect[] | null>(null);
+  const [streetSaxGate, setStreetSaxGate] = useState<null | { title?: string; subtitle?: string }>(null);
+  const [pendingAfterStreetSax, setPendingAfterStreetSax] = useState<Effect[] | null>(null);
 
   const event = useMemo(() => getEventById(save.currentEventId), [save.currentEventId]);
 
@@ -517,6 +520,19 @@ if (picnicEff && picnicEff.type === "picnicDate") {
       return;
     }
 
+    // 2.26) Street sax gate (New York food)
+    const streetSaxEff = effects.find(
+      (e): e is Extract<Effect, { type: "streetSax" }> => e.type === "streetSax"
+    );
+    if (streetSaxEff) {
+      setStreetSaxGate({
+        title: streetSaxEff.title,
+        subtitle: streetSaxEff.subtitle,
+      });
+      setPendingAfterStreetSax(effects.filter((e) => e.type !== "streetSax"));
+      return;
+    }
+
     // 3) Reflection gate intercept
 const reflEff = effects.find(
   (e): e is Extract<Effect, { type: "reflectionPrompt" }> => e.type === "reflectionPrompt"
@@ -858,6 +874,14 @@ function finishReflectionSave(text: string) {
     if (!pendingAfterTaxiPuzzle) return;
     const rest = pendingAfterTaxiPuzzle;
     setPendingAfterTaxiPuzzle(null);
+    runEffects(rest);
+  }
+
+  function finishStreetSax() {
+    setStreetSaxGate(null);
+    if (!pendingAfterStreetSax) return;
+    const rest = pendingAfterStreetSax;
+    setPendingAfterStreetSax(null);
     runEffects(rest);
   }
 
@@ -1260,6 +1284,14 @@ function finishReflectionSave(text: string) {
           title={taxiPuzzleGate.title}
           subtitle={taxiPuzzleGate.subtitle}
           onDone={finishTaxiPuzzle}
+        />
+      )}
+
+      {streetSaxGate && (
+        <StreetSax
+          title={streetSaxGate.title}
+          subtitle={streetSaxGate.subtitle}
+          onDone={finishStreetSax}
         />
       )}
 

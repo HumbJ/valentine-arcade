@@ -130,6 +130,11 @@ export type Effect =
       title?: string;
       subtitle?: string;
     }
+  | {
+      type: "streetSax";
+      title?: string;
+      subtitle?: string;
+    }
   // Date night unlocking
   | {
       type: "unlockDateNights";
