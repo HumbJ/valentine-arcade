@@ -148,7 +148,7 @@ export const TRIP_MINI_GAMES: TripGames[] = [
     ],
   },
   {
-    tripId: "newyork_reflection",
+    tripId: "newyork",
     tripTitle: "New York",
     emoji: "🗽",
     games: [
