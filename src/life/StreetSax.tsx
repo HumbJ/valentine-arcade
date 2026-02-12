@@ -498,14 +498,25 @@ export function StreetSax({
       // Draw everything
       ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-      // Draw background
-      ctx.fillStyle = "#1a1a1a";
+      const laneWidth = CANVAS_WIDTH / LANES;
+
+      // Draw piano-style background with gradient
+      const bgGradient = ctx.createLinearGradient(0, 0, 0, CANVAS_HEIGHT);
+      bgGradient.addColorStop(0, "#0a0a0a");
+      bgGradient.addColorStop(1, "#1a1520");
+      ctx.fillStyle = bgGradient;
       ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-      // Draw lane dividers
-      ctx.strokeStyle = "#444";
-      ctx.lineWidth = 2;
-      const laneWidth = CANVAS_WIDTH / LANES;
+      // Draw piano key lanes (alternating subtle colors)
+      const laneColors = ["#1a1a1a", "#252525", "#1a1a1a", "#252525"];
+      for (let i = 0; i < LANES; i++) {
+        ctx.fillStyle = laneColors[i];
+        ctx.fillRect(i * laneWidth, 0, laneWidth, CANVAS_HEIGHT);
+      }
+
+      // Draw lane dividers with subtle glow
+      ctx.strokeStyle = "#333";
+      ctx.lineWidth = 3;
       for (let i = 1; i < LANES; i++) {
         ctx.beginPath();
         ctx.moveTo(i * laneWidth, 0);
@@ -513,29 +524,69 @@ export function StreetSax({
         ctx.stroke();
       }
 
-      // Draw hit zone line
+      // Draw hit zone with piano key style
+      const hitY = HIT_ZONE * CANVAS_HEIGHT;
+
+      // Hit zone glow
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = "#FFD700";
+
+      // Draw hit zone keys for each lane
+      for (let i = 0; i < LANES; i++) {
+        const gradient = ctx.createLinearGradient(0, hitY - 30, 0, hitY + 30);
+        gradient.addColorStop(0, "rgba(255, 215, 0, 0.1)");
+        gradient.addColorStop(0.5, "rgba(255, 215, 0, 0.3)");
+        gradient.addColorStop(1, "rgba(255, 215, 0, 0.1)");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(i * laneWidth + 5, hitY - 25, laneWidth - 10, 50);
+      }
+
+      // Hit zone line
       ctx.strokeStyle = "#FFD700";
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.moveTo(0, HIT_ZONE * CANVAS_HEIGHT);
-      ctx.lineTo(CANVAS_WIDTH, HIT_ZONE * CANVAS_HEIGHT);
+      ctx.moveTo(0, hitY);
+      ctx.lineTo(CANVAS_WIDTH, hitY);
       ctx.stroke();
 
-      // Draw notes
+      // Reset shadow
+      ctx.shadowBlur = 0;
+
+      // Draw notes with elegant styling
       notesRef.current.forEach((note) => {
         if (note.hit) return;
 
         const x = note.lane * laneWidth + laneWidth / 2;
         const y = note.y * CANVAS_HEIGHT;
-        const size = 30;
+        const size = 35;
 
-        ctx.fillStyle = "#00D9FF";
+        // Note glow
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = "#00D9FF";
+
+        // Draw note as rounded diamond/rectangle
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(Math.PI / 4);
+
+        // Gradient fill
+        const noteGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, size);
+        noteGradient.addColorStop(0, "#00F0FF");
+        noteGradient.addColorStop(0.5, "#00D9FF");
+        noteGradient.addColorStop(1, "#0088CC");
+
+        ctx.fillStyle = noteGradient;
         ctx.strokeStyle = "#ffffff";
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 2.5;
+
+        const roundedSize = size * 0.7;
         ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.roundRect(-roundedSize, -roundedSize, roundedSize * 2, roundedSize * 2, 8);
         ctx.fill();
         ctx.stroke();
+
+        ctx.restore();
+        ctx.shadowBlur = 0;
       });
 
       // Draw hit results
