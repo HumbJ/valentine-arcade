@@ -153,6 +153,13 @@ export const TRIP_MINI_GAMES: TripGames[] = [
     emoji: "🗽",
     games: [
       {
+        id: "centralParkJogger",
+        title: "Central Park Jog",
+        emoji: "🏃",
+        description: "Run through the park",
+        component: "CentralParkJogger",
+      },
+      {
         id: "taxiPuzzle",
         title: "NYC Traffic Jam",
         emoji: "🚕",
