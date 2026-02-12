@@ -272,7 +272,7 @@ export function StreetSax({
       "../assets/audio/lofi_music_library-lofi-cafe-lofi-music-ambient-jazz-461870.mp3",
       import.meta.url
     ).href;
-    audio.volume = 0.25; // Lower volume for better balance
+    audio.volume = 0.15; // Lower volume for better balance
     audio.currentTime = 0;
 
     audioElementRef.current = audio;
