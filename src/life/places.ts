@@ -42,6 +42,13 @@ export const PLACES: Place[] = [
   emoji: "🌸",
   deck: "seattle2",
 },
+{
+  id: "newyork",
+  title: "New York",
+  subtitle: "lights, energy, endless city",
+  emoji: "🗽",
+  deck: "newyork",
+},
 
   // Add more later:
   // { id: "las_vegas", title: "Las Vegas", subtitle: "late-night lights", emoji: "🎰" },

@@ -1115,6 +1115,218 @@ export const SEATTLE2_REFLECTION: LifeEvent = {
   ],
 };
 
+// =============================================================================
+// NEW YORK TRIP EVENTS
+// =============================================================================
+
+export const NEWYORK_TRIP_START: LifeEvent = {
+  id: "newyork_trip_start",
+  title: "New York Trip 🗽",
+  text: "The city that never sleeps. Bright lights, endless energy, and that feeling you get when you're standing in the middle of everything.",
+  choices: [
+    {
+      id: "begin",
+      label: "Let's go! 🚕",
+      effects: [
+        { type: "log", text: "New York trip begins! The city awaits." },
+        { type: "goto", eventId: "newyork_arrival" },
+      ],
+    },
+  ],
+};
+
+export const NEWYORK_ARRIVAL: LifeEvent = {
+  id: "newyork_arrival",
+  title: "Arrival",
+  text: "The energy hits you immediately. Cab horns, millions of people, buildings reaching for the sky. This is New York.",
+  choices: [
+    {
+      id: "continue",
+      label: "Take it all in →",
+      effects: [
+        { type: "burst", deck: "newyork_arrival" },
+        {
+          type: "reflectionPrompt",
+          id: "newyork_arrival",
+          arc: "newyork",
+          title: "First Impressions",
+          subtitle: "Stepping into the city",
+          prompt: "What was it like arriving in New York for the first time?",
+        },
+        { type: "goto", eventId: "newyork_empirestate" },
+      ],
+    },
+  ],
+};
+
+export const NEWYORK_EMPIRESTATE: LifeEvent = {
+  id: "newyork_empirestate",
+  title: "Empire State Building",
+  text: "Night falls, and we're heading to the top of one of the most iconic buildings in the world. The city lights stretch forever.",
+  choices: [
+    {
+      id: "continue",
+      label: "To the top →",
+      effects: [
+        { type: "burst", deck: "newyork_empirestate" },
+        { type: "goto", eventId: "newyork_explore1" },
+      ],
+    },
+  ],
+};
+
+export const NEWYORK_EXPLORE1: LifeEvent = {
+  id: "newyork_explore1",
+  title: "Exploring the City",
+  text: "Walking through the streets, every block is different. Street vendors, massive stores, people from everywhere. The pulse of the city.",
+  choices: [
+    {
+      id: "continue",
+      label: "Keep exploring →",
+      effects: [
+        {
+          type: "subwayRunner",
+          title: "Subway Rush",
+          subtitle: "Navigate the NYC subway!",
+        },
+        { type: "burst", deck: "newyork_explore1" },
+        { type: "goto", eventId: "newyork_museums" },
+      ],
+    },
+  ],
+};
+
+export const NEWYORK_MUSEUMS: LifeEvent = {
+  id: "newyork_museums",
+  title: "Museums",
+  text: "From natural history to modern art, New York's museums are world-class. Every exhibit feels like stepping into another world.",
+  choices: [
+    {
+      id: "continue",
+      label: "Wander through history →",
+      effects: [
+        { type: "burst", deck: "newyork_museums" },
+        { type: "goto", eventId: "newyork_art" },
+      ],
+    },
+  ],
+};
+
+export const NEWYORK_ART: LifeEvent = {
+  id: "newyork_art",
+  title: "Art Everywhere",
+  text: "Galleries, street art, installations that make you stop and stare. Art is woven into every corner of this city.",
+  choices: [
+    {
+      id: "continue",
+      label: "Take it all in →",
+      effects: [
+        { type: "burst", deck: "newyork_art" },
+        { type: "goto", eventId: "newyork_tennis" },
+      ],
+    },
+  ],
+};
+
+export const NEWYORK_TENNIS: LifeEvent = {
+  id: "newyork_tennis",
+  title: "Tennis",
+  text: "Maybe we caught a match, or maybe we just soaked in the atmosphere. Either way, the energy of the sport in this city is unmatched.",
+  choices: [
+    {
+      id: "continue",
+      label: "Game, set, match →",
+      effects: [
+        { type: "burst", deck: "newyork_tennis" },
+        { type: "goto", eventId: "newyork_summitone" },
+      ],
+    },
+  ],
+};
+
+export const NEWYORK_SUMMITONE: LifeEvent = {
+  id: "newyork_summitone",
+  title: "Summit One Vanderbilt",
+  text: "Glass floors, mirrors reflecting infinity, and views that make your breath catch. It's like floating above the city.",
+  choices: [
+    {
+      id: "continue",
+      label: "Look out over the city →",
+      effects: [
+        { type: "burst", deck: "newyork_summitone" },
+        { type: "goto", eventId: "newyork_explore2" },
+      ],
+    },
+  ],
+};
+
+export const NEWYORK_EXPLORE2: LifeEvent = {
+  id: "newyork_explore2",
+  title: "More Adventures",
+  text: "More streets, more discoveries. Central Park, hidden gems, places that feel like secrets only New York knows.",
+  choices: [
+    {
+      id: "continue",
+      label: "Keep discovering →",
+      effects: [
+        {
+          type: "taxiPuzzle",
+          title: "Traffic Jam",
+          subtitle: "Help the taxi escape!",
+        },
+        { type: "burst", deck: "newyork_explore2" },
+        { type: "goto", eventId: "newyork_food" },
+      ],
+    },
+  ],
+};
+
+export const NEWYORK_FOOD: LifeEvent = {
+  id: "newyork_food",
+  title: "Food",
+  text: "Pizza slices bigger than your face, bagels that set the standard, food from every culture on earth. New York tastes like everything.",
+  choices: [
+    {
+      id: "continue",
+      label: "One more bite →",
+      effects: [
+        { type: "burst", deck: "newyork_food" },
+        { type: "goto", eventId: "newyork_reflection" },
+      ],
+    },
+  ],
+};
+
+export const NEWYORK_REFLECTION: LifeEvent = {
+  id: "newyork_reflection",
+  title: "Last Moments",
+  text: "The trip is winding down, but the city's energy still buzzes around us. Time to look back on everything we experienced.",
+  choices: [
+    {
+      id: "continue",
+      label: "Remember it all →",
+      effects: [
+        { type: "burst", deck: "newyork_reflection" },
+        {
+          type: "reflectionPrompt",
+          id: "newyork_end",
+          arc: "newyork",
+          title: "City That Never Sleeps",
+          subtitle: "Before we leave",
+          prompt: "What will you remember most about New York?",
+        },
+        { type: "stat", key: "love", delta: 12 },
+        { type: "stat", key: "happiness", delta: 14 },
+        { type: "stat", key: "memories", delta: 16 },
+        { type: "unlockPlace", placeId: "newyork" },
+        { type: "unlockDateNights", tripId: "newyork" },
+        { type: "log", text: "New York Trip: lights, energy, and unforgettable moments." },
+        { type: "gotoHome", markComplete: "newyork" },
+      ],
+    },
+  ],
+};
+
 // ============================================
 // RANDOM POP-UP MINI-EVENTS
 // ============================================
@@ -2299,6 +2511,14 @@ export const LIFE_EVENTS: LifeEvent[] = [
   effects: [
     { type: "log", text: "Seattle called us back… and we couldn't resist." },
     { type: "goto", eventId: "seattle2_trip_start" },
+  ],
+},
+{
+  id: "newyork",
+  label: "New York 🗽 (lights + energy + endless city)",
+  effects: [
+    { type: "log", text: "New York was calling… and we answered." },
+    { type: "goto", eventId: "newyork_trip_start" },
   ],
 },
       {
