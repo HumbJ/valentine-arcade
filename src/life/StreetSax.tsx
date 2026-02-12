@@ -30,7 +30,7 @@ const PERFECT_WINDOW = 0.05; // ±5% of screen height for perfect hit
 const GOOD_WINDOW = 0.1; // ±10% of screen height for good hit
 const CANVAS_WIDTH = 600;
 const CANVAS_HEIGHT = 800;
-const AUDIO_OFFSET = 0; // Adjust if notes are early (negative) or late (positive)
+const AUDIO_OFFSET = 0.1; // Adjust if notes are early (negative) or late (positive)
 
 // Melody chart from Audacity timestamps - manually charted to actual song beats
 const MELODY: Array<{ time: number; lane: number }> = [
@@ -396,7 +396,7 @@ export function StreetSax({
 
       if (accuracy !== "miss") {
         note.hit = true;
-        playTone(lane);
+        // playTone(lane); // Removed - no sound on note hit
         scoreRef.current += points * (1 + comboRef.current * 0.1);
         setScore(Math.floor(scoreRef.current));
         setCombo(comboRef.current);
