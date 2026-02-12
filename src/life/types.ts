@@ -121,7 +121,7 @@ export type Effect =
     }
   // New York trip mini-game effects
   | {
-      type: "subwayRunner";
+      type: "centralParkJogger";
       title?: string;
       subtitle?: string;
     }

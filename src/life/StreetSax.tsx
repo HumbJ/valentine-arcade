@@ -24,77 +24,118 @@ interface HitResult {
 }
 
 const LANES = 4;
-const NOTE_SPEED = 0.4; // How fast notes fall (fraction of screen per second)
+const NOTE_SPEED = 0.35; // How fast notes fall (fraction of screen per second)
 const HIT_ZONE = 0.9; // Y position of hit line (0-1)
 const PERFECT_WINDOW = 0.05; // ±5% of screen height for perfect hit
 const GOOD_WINDOW = 0.1; // ±10% of screen height for good hit
 const CANVAS_WIDTH = 600;
 const CANVAS_HEIGHT = 800;
 
-// Jazz melody chart - notes with timing in seconds
+// Lofi jazz melody chart - charted for ~60 seconds at 85 BPM
+// Lanes represent different note pitches
 const MELODY: Array<{ time: number; lane: number }> = [
-  // Intro (0-4s)
-  { time: 1.0, lane: 1 },
-  { time: 1.5, lane: 2 },
-  { time: 2.0, lane: 1 },
-  { time: 2.5, lane: 0 },
-  { time: 3.0, lane: 2 },
-  { time: 3.5, lane: 3 },
+  // Intro section (0-8s) - gentle start
+  { time: 1.4, lane: 1 },
+  { time: 2.1, lane: 2 },
+  { time: 2.8, lane: 1 },
+  { time: 3.5, lane: 0 },
+  { time: 4.2, lane: 2 },
+  { time: 4.9, lane: 3 },
+  { time: 5.6, lane: 2 },
+  { time: 6.3, lane: 1 },
+  { time: 7.0, lane: 2 },
+  { time: 7.7, lane: 1 },
 
-  // Main melody (4-8s)
-  { time: 4.0, lane: 1 },
-  { time: 4.3, lane: 1 },
-  { time: 4.6, lane: 2 },
-  { time: 5.0, lane: 3 },
-  { time: 5.5, lane: 2 },
-  { time: 6.0, lane: 1 },
-  { time: 6.5, lane: 0 },
-  { time: 7.0, lane: 1 },
-  { time: 7.5, lane: 2 },
+  // First phrase (8-16s) - melody emerges
+  { time: 8.4, lane: 1 },
+  { time: 8.7, lane: 1 },
+  { time: 9.1, lane: 2 },
+  { time: 9.8, lane: 3 },
+  { time: 10.5, lane: 2 },
+  { time: 11.2, lane: 1 },
+  { time: 11.9, lane: 0 },
+  { time: 12.6, lane: 1 },
+  { time: 13.3, lane: 2 },
+  { time: 14.0, lane: 3 },
+  { time: 14.7, lane: 2 },
+  { time: 15.4, lane: 1 },
 
-  // Variation (8-12s)
-  { time: 8.0, lane: 3 },
-  { time: 8.3, lane: 2 },
-  { time: 8.6, lane: 3 },
-  { time: 9.0, lane: 2 },
-  { time: 9.5, lane: 1 },
-  { time: 10.0, lane: 0 },
-  { time: 10.5, lane: 1 },
-  { time: 11.0, lane: 2 },
-  { time: 11.5, lane: 3 },
-
-  // Bridge (12-16s)
-  { time: 12.0, lane: 0 },
-  { time: 12.4, lane: 1 },
-  { time: 12.8, lane: 2 },
-  { time: 13.2, lane: 3 },
-  { time: 13.6, lane: 2 },
-  { time: 14.0, lane: 1 },
-  { time: 14.5, lane: 2 },
-  { time: 15.0, lane: 3 },
-  { time: 15.5, lane: 2 },
-
-  // Final phrase (16-20s)
-  { time: 16.0, lane: 1 },
-  { time: 16.5, lane: 0 },
-  { time: 17.0, lane: 1 },
+  // Second phrase (16-24s) - variation
+  { time: 16.1, lane: 0 },
+  { time: 16.8, lane: 1 },
   { time: 17.5, lane: 2 },
-  { time: 18.0, lane: 3 },
-  { time: 18.5, lane: 2 },
-  { time: 19.0, lane: 1 },
-  { time: 19.5, lane: 0 },
-
-  // Outro (20-24s)
-  { time: 20.0, lane: 1 },
-  { time: 20.5, lane: 2 },
+  { time: 18.2, lane: 3 },
+  { time: 18.6, lane: 3 },
+  { time: 18.9, lane: 2 },
+  { time: 19.6, lane: 1 },
+  { time: 20.3, lane: 2 },
   { time: 21.0, lane: 3 },
-  { time: 21.5, lane: 2 },
-  { time: 22.0, lane: 1 },
-  { time: 22.5, lane: 2 },
-  { time: 23.0, lane: 1 },
+  { time: 21.7, lane: 2 },
+  { time: 22.4, lane: 1 },
+  { time: 23.1, lane: 0 },
+
+  // Bridge (24-32s) - rhythmic section
+  { time: 24.0, lane: 1 },
+  { time: 24.35, lane: 2 },
+  { time: 24.7, lane: 1 },
+  { time: 25.4, lane: 0 },
+  { time: 26.1, lane: 1 },
+  { time: 26.8, lane: 2 },
+  { time: 27.5, lane: 3 },
+  { time: 28.2, lane: 2 },
+  { time: 28.9, lane: 1 },
+  { time: 29.6, lane: 2 },
+  { time: 30.3, lane: 3 },
+  { time: 31.0, lane: 2 },
+  { time: 31.7, lane: 1 },
+
+  // Third phrase (32-40s) - development
+  { time: 32.4, lane: 0 },
+  { time: 33.1, lane: 1 },
+  { time: 33.8, lane: 2 },
+  { time: 34.5, lane: 3 },
+  { time: 35.2, lane: 2 },
+  { time: 35.9, lane: 1 },
+  { time: 36.6, lane: 2 },
+  { time: 37.3, lane: 3 },
+  { time: 38.0, lane: 2 },
+  { time: 38.7, lane: 1 },
+  { time: 39.4, lane: 0 },
+
+  // Fourth phrase (40-48s) - climax building
+  { time: 40.1, lane: 1 },
+  { time: 40.5, lane: 2 },
+  { time: 40.8, lane: 1 },
+  { time: 41.5, lane: 2 },
+  { time: 42.2, lane: 3 },
+  { time: 42.9, lane: 2 },
+  { time: 43.6, lane: 1 },
+  { time: 44.3, lane: 0 },
+  { time: 45.0, lane: 1 },
+  { time: 45.7, lane: 2 },
+  { time: 46.4, lane: 3 },
+  { time: 47.1, lane: 2 },
+
+  // Final section (48-60s) - wind down
+  { time: 48.0, lane: 1 },
+  { time: 48.7, lane: 2 },
+  { time: 49.4, lane: 1 },
+  { time: 50.1, lane: 0 },
+  { time: 50.8, lane: 1 },
+  { time: 51.5, lane: 2 },
+  { time: 52.2, lane: 3 },
+  { time: 52.9, lane: 2 },
+  { time: 53.6, lane: 1 },
+  { time: 54.3, lane: 0 },
+  { time: 55.0, lane: 1 },
+  { time: 55.7, lane: 2 },
+  { time: 56.4, lane: 1 },
+  { time: 57.1, lane: 0 },
+  { time: 57.8, lane: 1 },
+  { time: 58.5, lane: 2 },
 ];
 
-const SONG_DURATION = 24; // seconds
+const SONG_DURATION = 60; // seconds
 
 // Note frequencies for each lane (saxophone-ish range)
 const LANE_FREQUENCIES = [
@@ -117,7 +158,7 @@ export function StreetSax({
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
-  const backgroundMusicRef = useRef<{ stop: () => void } | null>(null);
+  const audioElementRef = useRef<HTMLAudioElement | null>(null);
   const isRunningRef = useRef(false);
   const notesRef = useRef<Note[]>([]);
   const nextNoteIdRef = useRef(0);
@@ -149,67 +190,23 @@ export function StreetSax({
     oscillator.stop(ctx.currentTime + duration);
   }, []);
 
-  // Play background music loop
+  // Load and play the actual audio track
   const playBackgroundMusic = useCallback(() => {
-    if (!audioContextRef.current) return;
+    // Create audio element
+    const audio = new Audio();
+    audio.src = new URL(
+      "../assets/audio/lofi_music_library-lofi-cafe-lofi-music-ambient-jazz-461870.mp3",
+      import.meta.url
+    ).href;
+    audio.volume = 0.5;
+    audio.currentTime = 0;
 
-    const ctx = audioContextRef.current;
-    const startTime = ctx.currentTime;
-    const bpm = 120;
-    const beatDuration = 60 / bpm;
-    const totalDuration = SONG_DURATION;
+    audioElementRef.current = audio;
 
-    // Jazz chord progression (ii-V-I in C)
-    const chordProgression = [
-      { root: 196.00, third: 233.08, fifth: 293.66 }, // Dm (D-F-A)
-      { root: 196.00, third: 246.94, fifth: 293.66 }, // G7 (G-B-D)
-      { root: 130.81, third: 164.81, fifth: 196.00 }, // C (C-E-G)
-      { root: 220.00, third: 261.63, fifth: 329.63 }, // Am (A-C-E)
-    ];
-
-    const oscillators: OscillatorNode[] = [];
-    const gains: GainNode[] = [];
-
-    // Play repeating chord progression
-    for (let time = 0; time < totalDuration; time += beatDuration * 4) {
-      chordProgression.forEach((chord, i) => {
-        const chordTime = startTime + time + i * beatDuration;
-
-        // Play each note in the chord
-        [chord.root, chord.third, chord.fifth].forEach((freq) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-
-          osc.frequency.value = freq;
-          osc.type = "sine";
-
-          gain.gain.setValueAtTime(0, chordTime);
-          gain.gain.linearRampToValueAtTime(0.08, chordTime + 0.01);
-          gain.gain.exponentialRampToValueAtTime(0.01, chordTime + beatDuration * 0.8);
-
-          osc.start(chordTime);
-          osc.stop(chordTime + beatDuration);
-
-          oscillators.push(osc);
-          gains.push(gain);
-        });
-      });
-    }
-
-    return {
-      stop: () => {
-        oscillators.forEach((osc) => {
-          try {
-            osc.stop();
-          } catch (e) {
-            // Already stopped
-          }
-        });
-      },
-    };
+    // Play the audio
+    audio.play().catch((err) => {
+      console.error("Failed to play audio:", err);
+    });
   }, []);
 
   const startGame = useCallback(() => {
@@ -237,7 +234,7 @@ export function StreetSax({
           setAccuracy({ perfect: 0, good: 0, miss: 0 });
 
           // Start background music
-          backgroundMusicRef.current = playBackgroundMusic();
+          playBackgroundMusic();
 
           return 0;
         }
@@ -383,9 +380,9 @@ export function StreetSax({
       if (gameTime >= SONG_DURATION + 2 && notesRef.current.length === 0) {
         isRunningRef.current = false;
         // Stop background music
-        if (backgroundMusicRef.current) {
-          backgroundMusicRef.current.stop();
-          backgroundMusicRef.current = null;
+        if (audioElementRef.current) {
+          audioElementRef.current.pause();
+          audioElementRef.current.currentTime = 0;
         }
         setPhase("complete");
         return;
@@ -469,9 +466,9 @@ export function StreetSax({
     return () => {
       if (animationId) cancelAnimationFrame(animationId);
       // Stop background music on cleanup
-      if (backgroundMusicRef.current) {
-        backgroundMusicRef.current.stop();
-        backgroundMusicRef.current = null;
+      if (audioElementRef.current) {
+        audioElementRef.current.pause();
+        audioElementRef.current.currentTime = 0;
       }
     };
   }, [phase]);

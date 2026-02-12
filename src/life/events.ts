@@ -1185,9 +1185,9 @@ export const NEWYORK_EXPLORE1: LifeEvent = {
       label: "Keep exploring →",
       effects: [
         {
-          type: "subwayRunner",
-          title: "Subway Rush",
-          subtitle: "Navigate the NYC subway!",
+          type: "centralParkJogger",
+          title: "Central Park Jog",
+          subtitle: "Morning run through the park!",
         },
         { type: "burst", deck: "newyork_explore1" },
         { type: "goto", eventId: "newyork_museums" },
