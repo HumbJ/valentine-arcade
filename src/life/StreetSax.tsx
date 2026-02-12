@@ -643,13 +643,13 @@ export function StreetSax({
           {phase === "intro" && (
             <div className="streetsax-intro">
               <p className="streetsax-instructions">
-                🎷 Feel the rhythm of the city streets!
+                🎷 Street rhythm game
               </p>
               <p className="streetsax-instructions">
-                Hit notes to the beat of the jazz music
+                Hit notes to the beat
               </p>
               <p className="streetsax-instructions">
-                Press keys when notes hit the golden line
+                Press keys when notes hit the line
               </p>
               <div className="streetsax-keys">
                 <div className="streetsax-key">1 / A</div>
@@ -658,7 +658,7 @@ export function StreetSax({
                 <div className="streetsax-key">4 / F</div>
               </div>
               <button className="streetsax-btn primary" onClick={startGame}>
-                Start Playing! 🎵
+                Start 🎵
               </button>
             </div>
           )}
@@ -699,24 +699,24 @@ export function StreetSax({
               </div>
               <div className="streetsax-complete-text">
                 {accuracy.miss === 0
-                  ? "Perfect Performance! You're a street legend! 🎷✨"
+                  ? "Perfect run, that's pretty impressive 🎷"
                   : score >= 3000
-                  ? "Amazing rhythm! The crowd loved it! 🎵"
+                  ? "Nice rhythm"
                   : score >= 2000
-                  ? "Great performance! Keep grooving! 🎶"
+                  ? "Not bad at all"
                   : score >= 1000
-                  ? "Nice job! You're finding your rhythm! 🎼"
-                  : "Keep practicing! The streets await! 🎺"}
+                  ? "Getting the hang of it"
+                  : "Keep working on it"}
               </div>
               <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
                 <button className="streetsax-btn primary" onClick={startGame}>
-                  Play again 🎷
+                  Try again 🎷
                 </button>
                 <button
                   className="streetsax-btn primary"
                   onClick={() => onDone(score)}
                 >
-                  Continue exploring →
+                  Keep exploring →
                 </button>
               </div>
             </div>

@@ -225,16 +225,16 @@ export function TaxiPuzzle({
           {phase === "intro" && (
             <div className="taxi-puzzle-intro">
               <p className="taxi-puzzle-instructions">
-                🚕 Help the yellow taxi escape the traffic jam!
+                🚕 Get the yellow taxi out of traffic
               </p>
               <p className="taxi-puzzle-instructions">
-                Click a car to select it, then use <strong>arrow keys</strong> to slide it
+                Click a car, then use <strong>arrow keys</strong> to slide it
               </p>
               <p className="taxi-puzzle-instructions">
-                Move the taxi all the way to the right to exit
+                Move the taxi all the way right to exit
               </p>
               <button className="taxi-puzzle-btn primary" onClick={startGame}>
-                Start Driving! 🚦
+                Start 🚦
               </button>
             </div>
           )}
@@ -358,22 +358,22 @@ export function TaxiPuzzle({
               </div>
               <div className="taxi-puzzle-complete-text">
                 {totalScore >= 250
-                  ? "Traffic Master! Perfect navigation! 🏆"
+                  ? "Nice, that was clean 🚕"
                   : totalScore >= 180
-                  ? "Amazing! You know the streets well! 🚕"
+                  ? "Pretty solid navigation"
                   : totalScore >= 120
-                  ? "Great job! You made it through! 🚦"
-                  : "You escaped the traffic! Well done! 🚗"}
+                  ? "Made it through"
+                  : "Escaped the traffic"}
               </div>
               <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
                 <button className="taxi-puzzle-btn primary" onClick={startGame}>
-                  Try again 🚕
+                  Go again 🚕
                 </button>
                 <button
                   className="taxi-puzzle-btn primary"
                   onClick={() => onDone(totalScore)}
                 >
-                  Back to exploring →
+                  Keep exploring →
                 </button>
               </div>
             </div>

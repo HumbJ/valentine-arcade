@@ -1122,13 +1122,13 @@ export const SEATTLE2_REFLECTION: LifeEvent = {
 export const NEWYORK_TRIP_START: LifeEvent = {
   id: "newyork_trip_start",
   title: "New York Trip 🗽",
-  text: "The city that never sleeps. Bright lights, endless energy, and that feeling you get when you're standing in the middle of everything.",
+  text: "The city that never sleeps. Bright lights everywhere, constant noise, that feeling you're in the middle of everything.",
   choices: [
     {
       id: "begin",
-      label: "Let's go! 🚕",
+      label: "Let's go 🚕",
       effects: [
-        { type: "log", text: "New York trip begins! The city awaits." },
+        { type: "log", text: "New York trip begins." },
         { type: "goto", eventId: "newyork_arrival" },
       ],
     },
@@ -1138,7 +1138,7 @@ export const NEWYORK_TRIP_START: LifeEvent = {
 export const NEWYORK_ARRIVAL: LifeEvent = {
   id: "newyork_arrival",
   title: "Arrival",
-  text: "The energy hits you immediately. Cab horns, millions of people, buildings reaching for the sky. This is New York.",
+  text: "The energy hits immediately. Cab horns, people everywhere, buildings that just keep going up. This is New York.",
   choices: [
     {
       id: "continue",
@@ -1151,7 +1151,7 @@ export const NEWYORK_ARRIVAL: LifeEvent = {
           arc: "newyork",
           title: "First Impressions",
           subtitle: "Stepping into the city",
-          prompt: "What was it like arriving in New York for the first time?",
+          prompt: "What was it like arriving in New York?",
         },
         { type: "goto", eventId: "newyork_empirestate" },
       ],
@@ -1162,7 +1162,7 @@ export const NEWYORK_ARRIVAL: LifeEvent = {
 export const NEWYORK_EMPIRESTATE: LifeEvent = {
   id: "newyork_empirestate",
   title: "Empire State Building",
-  text: "Night falls, and we're heading to the top of one of the most iconic buildings in the world. The city lights stretch forever.",
+  text: "Night's falling and we're heading to the top. The city lights stretch out in every direction, going on forever.",
   choices: [
     {
       id: "continue",
@@ -1178,7 +1178,7 @@ export const NEWYORK_EMPIRESTATE: LifeEvent = {
 export const NEWYORK_EXPLORE1: LifeEvent = {
   id: "newyork_explore1",
   title: "Exploring the City",
-  text: "Walking through the streets, every block is different. Street vendors, massive stores, people from everywhere. The pulse of the city.",
+  text: "Walking through the streets, every block's different. Street vendors, huge stores, people from everywhere. The city just keeps moving.",
   choices: [
     {
       id: "continue",
@@ -1187,7 +1187,7 @@ export const NEWYORK_EXPLORE1: LifeEvent = {
         {
           type: "centralParkJogger",
           title: "Central Park Jog",
-          subtitle: "Morning run through the park!",
+          subtitle: "Morning run through the park",
         },
         { type: "burst", deck: "newyork_explore1" },
         { type: "goto", eventId: "newyork_museums" },
@@ -1199,11 +1199,11 @@ export const NEWYORK_EXPLORE1: LifeEvent = {
 export const NEWYORK_MUSEUMS: LifeEvent = {
   id: "newyork_museums",
   title: "Museums",
-  text: "From natural history to modern art, New York's museums are world-class. Every exhibit feels like stepping into another world.",
+  text: "Natural history, modern art, everything in between. The museums here are on another level. Every exhibit's like stepping into a different world.",
   choices: [
     {
       id: "continue",
-      label: "Wander through history →",
+      label: "Keep wandering →",
       effects: [
         { type: "burst", deck: "newyork_museums" },
         { type: "goto", eventId: "newyork_art" },
@@ -1215,11 +1215,11 @@ export const NEWYORK_MUSEUMS: LifeEvent = {
 export const NEWYORK_ART: LifeEvent = {
   id: "newyork_art",
   title: "Art Everywhere",
-  text: "Galleries, street art, installations that make you stop and stare. Art is woven into every corner of this city.",
+  text: "Galleries, street art, random installations that make you stop and stare. Art's just woven into every corner here.",
   choices: [
     {
       id: "continue",
-      label: "Take it all in →",
+      label: "Keep looking →",
       effects: [
         { type: "burst", deck: "newyork_art" },
         { type: "goto", eventId: "newyork_tennis" },
@@ -1231,7 +1231,7 @@ export const NEWYORK_ART: LifeEvent = {
 export const NEWYORK_TENNIS: LifeEvent = {
   id: "newyork_tennis",
   title: "Tennis",
-  text: "Maybe we caught a match, or maybe we just soaked in the atmosphere. Either way, the energy of the sport in this city is unmatched.",
+  text: "Maybe we caught a match, maybe we just took in the atmosphere. Either way, the energy around the sport here hits different.",
   choices: [
     {
       id: "continue",
@@ -1247,11 +1247,11 @@ export const NEWYORK_TENNIS: LifeEvent = {
 export const NEWYORK_SUMMITONE: LifeEvent = {
   id: "newyork_summitone",
   title: "Summit One Vanderbilt",
-  text: "Glass floors, mirrors reflecting infinity, and views that make your breath catch. It's like floating above the city.",
+  text: "Glass floors, mirrors reflecting infinity, views that kind of take your breath away. It's like floating above the whole city.",
   choices: [
     {
       id: "continue",
-      label: "Look out over the city →",
+      label: "Look out →",
       effects: [
         { type: "burst", deck: "newyork_summitone" },
         { type: "goto", eventId: "newyork_explore2" },
@@ -1263,16 +1263,16 @@ export const NEWYORK_SUMMITONE: LifeEvent = {
 export const NEWYORK_EXPLORE2: LifeEvent = {
   id: "newyork_explore2",
   title: "More Adventures",
-  text: "More streets, more discoveries. Central Park, hidden gems, places that feel like secrets only New York knows.",
+  text: "More streets, more stuff to find. Central Park, random hidden spots, places that feel like secrets only this city knows.",
   choices: [
     {
       id: "continue",
-      label: "Keep discovering →",
+      label: "Keep going →",
       effects: [
         {
           type: "taxiPuzzle",
           title: "Traffic Jam",
-          subtitle: "Help the taxi escape!",
+          subtitle: "Help the taxi escape",
         },
         { type: "burst", deck: "newyork_explore2" },
         { type: "goto", eventId: "newyork_food" },
@@ -1284,7 +1284,7 @@ export const NEWYORK_EXPLORE2: LifeEvent = {
 export const NEWYORK_FOOD: LifeEvent = {
   id: "newyork_food",
   title: "Food",
-  text: "Pizza slices bigger than your face, bagels that set the standard, food from every culture on earth. New York tastes like everything.",
+  text: "Pizza slices bigger than your face, bagels that actually live up to the hype, food from every culture you can think of. New York tastes like everything.",
   choices: [
     {
       id: "continue",
@@ -1293,7 +1293,7 @@ export const NEWYORK_FOOD: LifeEvent = {
         {
           type: "streetSax",
           title: "Street Performer",
-          subtitle: "Feel the rhythm of the city!",
+          subtitle: "Rhythm of the city",
         },
         { type: "burst", deck: "newyork_food" },
         { type: "goto", eventId: "newyork_reflection" },
@@ -1305,11 +1305,11 @@ export const NEWYORK_FOOD: LifeEvent = {
 export const NEWYORK_REFLECTION: LifeEvent = {
   id: "newyork_reflection",
   title: "Last Moments",
-  text: "The trip is winding down, but the city's energy still buzzes around us. Time to look back on everything we experienced.",
+  text: "The trip's winding down but the city's energy is still buzzing all around us. Time to think back on everything.",
   choices: [
     {
       id: "continue",
-      label: "Remember it all →",
+      label: "Look back →",
       effects: [
         { type: "burst", deck: "newyork_reflection" },
         {
@@ -1318,14 +1318,14 @@ export const NEWYORK_REFLECTION: LifeEvent = {
           arc: "newyork",
           title: "City That Never Sleeps",
           subtitle: "Before we leave",
-          prompt: "What will you remember most about New York?",
+          prompt: "What'll you remember most about New York?",
         },
         { type: "stat", key: "love", delta: 12 },
         { type: "stat", key: "happiness", delta: 14 },
         { type: "stat", key: "memories", delta: 16 },
         { type: "unlockPlace", placeId: "newyork" },
         { type: "unlockDateNights", tripId: "newyork" },
-        { type: "log", text: "New York Trip: lights, energy, and unforgettable moments." },
+        { type: "log", text: "New York Trip: lights, energy, moments we won't forget." },
         { type: "gotoHome", markComplete: "newyork" },
       ],
     },
