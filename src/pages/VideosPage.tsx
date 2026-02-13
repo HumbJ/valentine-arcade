@@ -15,7 +15,7 @@ export function VideosPage() {
   try {
     save = loadSave();
     console.log("Save loaded:", save);
-    stats = getVideoStats(save.tripsCompleted);
+    stats = getVideoStats(save.completedEvents);
     console.log("Stats:", stats);
   } catch (error) {
     console.error("Error loading save or stats:", error);
@@ -41,7 +41,7 @@ export function VideosPage() {
   };
 
   const handleVideoClick = (video: Video) => {
-    if (isVideoUnlocked(video, save.tripsCompleted)) {
+    if (isVideoUnlocked(video, save.completedEvents)) {
       setSelectedVideo(video);
     }
   };
@@ -66,7 +66,7 @@ export function VideosPage() {
         <div className="videos-categories">
           {VIDEO_CATEGORIES.map((category) => {
             const unlockedCount = category.videos.filter((v) =>
-              isVideoUnlocked(v, save.tripsCompleted)
+              isVideoUnlocked(v, save.completedEvents)
             ).length;
             const totalCount = category.videos.length;
             const isExpanded = selectedCategory === category.id;
@@ -88,7 +88,7 @@ export function VideosPage() {
                 {isExpanded && (
                   <div className="video-category-items">
                     {category.videos.map((video) => {
-                      const unlocked = isVideoUnlocked(video, save.tripsCompleted);
+                      const unlocked = isVideoUnlocked(video, save.completedEvents);
 
                       return (
                         <button

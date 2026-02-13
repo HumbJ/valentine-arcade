@@ -231,25 +231,25 @@ export const VIDEO_CATEGORIES: VideoCategory[] = [
 ];
 
 // Helper function to check if a video is unlocked
-export function isVideoUnlocked(video: Video, completedTrips: string[]): boolean {
-  return completedTrips.includes(video.unlockCondition);
+export function isVideoUnlocked(video: Video, completedEvents: string[]): boolean {
+  return completedEvents.includes(video.unlockCondition);
 }
 
 // Get all unlocked videos for a category
 export function getUnlockedVideosForCategory(
   categoryId: string,
-  completedTrips: string[]
+  completedEvents: string[]
 ): Video[] {
   const category = VIDEO_CATEGORIES.find((c) => c.id === categoryId);
   if (!category) return [];
 
-  return category.videos.filter((video) => isVideoUnlocked(video, completedTrips));
+  return category.videos.filter((video) => isVideoUnlocked(video, completedEvents));
 }
 
 // Get total count of videos and unlocked videos
-export function getVideoStats(completedTrips: string[]): { unlocked: number; total: number } {
+export function getVideoStats(completedEvents: string[]): { unlocked: number; total: number } {
   const allVideos = VIDEO_CATEGORIES.flatMap((cat) => cat.videos);
-  const unlockedVideos = allVideos.filter((video) => isVideoUnlocked(video, completedTrips));
+  const unlockedVideos = allVideos.filter((video) => isVideoUnlocked(video, completedEvents));
 
   return {
     unlocked: unlockedVideos.length,
