@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loadSave } from "../life/save";
-import { VIDEO_CATEGORIES, isVideoUnlocked, getVideoStats, type Video } from "../life/videos";
+import { VIDEO_CATEGORIES, isVideoUnlocked, getVideoStats, getVideoUrl, type Video } from "../life/videos";
 import "./VideosPage.css";
 
 export function VideosPage() {
@@ -110,7 +110,7 @@ export function VideosPage() {
               </div>
               <video
                 className="video-player"
-                src={selectedVideo.path}
+                src={getVideoUrl(selectedVideo.path)}
                 controls
                 autoPlay
                 playsInline
