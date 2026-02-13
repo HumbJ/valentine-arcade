@@ -5,12 +5,31 @@ import { VIDEO_CATEGORIES, isVideoUnlocked, getVideoStats, type Video } from "..
 import "./VideosPage.css";
 
 export function VideosPage() {
+  console.log("VideosPage rendering");
+
   const navigate = useNavigate();
-  const save = loadSave();
+
+  let save;
+  let stats;
+
+  try {
+    save = loadSave();
+    console.log("Save loaded:", save);
+    stats = getVideoStats(save.tripsCompleted);
+    console.log("Stats:", stats);
+  } catch (error) {
+    console.error("Error loading save or stats:", error);
+    return (
+      <div className="videos-page">
+        <div style={{ color: 'red', padding: '2rem' }}>
+          Error loading videos: {String(error)}
+        </div>
+      </div>
+    );
+  }
+
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
-  const stats = getVideoStats(save.tripsCompleted);
 
   const handleCategoryClick = (categoryId: string) => {
     if (selectedCategory === categoryId) {
