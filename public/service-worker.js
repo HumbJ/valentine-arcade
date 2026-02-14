@@ -1,8 +1,12 @@
-const CACHE_NAME = 'valentine-arcade-v3';
+const CACHE_NAME = 'valentine-arcade-v4';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/apple-touch-icon.png',
+  '/favicon.png',
 ];
 
 // Install event - cache assets
