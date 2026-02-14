@@ -85,53 +85,59 @@ export function InstallPrompt() {
   // Android/Chrome - native install prompt available
   if (deferredPrompt) {
     return (
-      <div className="install-banner">
-        <div className="install-banner-content">
-          <div className="install-icon">💝</div>
-          <div className="install-text">
-            <strong>Add Valentine Arcade to your home screen!</strong>
-            <span>Open it like a real app, anytime</span>
+      <>
+        <div className="install-backdrop" onClick={handleDismiss} />
+        <div className="install-banner">
+          <div className="install-banner-content">
+            <div className="install-icon">💝</div>
+            <div className="install-text">
+              <strong>Add Valentine Arcade to your home screen!</strong>
+              <span>Open it like a real app, anytime</span>
+            </div>
+          </div>
+          <div className="install-actions">
+            <button className="install-btn" onClick={handleInstall}>
+              Install
+            </button>
+            <button className="install-dismiss" onClick={handleDismiss}>
+              Not now
+            </button>
           </div>
         </div>
-        <div className="install-actions">
-          <button className="install-btn" onClick={handleInstall}>
-            Install
-          </button>
-          <button className="install-dismiss" onClick={handleDismiss}>
-            Not now
-          </button>
-        </div>
-      </div>
+      </>
     );
   }
 
   // iOS - show manual instructions
   if (showIOSGuide) {
     return (
-      <div className="install-banner ios-guide">
-        <button className="install-close" onClick={handleDismiss}>
-          ×
-        </button>
-        <div className="install-banner-content">
-          <div className="install-icon">💝</div>
-          <div className="install-text">
-            <strong>Add to your home screen!</strong>
-            <span>So you can open it like an app</span>
+      <>
+        <div className="install-backdrop" onClick={handleDismiss} />
+        <div className="install-banner ios-guide">
+          <button className="install-close" onClick={handleDismiss}>
+            ×
+          </button>
+          <div className="install-banner-content">
+            <div className="install-icon">💝</div>
+            <div className="install-text">
+              <strong>Add to your home screen!</strong>
+              <span>So you can open it like an app</span>
+            </div>
           </div>
+          <ol className="ios-steps">
+            <li>
+              Tap the <strong>Share</strong> button{" "}
+              <span className="ios-share-icon">⬆</span> at the bottom of Safari
+            </li>
+            <li>
+              Scroll down and tap <strong>"Add to Home Screen"</strong>
+            </li>
+            <li>
+              Tap <strong>"Add"</strong> in the top right
+            </li>
+          </ol>
         </div>
-        <ol className="ios-steps">
-          <li>
-            Tap the <strong>Share</strong> button{" "}
-            <span className="ios-share-icon">⬆</span> at the bottom of Safari
-          </li>
-          <li>
-            Scroll down and tap <strong>"Add to Home Screen"</strong>
-          </li>
-          <li>
-            Tap <strong>"Add"</strong> in the top right
-          </li>
-        </ol>
-      </div>
+      </>
     );
   }
 
