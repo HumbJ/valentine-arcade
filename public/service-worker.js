@@ -1,4 +1,4 @@
-const CACHE_NAME = 'valentine-arcade-v2';
+const CACHE_NAME = 'valentine-arcade-v3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -16,35 +16,47 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - network-first for navigation, stale-while-revalidate for assets
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        // Clone the request
-        const fetchRequest = event.request.clone();
+  const { request } = event;
 
-        return fetch(fetchRequest).then((response) => {
-          // Check if valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-
-          // Clone the response
+  // Navigation requests (HTML pages): always go to network first
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          // Cache the fresh response
           const responseToCache = response.clone();
-
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
-
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseToCache);
+          });
           return response;
-        });
-      })
+        })
+        .catch(() => {
+          // Offline fallback: serve from cache
+          return caches.match(request);
+        })
+    );
+    return;
+  }
+
+  // All other requests: stale-while-revalidate
+  event.respondWith(
+    caches.match(request).then((cachedResponse) => {
+      const fetchPromise = fetch(request).then((networkResponse) => {
+        // Cache valid responses
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseToCache);
+          });
+        }
+        return networkResponse;
+      });
+
+      // Return cached response immediately if available, otherwise wait for network
+      return cachedResponse || fetchPromise;
+    })
   );
 });
 
