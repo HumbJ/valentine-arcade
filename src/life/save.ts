@@ -1,3 +1,5 @@
+import { DATE_NIGHTS } from "./dateNights";
+
 const KEY = "our_little_life_save"; // match whatever key you're using everywhere
 
 export function defaultSave() {
@@ -23,7 +25,7 @@ export function loadSave() {
     if (!raw) return fresh;
     const parsed = JSON.parse(raw);
 
-    return {
+    const save = {
   ...fresh,
   ...parsed,
   stats: { ...fresh.stats, ...(parsed.stats ?? {}) },
@@ -35,6 +37,22 @@ export function loadSave() {
   experiencedDateNights: Array.isArray(parsed.experiencedDateNights) ? parsed.experiencedDateNights : [],
 };
 
+    // Auto-repair: unlock date nights for already-completed trips.
+    // Fixes saves created before unlockDateNights effects were wired up.
+    const completed = save.completedEvents as string[];
+    const unlocked = new Set(save.unlockedDateNights as string[]);
+    let repaired = false;
+    for (const dn of DATE_NIGHTS) {
+      if (completed.includes(dn.unlockAfter) && !unlocked.has(dn.id)) {
+        unlocked.add(dn.id);
+        repaired = true;
+      }
+    }
+    if (repaired) {
+      save.unlockedDateNights = [...unlocked];
+    }
+
+    return save;
   } catch {
     return fresh;
   }
