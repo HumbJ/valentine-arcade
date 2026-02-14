@@ -255,14 +255,14 @@ export const COZY_NEXT_DAY: LifeEvent = {
         { type: "burst", deck: "cozy_stay" },
         { type: "stat", key: "love", delta: 3 },
         { type: "stat", key: "happiness", delta: 2 },
-        { type: "goto", eventId: "activity_hub" },
+        { type: "gotoHome", markComplete: "" },
       ],
     },
     {
       id: "back",
       label: "← Back",
       effects: [
-        { type: "goto", eventId: "activity_hub" },
+        { type: "gotoHome", markComplete: "" },
       ],
     },
   ],
@@ -2177,75 +2177,54 @@ export const LIFE_EVENTS: LifeEvent[] = [
     id: "start",
     title: "Our Little Life",
     text:
-      "Okay… we’re doing this. A tiny life made of big memories. Where should we begin?",
+      "We're together. That's what matters. What sounds good tonight?",
     choices: [
       {
-        id: "begin",
-        label: "Start at the beginning 💗",
+        id: "cozy",
+        label: "Cozy Night In 🌙",
         effects: [
-          { type: "log", text: "We decided to tell our story." },
-          { type: "goto", eventId: "first_date" },
+          { type: "log", text: "We decided to stay in tonight." },
+          { type: "goto", eventId: "cozy_night" },
         ],
       },
       {
-        id: "peek",
-        label: "Jump to an adventure ✨",
+        id: "adventure",
+        label: "Plan an Adventure ✨",
         effects: [
-          { type: "log", text: "We skipped ahead to an adventure." },
+          { type: "log", text: "Time to pick our next adventure." },
           { type: "goto", eventId: "vacation_tease" },
         ],
       },
     ],
   },
   {
-    id: "first_date",
-    title: "A First Date",
-    text:
-      "We meet up and it feels easy—like we’ve known each other longer than we have.",
-    choices: [
-      {
-        id: "sweet",
-        label: "Lean in and enjoy it",
-        effects: [
-          { type: "stat", key: "love", delta: 6 },
-          { type: "stat", key: "happiness", delta: 5 },
-          { type: "log", text: "That first-date glow stayed with us." },
-          { type: "goto", eventId: "cozy_night" },
-        ],
-      },
-      {
-        id: "nervous",
-        label: "Be nervous but honest",
-        effects: [
-          { type: "stat", key: "love", delta: 4 },
-          { type: "stat", key: "happiness", delta: 3 },
-          { type: "log", text: "We were nervous… but it was real." },
-          { type: "goto", eventId: "cozy_night" },
-        ],
-      },
-    ],
-  },
-  {
     id: "cozy_night",
-    title: "A Cozy Night In",
+    title: "Cozy Night In",
     text:
       "No big plans. Just us, snacks, and that safe feeling of being together.",
     choices: [
       {
         id: "movie",
-        label: "Pick a comfort movie",
+        label: "Watch a movie 🎬",
         effects: [
           { type: "goto", eventId: "comfort_movie_choice" },
         ],
       },
       {
         id: "talk",
-        label: "Talk late into the night",
+        label: "Stay cozy & talk 💕",
         effects: [
           { type: "stat", key: "love", delta: 5 },
           { type: "log", text: "We talked long into the night." },
-  { type: "goto", eventId: "cozy_next_day" },
-],
+          { type: "goto", eventId: "cozy_next_day" },
+        ],
+      },
+      {
+        id: "back",
+        label: "← Back home",
+        effects: [
+          { type: "gotoHome", markComplete: "" },
+        ],
       },
     ],
   },
@@ -2286,7 +2265,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
         id: "back",
         label: "← Maybe something else",
         effects: [
-          { type: "goto", eventId: "activity_hub" },
+          { type: "gotoHome", markComplete: "" },
         ],
       },
     ],
@@ -2322,7 +2301,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
         id: "continue",
         label: "What's next? →",
         effects: [
-          { type: "goto", eventId: "activity_hub" },
+          { type: "gotoHome", markComplete: "" },
         ],
       },
     ],
@@ -2358,7 +2337,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
         id: "continue",
         label: "What's next? →",
         effects: [
-          { type: "goto", eventId: "activity_hub" },
+          { type: "gotoHome", markComplete: "" },
         ],
       },
     ],
@@ -2394,7 +2373,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
         id: "continue",
         label: "What's next? →",
         effects: [
-          { type: "goto", eventId: "activity_hub" },
+          { type: "gotoHome", markComplete: "" },
         ],
       },
     ],
@@ -2430,54 +2409,17 @@ export const LIFE_EVENTS: LifeEvent[] = [
         id: "continue",
         label: "What's next? →",
         effects: [
-          { type: "goto", eventId: "activity_hub" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "activity_hub",
-    title: "What Do You Want to Do?",
-    text: "We're together. That's the important part. What sounds good?",
-    choices: [
-      {
-        id: "movie_night",
-        label: "Movie night 🎬",
-        effects: [
-          { type: "goto", eventId: "comfort_movie_choice" },
-        ],
-      },
-      {
-        id: "adventures",
-        label: "Plan an adventure ✨",
-        effects: [
-          { type: "goto", eventId: "vacation_tease" },
-        ],
-      },
-      {
-        id: "cozy_activities",
-        label: "Stay cozy 🌙",
-        effects: [
-          { type: "goto", eventId: "cozy_next_day" },
+          { type: "gotoHome", markComplete: "" },
         ],
       },
     ],
   },
   {
     id: "vacation_tease",
-    title: "A Trip Idea",
+    title: "Plan an Adventure",
     text:
-      "We start talking about vacations—places we've been, and places we still want to go.",
+      "Where should we go next?",
     choices: [
-      {
-        id: "japan",
-        label: "Japan 🇯🇵 (food + city lights + trains)",
-        effects: [
-          { type: "stat", key: "happiness", delta: 4 },
-          { type: "log", text: "Japan is officially on the dream list." },
-          { type: "goto", eventId: "end_demo" },
-        ],
-      },
       {
   id: "disneyland",
   label: "Disneyland 🏰 (snacks + rides + fireworks)",
@@ -2527,19 +2469,10 @@ export const LIFE_EVENTS: LifeEvent[] = [
   ],
 },
       {
-        id: "cozy",
-        label: "Cozy cabin 🏔 (quiet + warm + slow mornings)",
-        effects: [
-          { type: "stat", key: "happiness", delta: 4 },
-          { type: "log", text: "A cabin getaway sounds perfect." },
-          { type: "goto", eventId: "end_demo" },
-        ],
-      },
-      {
         id: "back",
-        label: "← Back",
+        label: "← Back home",
         effects: [
-          { type: "goto", eventId: "activity_hub" },
+          { type: "gotoHome", markComplete: "" },
         ],
       },
     ],
@@ -2577,6 +2510,28 @@ export const LIFE_EVENTS: LifeEvent[] = [
   
 },
 
+{
+  id: "story_complete",
+  title: "Our Story",
+  text: "We've relived so many memories together—the trips, the quiet nights, all those small moments that make up our life. What would you like to do?",
+  choices: [
+    {
+      id: "continue",
+      label: "Continue reliving the memories ✨",
+      effects: [
+        { type: "log", text: "There's always more to explore together." },
+        { type: "gotoHome", markComplete: "" },
+      ],
+    },
+    {
+      id: "end_journey",
+      label: "End the journey... for now 💕",
+      effects: [
+        { type: "goto", eventId: "end" },
+      ],
+    },
+  ],
+},
 {
   id: "end",
   title: "The end (for now)",

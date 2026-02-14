@@ -1,4 +1,4 @@
-const CACHE_NAME = 'valentine-arcade-v1';
+const CACHE_NAME = 'valentine-arcade-v2';
 const urlsToCache = [
   '/',
   '/index.html',

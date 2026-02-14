@@ -23,8 +23,13 @@ export function HomePage() {
           // Resume existing event
           navigate("/story");
         } else {
-          // Start from beginning - set currentEventId before navigating
-          const updated = { ...save, currentEventId: "start" };
+          // Check if all main story is completed (all 6 trips)
+          const mainTrips = ["seattle1", "roadtrip", "hawaii", "seattle2", "newyork", "disneyland"];
+          const allTripsComplete = mainTrips.every(trip => save.completedEvents.includes(trip));
+
+          // If all trips complete, show completion screen; otherwise start story
+          const startEvent = allTripsComplete ? "story_complete" : "start";
+          const updated = { ...save, currentEventId: startEvent };
           persistSave(updated);
           setSave(updated);
           navigate("/story");

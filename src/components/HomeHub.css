@@ -185,6 +185,13 @@
   cursor: pointer;
   transition: transform 0.2s ease, filter 0.2s ease;
   z-index: 10;
+  /* Add subtle highlight for better visibility */
+  outline: 2px dashed transparent;
+  outline-offset: 4px;
+}
+
+.hub-zone:focus-visible {
+  outline-color: rgba(255, 105, 180, 0.5);
 }
 
 .hub-zone:hover,
@@ -889,11 +896,20 @@
   }
 
   .hub-event-popup {
-    flex-wrap: wrap;
-    justify-content: center;
     max-width: 90%;
     padding: 10px 14px;
     gap: 8px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hub-event-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .hub-event-btn {
+    flex: 1;
   }
 
   .hub-event-emoji {
