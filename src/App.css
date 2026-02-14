@@ -75,7 +75,6 @@ html, body {
   background: linear-gradient(180deg, var(--bg1), var(--bg2));
   font-family: system-ui, -apple-system, BlinkMacSystemFont;
   color: var(--ink);
-  padding-bottom: 84px; /* space for bottom nav */
 }
 
 .screen {
