@@ -25,13 +25,12 @@ export function PerfectMoment({
   const [currentRound, setCurrentRound] = useState(0);
   const [score, setScore] = useState(0);
   const [momentVisible, setMomentVisible] = useState(false);
-  const [captureWindow, setCaptureWindow] = useState(false);
+  const [_captureWindow, setCaptureWindow] = useState(false);
   const [feedback, setFeedback] = useState<"perfect" | "good" | "missed" | null>(null);
 
-  const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef(0);
   const feedbackRef = useRef<"perfect" | "good" | "missed" | null>(null);
-  const timersRef = useRef<NodeJS.Timeout[]>([]);
+  const timersRef = useRef<number[]>([]);
 
   const totalRounds = 4;
   const currentMoment = MOMENTS[currentRound % MOMENTS.length];

@@ -36,10 +36,10 @@ export function OceanSpotting({
   const [score, setScore] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(GAME_DURATION);
   const nextCreatureId = useRef(0);
-  const spawnTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const hideTimersRef = useRef<Map<number, NodeJS.Timeout>>(new Map());
+  const spawnTimerRef = useRef<number | null>(null);
+  const hideTimersRef = useRef<Map<number, number>>(new Map());
   const gameStartTimeRef = useRef<number>(0);
-  const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timerIntervalRef = useRef<number | null>(null);
   const isSpawningRef = useRef(false);
   const caughtCreaturesRef = useRef<Set<number>>(new Set());
 

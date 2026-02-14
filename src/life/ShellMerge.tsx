@@ -47,7 +47,7 @@ export function ShellMerge({
   const [score, setScore] = useState(0);
   const [dropX, setDropX] = useState(GAME_WIDTH / 2);
   const [nextId, setNextId] = useState(0);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | undefined>(undefined);
   const gameLoopActive = useRef(false);
 
   // Get random shell type (weighted towards smaller)

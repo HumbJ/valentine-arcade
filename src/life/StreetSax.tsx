@@ -244,14 +244,6 @@ const MELODY: Array<{ time: number; lane: number }> = [
 
 const SONG_DURATION = 148; // seconds (~2:28)
 
-// Note frequencies for each lane (saxophone-ish range)
-const LANE_FREQUENCIES = [
-  261.63, // C4
-  293.66, // D4
-  329.63, // E4
-  392.00, // G4
-];
-
 export function StreetSax({
   title = "Street Saxophone",
   subtitle,
@@ -275,27 +267,6 @@ export function StreetSax({
   const comboRef = useRef(0);
   const accuracyRef = useRef({ perfect: 0, good: 0, miss: 0 });
   const hitResultsRef = useRef<HitResult[]>([]);
-
-  // Play a tone for a lane
-  const playTone = useCallback((lane: number, duration: number = 0.2) => {
-    if (!audioContextRef.current) return;
-
-    const ctx = audioContextRef.current;
-    const oscillator = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(ctx.destination);
-
-    oscillator.frequency.value = LANE_FREQUENCIES[lane];
-    oscillator.type = "sine";
-
-    gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-
-    oscillator.start(ctx.currentTime);
-    oscillator.stop(ctx.currentTime + duration);
-  }, []);
 
   // Load and play the actual audio track
   const playBackgroundMusic = useCallback(() => {

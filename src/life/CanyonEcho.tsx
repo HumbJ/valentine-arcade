@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import "./CanyonEcho.css";
 
 // Rhythm patterns - each pattern is a sequence of timing offsets (in ms)

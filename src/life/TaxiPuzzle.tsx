@@ -158,7 +158,6 @@ export function TaxiPuzzle({
       const newCol = car.col + deltaCol;
 
       // Check if move is valid
-      const tempCar = { ...car, row: newRow, col: newCol };
       if (deltaRow !== 0 || deltaCol !== 0) {
         if (!canMoveCar(car, deltaRow, deltaCol)) return prevCars;
       }

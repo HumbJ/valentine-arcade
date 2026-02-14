@@ -141,10 +141,6 @@ export function TunnelViewReveal({
     scratch(x, y);
   };
 
-  const handleEnd = () => {
-    setIsDrawing(false);
-  };
-
   // Add document-level listeners for move/end to continue drawing outside canvas
   useEffect(() => {
     const handleDocumentMove = (e: MouseEvent | TouchEvent) => {

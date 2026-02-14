@@ -30,7 +30,7 @@ export function EpicEscape({
   const [feedback, setFeedback] = useState<"success" | "fail" | null>(null);
 
   const respondedRef = useRef(false);
-  const timersRef = useRef<NodeJS.Timeout[]>([]);
+  const timersRef = useRef<number[]>([]);
 
   const totalRounds = 6;
   const currentQTE = QTE_PROMPTS[currentRound % QTE_PROMPTS.length];
