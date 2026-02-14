@@ -1,9 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./InstallPrompt.css";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
+function getIsIOS(): boolean {
+  if (typeof navigator === "undefined") return false;
+  const ua = navigator.userAgent;
+  // Standard iOS check
+  if (/iPad|iPhone|iPod/.test(ua)) return true;
+  // iPadOS 13+ reports as Macintosh but has multi-touch
+  if (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) return true;
+  return false;
+}
+
+function getIsStandalone(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    (navigator as unknown as Record<string, boolean>).standalone === true
+  );
 }
 
 export function InstallPrompt() {
@@ -12,45 +30,37 @@ export function InstallPrompt() {
   const [showIOSGuide, setShowIOSGuide] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [installed, setInstalled] = useState(false);
-
-  const isIOS =
-    /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-    !(window as unknown as Record<string, unknown>).MSStream;
-  const isStandalone =
-    window.matchMedia("(display-mode: standalone)").matches ||
-    (navigator as unknown as Record<string, boolean>).standalone === true;
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
-    if (isStandalone) {
+    if (getIsStandalone()) {
       setInstalled(true);
       return;
     }
 
-    // Check if user previously dismissed
-    const prev = sessionStorage.getItem("install-dismissed");
-    if (prev) {
+    // Check if user previously dismissed (session only)
+    if (sessionStorage.getItem("install-dismissed")) {
       setDismissed(true);
       return;
     }
 
+    // Android/Chrome: listen for native install prompt
     const handler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
     };
-
     window.addEventListener("beforeinstallprompt", handler);
 
-    // Show iOS guide after a short delay if on iOS and not installed
-    if (isIOS) {
-      const t = setTimeout(() => setShowIOSGuide(true), 1500);
-      return () => {
-        clearTimeout(t);
-        window.removeEventListener("beforeinstallprompt", handler);
-      };
+    // iOS: show guide after page settles (longer delay for slow mobile loads)
+    if (getIsIOS()) {
+      timerRef.current = setTimeout(() => setShowIOSGuide(true), 2500);
     }
 
-    return () => window.removeEventListener("beforeinstallprompt", handler);
-  }, [isIOS, isStandalone]);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
@@ -96,7 +106,7 @@ export function InstallPrompt() {
   }
 
   // iOS - show manual instructions
-  if (showIOSGuide && isIOS) {
+  if (showIOSGuide) {
     return (
       <div className="install-banner ios-guide">
         <button className="install-close" onClick={handleDismiss}>

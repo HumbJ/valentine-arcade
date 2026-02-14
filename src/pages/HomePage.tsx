@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { HomeHub, type HubZone } from "../components/HomeHub";
 import { loadSave, persistSave } from "../life/save";
+import { DATE_NIGHTS } from "../life/dateNights";
 import type { SaveData } from "../life/types";
 import "./HomePage.css";
 
@@ -41,16 +42,16 @@ export function HomePage() {
         navigate("/map");
         break;
       case "tv":
-        // Video memories repository
-        navigate("/videos");
+        // Date night memories
+        navigate("/memories");
         break;
       case "table":
         // Food mini-games
         navigate("/food");
         break;
       case "phone":
-        // Date night memories
-        navigate("/memories");
+        // Video memories repository
+        navigate("/videos");
         break;
     }
   };
@@ -67,6 +68,10 @@ export function HomePage() {
   const unlockedTrips = save.placesUnlocked.length;
   const totalTrips = 5; // Seattle, Road Trip, Hawaii, Seattle 2, New York
 
+  // Count unlocked date nights
+  const unlockedDateNights = save.unlockedDateNights?.length ?? 0;
+  const totalDateNights = DATE_NIGHTS.length;
+
   return (
     <div className="home-page">
       <header className="home-header">
@@ -80,6 +85,8 @@ export function HomePage() {
         onRandomEventAccept={handleRandomEventAccept}
         unlockedTrips={unlockedTrips}
         totalTrips={totalTrips}
+        unlockedDateNights={unlockedDateNights}
+        totalDateNights={totalDateNights}
       />
 
       <div className="home-hint">
