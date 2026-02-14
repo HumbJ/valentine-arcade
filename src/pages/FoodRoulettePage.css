@@ -1,0 +1,315 @@
+.food-roulette-page {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff5e1 0%, #ffe4b5 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.food-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.food-back-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #ff69b4;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #ff1493;
+  transition: all 0.2s;
+}
+
+.food-back-btn:hover {
+  background: #ff69b4;
+  color: white;
+  transform: translateX(-2px);
+}
+
+.food-title {
+  font-size: 2rem;
+  color: #ff1493;
+  margin: 0.5rem 0;
+  text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.7);
+}
+
+.food-subtitle {
+  font-size: 1rem;
+  color: #c71585;
+  margin: 0.5rem 0;
+}
+
+.food-stats {
+  font-size: 1.2rem;
+  color: #ff1493;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.food-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Empty state */
+.food-empty {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  border: 3px solid #ff69b4;
+}
+
+.food-empty p {
+  font-size: 1.2rem;
+  color: #c71585;
+  margin: 0.5rem 0;
+}
+
+/* Start screen */
+.food-start {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  border: 4px solid #ff69b4;
+  box-shadow: 0 8px 16px rgba(255, 20, 147, 0.2);
+}
+
+.food-wheel-icon {
+  font-size: 6rem;
+  margin-bottom: 1rem;
+  animation: gentle-bounce 2s ease-in-out infinite;
+}
+
+@keyframes gentle-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.food-start h2 {
+  font-size: 2rem;
+  color: #ff1493;
+  margin-bottom: 0.5rem;
+}
+
+.food-start p {
+  font-size: 1.2rem;
+  color: #c71585;
+  margin-bottom: 2rem;
+}
+
+.food-spin-btn {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(255, 20, 147, 0.3);
+  transition: all 0.3s;
+}
+
+.food-spin-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(255, 20, 147, 0.4);
+}
+
+.food-spin-btn:active {
+  transform: scale(0.98);
+}
+
+/* Spinning state */
+.food-spinning {
+  text-align: center;
+}
+
+.food-wheel-spinner {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  border: 4px solid #ff69b4;
+  animation: spin 2s linear infinite;
+}
+
+.spinner-emoji {
+  font-size: 6rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.food-spinning p {
+  font-size: 1.5rem;
+  color: #ff1493;
+  font-weight: bold;
+}
+
+/* Game screen */
+.food-game {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.food-photo-container {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 4/3;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 4px solid #ff69b4;
+  box-shadow: 0 8px 16px rgba(255, 20, 147, 0.3);
+  background: white;
+}
+
+.food-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.food-question {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.food-question h2 {
+  font-size: 1.8rem;
+  color: #ff1493;
+  margin-bottom: 1.5rem;
+}
+
+.food-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.food-option-btn {
+  padding: 1rem;
+  font-size: 1.1rem;
+  background: white;
+  color: #ff1493;
+  border: 3px solid #ff69b4;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.food-option-btn:hover:not(:disabled) {
+  background: #fff0f5;
+  transform: scale(1.02);
+}
+
+.food-option-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.food-option-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.food-option-btn.correct {
+  background: #90ee90;
+  border-color: #228b22;
+  color: #006400;
+}
+
+.food-option-btn.incorrect {
+  background: #ffb6c1;
+  border-color: #dc143c;
+  color: #8b0000;
+}
+
+/* Result screen */
+.food-result {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.food-result-correct {
+  font-size: 1.8rem;
+  color: #228b22;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.food-result-wrong {
+  font-size: 1.5rem;
+  color: #c71585;
+  margin-bottom: 1rem;
+}
+
+.food-play-again-btn {
+  padding: 1rem 2rem;
+  font-size: 1.3rem;
+  background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(255, 20, 147, 0.3);
+  transition: all 0.3s;
+}
+
+.food-play-again-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(255, 20, 147, 0.4);
+}
+
+.food-play-again-btn:active {
+  transform: scale(0.98);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .food-title {
+    font-size: 1.5rem;
+  }
+
+  .food-options {
+    grid-template-columns: 1fr;
+  }
+
+  .food-photo-container {
+    max-width: 100%;
+  }
+}

@@ -7,6 +7,7 @@ import { MapPage } from "./pages/MapPage";
 import { MiniGamesPage } from "./pages/MiniGamesPage";
 import { MemoriesPage } from "./pages/MemoriesPage";
 import { VideosPage } from "./pages/VideosPage";
+import { FoodRoulettePage } from "./pages/FoodRoulettePage";
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
@@ -58,7 +59,7 @@ export default function App() {
           <Route path="/memories" element={<MemoriesPage />} />
           {/* Placeholder routes for hub zones - can be expanded later */}
           <Route path="/videos" element={<VideosPage />} />
-          <Route path="/food" element={<ArcadePage />} />
+          <Route path="/food" element={<FoodRoulettePage />} />
           <Route path="/friends" element={<ArcadePage />} />
         </Routes>
       </PageShell>
