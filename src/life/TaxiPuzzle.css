@@ -8,6 +8,13 @@
   justify-content: center;
   padding: 2rem;
   animation: fadeIn 0.3s ease;
+  box-sizing: border-box;
+}
+
+.taxi-puzzle-wrapper *,
+.taxi-puzzle-wrapper *::before,
+.taxi-puzzle-wrapper *::after {
+  box-sizing: border-box;
 }
 
 @keyframes fadeIn {
@@ -198,6 +205,33 @@
 }
 
 @media (max-width: 600px) {
+  .taxi-puzzle-wrapper {
+    padding: 0.5rem;
+    align-items: flex-start;
+    padding-top: 1rem;
+  }
+
+  .taxi-puzzle-header {
+    padding: 1rem;
+  }
+
+  .taxi-puzzle-title {
+    font-size: 1.4rem;
+  }
+
+  .taxi-puzzle-content {
+    padding: 1rem;
+  }
+
+  .taxi-puzzle-stats {
+    gap: 0.75rem;
+  }
+
+  .taxi-puzzle-stat {
+    font-size: 0.9rem;
+    padding: 0.35rem 0.6rem;
+  }
+
   .taxi-puzzle-arrow-btn {
     width: 50px;
     height: 50px;

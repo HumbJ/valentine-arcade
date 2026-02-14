@@ -8,6 +8,13 @@
   justify-content: center;
   padding: 2rem;
   animation: fadeIn 0.3s ease;
+  box-sizing: border-box;
+}
+
+.streetsax-wrapper *,
+.streetsax-wrapper *::before,
+.streetsax-wrapper *::after {
+  box-sizing: border-box;
 }
 
 @keyframes fadeIn {
@@ -157,10 +164,12 @@
 }
 
 .streetsax-canvas {
-  border: 4px solid #667eea;
+  border: 3px solid #667eea;
   border-radius: 8px;
   background: #1a1a1a;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  max-width: 100%;
+  height: auto;
 }
 
 .streetsax-accuracy {
@@ -241,13 +250,67 @@
 }
 
 @media (max-width: 600px) {
+  .streetsax-wrapper {
+    padding: 0.5rem;
+    align-items: flex-start;
+    padding-top: 0.5rem;
+  }
+
+  .streetsax-container {
+    max-height: 100%;
+    overflow-y: auto;
+  }
+
+  .streetsax-header {
+    padding: 1rem;
+  }
+
+  .streetsax-title {
+    font-size: 1.4rem;
+  }
+
+  .streetsax-content {
+    padding: 0.75rem;
+  }
+
+  .streetsax-game {
+    gap: 0.5rem;
+  }
+
+  .streetsax-stats {
+    gap: 1rem;
+  }
+
+  .streetsax-stat {
+    font-size: 0.9rem;
+    padding: 0.35rem 0.6rem;
+  }
+
+  .streetsax-accuracy {
+    gap: 0.75rem;
+    font-size: 0.8rem;
+  }
+
   .streetsax-lane-btn {
     width: 60px;
     height: 60px;
     font-size: 1.7rem;
+    flex: 1;
+    max-width: 70px;
   }
 
   .streetsax-mobile-controls {
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .streetsax-key {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .streetsax-keys {
     gap: 0.5rem;
+    margin: 1rem 0;
   }
 }
