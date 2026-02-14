@@ -4,7 +4,7 @@
   "framework": "vite",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/:path((?!assets/|manifest\\.json|service-worker\\.js|icon-.*\\.png|.*\\.svg|.*\\.ico).*)",
       "destination": "/index.html"
     }
   ],
