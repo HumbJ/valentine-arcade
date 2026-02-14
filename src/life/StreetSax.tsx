@@ -350,72 +350,77 @@ export function StreetSax({
     }, 1000);
   }, [playBackgroundMusic]);
 
+  // Handle hitting a note in a lane
+  const hitLane = useCallback((lane: number) => {
+    if (!isRunningRef.current) return;
+
+    // Find closest unhit note in this lane
+    const laneNotes = notesRef.current
+      .filter((n) => n.lane === lane && !n.hit)
+      .sort((a, b) => Math.abs(a.y - HIT_ZONE) - Math.abs(b.y - HIT_ZONE));
+
+    if (laneNotes.length === 0) return;
+
+    const note = laneNotes[0];
+    const distance = Math.abs(note.y - HIT_ZONE);
+
+    let accuracy: "perfect" | "good" | "miss" = "miss";
+    let points = 0;
+
+    if (distance < PERFECT_WINDOW) {
+      accuracy = "perfect";
+      points = 100;
+      comboRef.current += 1;
+      accuracyRef.current.perfect += 1;
+    } else if (distance < GOOD_WINDOW) {
+      accuracy = "good";
+      points = 50;
+      comboRef.current += 1;
+      accuracyRef.current.good += 1;
+    } else {
+      accuracy = "miss";
+      comboRef.current = 0;
+      accuracyRef.current.miss += 1;
+    }
+
+    if (accuracy !== "miss") {
+      note.hit = true;
+      // playTone(lane); // Removed - no sound on note hit
+      scoreRef.current += points * (1 + comboRef.current * 0.1);
+      setScore(Math.floor(scoreRef.current));
+      setCombo(comboRef.current);
+      setAccuracy({ ...accuracyRef.current });
+
+      // Add hit result for visual feedback
+      hitResultsRef.current.push({
+        id: Date.now(),
+        accuracy,
+        x: lane,
+        y: note.y,
+        opacity: 1,
+      });
+    }
+  }, []);
+
   // Handle key presses
   useEffect(() => {
     if (phase !== "playing") return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isRunningRef.current) return;
-
       let lane = -1;
       if (e.key === "1" || e.key === "a" || e.key === "A") lane = 0;
       else if (e.key === "2" || e.key === "s" || e.key === "S") lane = 1;
       else if (e.key === "3" || e.key === "d" || e.key === "D") lane = 2;
       else if (e.key === "4" || e.key === "f" || e.key === "F") lane = 3;
 
-      if (lane === -1) return;
-
-      // Find closest unhit note in this lane
-      const laneNotes = notesRef.current
-        .filter((n) => n.lane === lane && !n.hit)
-        .sort((a, b) => Math.abs(a.y - HIT_ZONE) - Math.abs(b.y - HIT_ZONE));
-
-      if (laneNotes.length === 0) return;
-
-      const note = laneNotes[0];
-      const distance = Math.abs(note.y - HIT_ZONE);
-
-      let accuracy: "perfect" | "good" | "miss" = "miss";
-      let points = 0;
-
-      if (distance < PERFECT_WINDOW) {
-        accuracy = "perfect";
-        points = 100;
-        comboRef.current += 1;
-        accuracyRef.current.perfect += 1;
-      } else if (distance < GOOD_WINDOW) {
-        accuracy = "good";
-        points = 50;
-        comboRef.current += 1;
-        accuracyRef.current.good += 1;
-      } else {
-        accuracy = "miss";
-        comboRef.current = 0;
-        accuracyRef.current.miss += 1;
-      }
-
-      if (accuracy !== "miss") {
-        note.hit = true;
-        // playTone(lane); // Removed - no sound on note hit
-        scoreRef.current += points * (1 + comboRef.current * 0.1);
-        setScore(Math.floor(scoreRef.current));
-        setCombo(comboRef.current);
-        setAccuracy({ ...accuracyRef.current });
-
-        // Add hit result for visual feedback
-        hitResultsRef.current.push({
-          id: Date.now(),
-          accuracy,
-          x: lane,
-          y: note.y,
-          opacity: 1,
-        });
+      if (lane !== -1) {
+        hitLane(lane);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [phase, playTone]);
+  }, [phase, hitLane]);
 
   // Game loop
   useEffect(() => {
@@ -685,6 +690,62 @@ export function StreetSax({
                 <span>Perfect: {accuracy.perfect}</span>
                 <span>Good: {accuracy.good}</span>
                 <span>Miss: {accuracy.miss}</span>
+              </div>
+
+              {/* Touch controls for mobile */}
+              <div className="streetsax-mobile-controls">
+                <button
+                  className="streetsax-lane-btn lane-0"
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    hitLane(0);
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    hitLane(0);
+                  }}
+                >
+                  1
+                </button>
+                <button
+                  className="streetsax-lane-btn lane-1"
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    hitLane(1);
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    hitLane(1);
+                  }}
+                >
+                  2
+                </button>
+                <button
+                  className="streetsax-lane-btn lane-2"
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    hitLane(2);
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    hitLane(2);
+                  }}
+                >
+                  3
+                </button>
+                <button
+                  className="streetsax-lane-btn lane-3"
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    hitLane(3);
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    hitLane(3);
+                  }}
+                >
+                  4
+                </button>
               </div>
             </div>
           )}

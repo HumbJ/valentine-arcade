@@ -192,3 +192,62 @@
   margin: 2rem 0;
   font-weight: 500;
 }
+
+/* Mobile touch controls */
+.streetsax-mobile-controls {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+
+.streetsax-lane-btn {
+  width: 70px;
+  height: 70px;
+  font-size: 2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.1s ease;
+  color: white;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.streetsax-lane-btn.lane-0 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.streetsax-lane-btn.lane-1 {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.streetsax-lane-btn.lane-2 {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.streetsax-lane-btn.lane-3 {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.streetsax-lane-btn:active {
+  transform: scale(0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 600px) {
+  .streetsax-lane-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.7rem;
+  }
+
+  .streetsax-mobile-controls {
+    gap: 0.5rem;
+  }
+}

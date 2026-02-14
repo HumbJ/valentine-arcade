@@ -338,9 +338,67 @@ export function TaxiPuzzle({
 
               <div className="taxi-puzzle-hint">
                 {selectedCar !== null
-                  ? `Selected ${cars.find((c) => c.id === selectedCar)?.isTaxi ? "TAXI" : "car"} - Use arrow keys to move`
+                  ? `Selected ${cars.find((c) => c.id === selectedCar)?.isTaxi ? "TAXI" : "car"} - Use arrow keys or buttons to move`
                   : "Click a car to select it"}
               </div>
+
+              {/* Touch controls for mobile */}
+              {selectedCar !== null && (
+                <div className="taxi-puzzle-mobile-controls">
+                  <div className="taxi-puzzle-dpad">
+                    <button
+                      className="taxi-puzzle-arrow-btn up"
+                      onClick={() => {
+                        const car = cars.find((c) => c.id === selectedCar);
+                        if (car?.orientation === "vertical") {
+                          moveCar(selectedCar, -1, 0);
+                        }
+                      }}
+                      disabled={cars.find((c) => c.id === selectedCar)?.orientation !== "vertical"}
+                    >
+                      ▲
+                    </button>
+                    <div className="taxi-puzzle-dpad-middle">
+                      <button
+                        className="taxi-puzzle-arrow-btn left"
+                        onClick={() => {
+                          const car = cars.find((c) => c.id === selectedCar);
+                          if (car?.orientation === "horizontal") {
+                            moveCar(selectedCar, 0, -1);
+                          }
+                        }}
+                        disabled={cars.find((c) => c.id === selectedCar)?.orientation !== "horizontal"}
+                      >
+                        ◀
+                      </button>
+                      <button
+                        className="taxi-puzzle-arrow-btn right"
+                        onClick={() => {
+                          const car = cars.find((c) => c.id === selectedCar);
+                          if (car?.orientation === "horizontal") {
+                            moveCar(selectedCar, 0, 1);
+                          }
+                        }}
+                        disabled={cars.find((c) => c.id === selectedCar)?.orientation !== "horizontal"}
+                      >
+                        ▶
+                      </button>
+                    </div>
+                    <button
+                      className="taxi-puzzle-arrow-btn down"
+                      onClick={() => {
+                        const car = cars.find((c) => c.id === selectedCar);
+                        if (car?.orientation === "vertical") {
+                          moveCar(selectedCar, 1, 0);
+                        }
+                      }}
+                      disabled={cars.find((c) => c.id === selectedCar)?.orientation !== "vertical"}
+                    >
+                      ▼
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <button
                 className="taxi-puzzle-btn"

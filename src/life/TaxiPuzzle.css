@@ -141,3 +141,70 @@
   color: #333;
   margin-bottom: 2rem;
 }
+
+/* Mobile touch controls */
+.taxi-puzzle-mobile-controls {
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.taxi-puzzle-dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.taxi-puzzle-dpad-middle {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.taxi-puzzle-arrow-btn {
+  width: 60px;
+  height: 60px;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+  transition: all 0.2s ease;
+  color: #333;
+  font-weight: bold;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.taxi-puzzle-arrow-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 165, 0, 0.4);
+}
+
+.taxi-puzzle-arrow-btn:active:not(:disabled) {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(255, 165, 0, 0.3);
+}
+
+.taxi-puzzle-arrow-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: #ccc;
+}
+
+@media (max-width: 600px) {
+  .taxi-puzzle-arrow-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .taxi-puzzle-dpad-middle {
+    gap: 2rem;
+  }
+}
