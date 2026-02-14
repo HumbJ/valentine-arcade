@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import "./TaxiPuzzle.css";
 
 interface TaxiPuzzleProps {
@@ -26,7 +26,7 @@ interface Level {
 }
 
 const GRID_SIZE = 6;
-const CELL_SIZE = 60;
+const MAX_CELL_SIZE = 60;
 
 // Predefined levels - VALIDATED NO OVERLAPS
 // Taxi always in row 2 (exit row), needs to reach column 6 (right edge)
@@ -88,6 +88,20 @@ export function TaxiPuzzle({
   const [moves, setMoves] = useState(0);
   const [selectedCar, setSelectedCar] = useState<number | null>(null);
   const [totalScore, setTotalScore] = useState(0);
+  const gridContainerRef = useRef<HTMLDivElement>(null);
+  const [cellSize, setCellSize] = useState(MAX_CELL_SIZE);
+
+  // Compute cell size based on available width
+  useEffect(() => {
+    const compute = () => {
+      // Account for wrapper padding (1rem×2) + content padding (1rem×2) + border (4px×2)
+      const available = window.innerWidth - 40;
+      setCellSize(Math.floor(Math.min(MAX_CELL_SIZE, (available - 8) / GRID_SIZE)));
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, []);
 
   const currentLevel = LEVELS[currentLevelIndex];
 
@@ -249,10 +263,11 @@ export function TaxiPuzzle({
               </div>
 
               <div
+                ref={gridContainerRef}
                 className="taxi-puzzle-grid"
                 style={{
-                  width: GRID_SIZE * CELL_SIZE,
-                  height: GRID_SIZE * CELL_SIZE,
+                  width: GRID_SIZE * cellSize,
+                  height: GRID_SIZE * cellSize,
                   position: "relative",
                   background: "#f5f5f5",
                   border: "4px solid #333",
@@ -274,18 +289,18 @@ export function TaxiPuzzle({
                   {Array.from({ length: GRID_SIZE + 1 }).map((_, i) => (
                     <g key={i}>
                       <line
-                        x1={i * CELL_SIZE}
+                        x1={i * cellSize}
                         y1={0}
-                        x2={i * CELL_SIZE}
-                        y2={GRID_SIZE * CELL_SIZE}
+                        x2={i * cellSize}
+                        y2={GRID_SIZE * cellSize}
                         stroke="#ddd"
                         strokeWidth="1"
                       />
                       <line
                         x1={0}
-                        y1={i * CELL_SIZE}
-                        x2={GRID_SIZE * CELL_SIZE}
-                        y2={i * CELL_SIZE}
+                        y1={i * cellSize}
+                        x2={GRID_SIZE * cellSize}
+                        y2={i * cellSize}
                         stroke="#ddd"
                         strokeWidth="1"
                       />
@@ -298,9 +313,9 @@ export function TaxiPuzzle({
                   style={{
                     position: "absolute",
                     right: -4,
-                    top: 2 * CELL_SIZE,
+                    top: 2 * cellSize,
                     width: 8,
-                    height: CELL_SIZE,
+                    height: cellSize,
                     background: "#4CAF50",
                     borderRadius: "0 4px 4px 0",
                   }}
@@ -313,19 +328,19 @@ export function TaxiPuzzle({
                     onClick={() => setSelectedCar(car.id)}
                     style={{
                       position: "absolute",
-                      left: car.col * CELL_SIZE + 4,
-                      top: car.row * CELL_SIZE + 4,
-                      width: (car.orientation === "horizontal" ? car.length : 1) * CELL_SIZE - 8,
-                      height: (car.orientation === "vertical" ? car.length : 1) * CELL_SIZE - 8,
+                      left: car.col * cellSize + 3,
+                      top: car.row * cellSize + 3,
+                      width: (car.orientation === "horizontal" ? car.length : 1) * cellSize - 6,
+                      height: (car.orientation === "vertical" ? car.length : 1) * cellSize - 6,
                       background: car.color,
-                      borderRadius: "8px",
+                      borderRadius: "6px",
                       border: selectedCar === car.id ? "3px solid #000" : "2px solid #333",
                       cursor: "pointer",
                       transition: "all 0.15s ease",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "1.5rem",
+                      fontSize: cellSize < 50 ? "1.1rem" : "1.5rem",
                       fontWeight: "bold",
                       boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
                     }}

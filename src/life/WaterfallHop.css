@@ -9,6 +9,7 @@
   justify-content: center;
   padding: 1rem;
   background: rgba(0, 0, 0, 0.85);
+  box-sizing: border-box;
 }
 
 .wh-wrap {
@@ -21,6 +22,7 @@
   min-height: 600px;
   box-shadow: 0 20px 60px rgba(69, 123, 157, 0.5);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .wh-content {
@@ -279,4 +281,36 @@
 
 .wh-btn.primary {
   background: linear-gradient(135deg, #1d3557, #457b9d);
+}
+
+@media (max-width: 600px) {
+  .wh-overlay {
+    padding: 0.5rem;
+    align-items: flex-start;
+    padding-top: 0.5rem;
+  }
+
+  .wh-wrap {
+    padding: 1rem;
+    min-height: auto;
+    max-height: 100%;
+    border-radius: 1rem;
+  }
+
+  .wh-content {
+    min-height: auto;
+  }
+
+  .wh-title {
+    font-size: 1.3rem;
+  }
+
+  .wh-game-area {
+    height: 320px;
+  }
+
+  .wh-water-stream {
+    width: 50px;
+    height: 100px;
+  }
 }
