@@ -25,11 +25,9 @@ type Props = {
   onRandomEventAccept: (eventId: string) => void;
   unlockedTrips?: number;
   totalTrips?: number;
-  unlockedDateNights?: number;
-  totalDateNights?: number;
 };
 
-export function HomeHub({ stats, onZoneClick, onRandomEventAccept, unlockedTrips = 1, totalTrips = 5, unlockedDateNights = 0, totalDateNights = 27 }: Props) {
+export function HomeHub({ stats, onZoneClick, onRandomEventAccept, unlockedTrips = 1, totalTrips = 5 }: Props) {
   const [randomEvent, setRandomEvent] = useState<RandomEvent | null>(null);
   const [showEvent, setShowEvent] = useState(false);
   const [particles, setParticles] = useState<{ id: number; x: number; y: number; delay: number }[]>([]);
@@ -117,18 +115,17 @@ export function HomeHub({ stats, onZoneClick, onRandomEventAccept, unlockedTrips
             <div className="hub-photo-frame" />
           </div>
 
-          {/* TV Area - Date Nights */}
+          {/* TV Area */}
           <button
             className="hub-zone hub-tv"
             onClick={() => handleZoneClick("tv")}
-            aria-label="Date night memories"
+            aria-label="Watch something together (Date Nights)"
           >
             <div className="hub-tv-screen">
               <div className="hub-tv-static" />
             </div>
             <div className="hub-tv-stand" />
             <span className="hub-zone-label">Date Nights</span>
-            <span className="hub-zone-badge">{unlockedDateNights}/{totalDateNights}</span>
           </button>
 
           {/* Fireplace */}
@@ -186,18 +183,18 @@ export function HomeHub({ stats, onZoneClick, onRandomEventAccept, unlockedTrips
             <span className="hub-zone-label">Food</span>
           </button>
 
-          {/* Phone on side table - Videos */}
+          {/* Phone on side table */}
           <button
             className="hub-zone hub-phone"
             onClick={() => handleZoneClick("phone")}
-            aria-label="Video memories"
+            aria-label="Check phone"
           >
             <div className="hub-side-table" />
             <div className="hub-phone-device">
               <div className="hub-phone-screen" />
               <div className="hub-phone-notif" />
             </div>
-            <span className="hub-zone-label">Videos</span>
+            <span className="hub-zone-label">Friends</span>
           </button>
 
           {/* Floor rug */}
