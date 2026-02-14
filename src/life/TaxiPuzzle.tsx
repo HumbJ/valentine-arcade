@@ -158,7 +158,6 @@ export function TaxiPuzzle({
       const newCol = car.col + deltaCol;
 
       // Check if move is valid
-      const tempCar = { ...car, row: newRow, col: newCol };
       if (deltaRow !== 0 || deltaCol !== 0) {
         if (!canMoveCar(car, deltaRow, deltaCol)) return prevCars;
       }
@@ -225,16 +224,16 @@ export function TaxiPuzzle({
           {phase === "intro" && (
             <div className="taxi-puzzle-intro">
               <p className="taxi-puzzle-instructions">
-                🚕 Help the yellow taxi escape the traffic jam!
+                🚕 Get the yellow taxi out of traffic
               </p>
               <p className="taxi-puzzle-instructions">
-                Click a car to select it, then use <strong>arrow keys</strong> to slide it
+                Click a car, then use <strong>arrow keys</strong> to slide it
               </p>
               <p className="taxi-puzzle-instructions">
-                Move the taxi all the way to the right to exit
+                Move the taxi all the way right to exit
               </p>
               <button className="taxi-puzzle-btn primary" onClick={startGame}>
-                Start Driving! 🚦
+                Start 🚦
               </button>
             </div>
           )}
@@ -338,9 +337,67 @@ export function TaxiPuzzle({
 
               <div className="taxi-puzzle-hint">
                 {selectedCar !== null
-                  ? `Selected ${cars.find((c) => c.id === selectedCar)?.isTaxi ? "TAXI" : "car"} - Use arrow keys to move`
+                  ? `Selected ${cars.find((c) => c.id === selectedCar)?.isTaxi ? "TAXI" : "car"} - Use arrow keys or buttons to move`
                   : "Click a car to select it"}
               </div>
+
+              {/* Touch controls for mobile */}
+              {selectedCar !== null && (
+                <div className="taxi-puzzle-mobile-controls">
+                  <div className="taxi-puzzle-dpad">
+                    <button
+                      className="taxi-puzzle-arrow-btn up"
+                      onClick={() => {
+                        const car = cars.find((c) => c.id === selectedCar);
+                        if (car?.orientation === "vertical") {
+                          moveCar(selectedCar, -1, 0);
+                        }
+                      }}
+                      disabled={cars.find((c) => c.id === selectedCar)?.orientation !== "vertical"}
+                    >
+                      ▲
+                    </button>
+                    <div className="taxi-puzzle-dpad-middle">
+                      <button
+                        className="taxi-puzzle-arrow-btn left"
+                        onClick={() => {
+                          const car = cars.find((c) => c.id === selectedCar);
+                          if (car?.orientation === "horizontal") {
+                            moveCar(selectedCar, 0, -1);
+                          }
+                        }}
+                        disabled={cars.find((c) => c.id === selectedCar)?.orientation !== "horizontal"}
+                      >
+                        ◀
+                      </button>
+                      <button
+                        className="taxi-puzzle-arrow-btn right"
+                        onClick={() => {
+                          const car = cars.find((c) => c.id === selectedCar);
+                          if (car?.orientation === "horizontal") {
+                            moveCar(selectedCar, 0, 1);
+                          }
+                        }}
+                        disabled={cars.find((c) => c.id === selectedCar)?.orientation !== "horizontal"}
+                      >
+                        ▶
+                      </button>
+                    </div>
+                    <button
+                      className="taxi-puzzle-arrow-btn down"
+                      onClick={() => {
+                        const car = cars.find((c) => c.id === selectedCar);
+                        if (car?.orientation === "vertical") {
+                          moveCar(selectedCar, 1, 0);
+                        }
+                      }}
+                      disabled={cars.find((c) => c.id === selectedCar)?.orientation !== "vertical"}
+                    >
+                      ▼
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <button
                 className="taxi-puzzle-btn"
@@ -358,22 +415,22 @@ export function TaxiPuzzle({
               </div>
               <div className="taxi-puzzle-complete-text">
                 {totalScore >= 250
-                  ? "Traffic Master! Perfect navigation! 🏆"
+                  ? "Nice, that was clean 🚕"
                   : totalScore >= 180
-                  ? "Amazing! You know the streets well! 🚕"
+                  ? "Pretty solid navigation"
                   : totalScore >= 120
-                  ? "Great job! You made it through! 🚦"
-                  : "You escaped the traffic! Well done! 🚗"}
+                  ? "Made it through"
+                  : "Escaped the traffic"}
               </div>
               <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
                 <button className="taxi-puzzle-btn primary" onClick={startGame}>
-                  Try again 🚕
+                  Go again 🚕
                 </button>
                 <button
                   className="taxi-puzzle-btn primary"
                   onClick={() => onDone(totalScore)}
                 >
-                  Back to exploring →
+                  Keep exploring →
                 </button>
               </div>
             </div>

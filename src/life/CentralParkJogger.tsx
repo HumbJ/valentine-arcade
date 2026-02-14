@@ -283,19 +283,19 @@ export function CentralParkJogger({
           {phase === "intro" && (
             <div className="centralparkjogger-intro">
               <p className="centralparkjogger-instructions">
-                🏃 Jog through Central Park and avoid obstacles!
+                🏃 Jog through Central Park, avoid obstacles
               </p>
               <p className="centralparkjogger-instructions">
-                Jump over trees, benches, rocks, and squirrels
+                Jump over trees, benches, rocks, squirrels
               </p>
               <p className="centralparkjogger-instructions">
                 Press SPACE or ↑ to jump
               </p>
               <p className="centralparkjogger-instructions">
-                Survive for 45 seconds!
+                Make it 45 seconds
               </p>
               <button className="centralparkjogger-btn primary" onClick={startGame}>
-                Start Jogging! 🏃
+                Start 🏃
               </button>
             </div>
           )}
@@ -343,24 +343,24 @@ export function CentralParkJogger({
               </div>
               <div className="centralparkjogger-complete-text">
                 {distance >= 400
-                  ? "Marathon runner! You crushed that jog! 🏃✨"
+                  ? "That's a solid run right there 🏃"
                   : distance >= 300
-                  ? "Great run! You've got stamina! 🎯"
+                  ? "Pretty good, nice stamina"
                   : distance >= 200
-                  ? "Nice jog! Keep it up! 💪"
+                  ? "Not bad, getting the hang of it"
                   : distance >= 100
-                  ? "Good effort! Practice makes perfect! 🏃"
-                  : "Keep training! The park awaits! 🌳"}
+                  ? "Decent effort"
+                  : "Keep at it"}
               </div>
               <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
                 <button className="centralparkjogger-btn primary" onClick={startGame}>
-                  Jog again 🏃
+                  Go again 🏃
                 </button>
                 <button
                   className="centralparkjogger-btn primary"
                   onClick={() => onDone(score)}
                 >
-                  Continue exploring →
+                  Keep exploring →
                 </button>
               </div>
             </div>

@@ -36,8 +36,8 @@ export function HomePage() {
         navigate("/map");
         break;
       case "tv":
-        // Date nights (could be a filtered story or mini-game selection)
-        navigate("/dates");
+        // Video memories repository
+        navigate("/videos");
         break;
       case "table":
         // Food mini-games

@@ -112,12 +112,9 @@ export function SubwayRunner({
     if (!ctx) return;
 
     let animationId: number;
-    let lastTime = Date.now();
 
     const gameLoop = () => {
       const now = Date.now();
-      const deltaTime = now - lastTime;
-      lastTime = now;
 
       if (!isRunningRef.current) return;
 

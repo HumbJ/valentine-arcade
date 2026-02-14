@@ -244,14 +244,6 @@ const MELODY: Array<{ time: number; lane: number }> = [
 
 const SONG_DURATION = 148; // seconds (~2:28)
 
-// Note frequencies for each lane (saxophone-ish range)
-const LANE_FREQUENCIES = [
-  261.63, // C4
-  293.66, // D4
-  329.63, // E4
-  392.00, // G4
-];
-
 export function StreetSax({
   title = "Street Saxophone",
   subtitle,
@@ -275,27 +267,6 @@ export function StreetSax({
   const comboRef = useRef(0);
   const accuracyRef = useRef({ perfect: 0, good: 0, miss: 0 });
   const hitResultsRef = useRef<HitResult[]>([]);
-
-  // Play a tone for a lane
-  const playTone = useCallback((lane: number, duration: number = 0.2) => {
-    if (!audioContextRef.current) return;
-
-    const ctx = audioContextRef.current;
-    const oscillator = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(ctx.destination);
-
-    oscillator.frequency.value = LANE_FREQUENCIES[lane];
-    oscillator.type = "sine";
-
-    gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-
-    oscillator.start(ctx.currentTime);
-    oscillator.stop(ctx.currentTime + duration);
-  }, []);
 
   // Load and play the actual audio track
   const playBackgroundMusic = useCallback(() => {
@@ -350,72 +321,77 @@ export function StreetSax({
     }, 1000);
   }, [playBackgroundMusic]);
 
+  // Handle hitting a note in a lane
+  const hitLane = useCallback((lane: number) => {
+    if (!isRunningRef.current) return;
+
+    // Find closest unhit note in this lane
+    const laneNotes = notesRef.current
+      .filter((n) => n.lane === lane && !n.hit)
+      .sort((a, b) => Math.abs(a.y - HIT_ZONE) - Math.abs(b.y - HIT_ZONE));
+
+    if (laneNotes.length === 0) return;
+
+    const note = laneNotes[0];
+    const distance = Math.abs(note.y - HIT_ZONE);
+
+    let accuracy: "perfect" | "good" | "miss" = "miss";
+    let points = 0;
+
+    if (distance < PERFECT_WINDOW) {
+      accuracy = "perfect";
+      points = 100;
+      comboRef.current += 1;
+      accuracyRef.current.perfect += 1;
+    } else if (distance < GOOD_WINDOW) {
+      accuracy = "good";
+      points = 50;
+      comboRef.current += 1;
+      accuracyRef.current.good += 1;
+    } else {
+      accuracy = "miss";
+      comboRef.current = 0;
+      accuracyRef.current.miss += 1;
+    }
+
+    if (accuracy !== "miss") {
+      note.hit = true;
+      // playTone(lane); // Removed - no sound on note hit
+      scoreRef.current += points * (1 + comboRef.current * 0.1);
+      setScore(Math.floor(scoreRef.current));
+      setCombo(comboRef.current);
+      setAccuracy({ ...accuracyRef.current });
+
+      // Add hit result for visual feedback
+      hitResultsRef.current.push({
+        id: Date.now(),
+        accuracy,
+        x: lane,
+        y: note.y,
+        opacity: 1,
+      });
+    }
+  }, []);
+
   // Handle key presses
   useEffect(() => {
     if (phase !== "playing") return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isRunningRef.current) return;
-
       let lane = -1;
       if (e.key === "1" || e.key === "a" || e.key === "A") lane = 0;
       else if (e.key === "2" || e.key === "s" || e.key === "S") lane = 1;
       else if (e.key === "3" || e.key === "d" || e.key === "D") lane = 2;
       else if (e.key === "4" || e.key === "f" || e.key === "F") lane = 3;
 
-      if (lane === -1) return;
-
-      // Find closest unhit note in this lane
-      const laneNotes = notesRef.current
-        .filter((n) => n.lane === lane && !n.hit)
-        .sort((a, b) => Math.abs(a.y - HIT_ZONE) - Math.abs(b.y - HIT_ZONE));
-
-      if (laneNotes.length === 0) return;
-
-      const note = laneNotes[0];
-      const distance = Math.abs(note.y - HIT_ZONE);
-
-      let accuracy: "perfect" | "good" | "miss" = "miss";
-      let points = 0;
-
-      if (distance < PERFECT_WINDOW) {
-        accuracy = "perfect";
-        points = 100;
-        comboRef.current += 1;
-        accuracyRef.current.perfect += 1;
-      } else if (distance < GOOD_WINDOW) {
-        accuracy = "good";
-        points = 50;
-        comboRef.current += 1;
-        accuracyRef.current.good += 1;
-      } else {
-        accuracy = "miss";
-        comboRef.current = 0;
-        accuracyRef.current.miss += 1;
-      }
-
-      if (accuracy !== "miss") {
-        note.hit = true;
-        // playTone(lane); // Removed - no sound on note hit
-        scoreRef.current += points * (1 + comboRef.current * 0.1);
-        setScore(Math.floor(scoreRef.current));
-        setCombo(comboRef.current);
-        setAccuracy({ ...accuracyRef.current });
-
-        // Add hit result for visual feedback
-        hitResultsRef.current.push({
-          id: Date.now(),
-          accuracy,
-          x: lane,
-          y: note.y,
-          opacity: 1,
-        });
+      if (lane !== -1) {
+        hitLane(lane);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [phase, playTone]);
+  }, [phase, hitLane]);
 
   // Game loop
   useEffect(() => {
@@ -643,13 +619,13 @@ export function StreetSax({
           {phase === "intro" && (
             <div className="streetsax-intro">
               <p className="streetsax-instructions">
-                🎷 Feel the rhythm of the city streets!
+                🎷 Street rhythm game
               </p>
               <p className="streetsax-instructions">
-                Hit notes to the beat of the jazz music
+                Hit notes to the beat
               </p>
               <p className="streetsax-instructions">
-                Press keys when notes hit the golden line
+                Press keys when notes hit the line
               </p>
               <div className="streetsax-keys">
                 <div className="streetsax-key">1 / A</div>
@@ -658,7 +634,7 @@ export function StreetSax({
                 <div className="streetsax-key">4 / F</div>
               </div>
               <button className="streetsax-btn primary" onClick={startGame}>
-                Start Playing! 🎵
+                Start 🎵
               </button>
             </div>
           )}
@@ -686,6 +662,62 @@ export function StreetSax({
                 <span>Good: {accuracy.good}</span>
                 <span>Miss: {accuracy.miss}</span>
               </div>
+
+              {/* Touch controls for mobile */}
+              <div className="streetsax-mobile-controls">
+                <button
+                  className="streetsax-lane-btn lane-0"
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    hitLane(0);
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    hitLane(0);
+                  }}
+                >
+                  1
+                </button>
+                <button
+                  className="streetsax-lane-btn lane-1"
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    hitLane(1);
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    hitLane(1);
+                  }}
+                >
+                  2
+                </button>
+                <button
+                  className="streetsax-lane-btn lane-2"
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    hitLane(2);
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    hitLane(2);
+                  }}
+                >
+                  3
+                </button>
+                <button
+                  className="streetsax-lane-btn lane-3"
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    hitLane(3);
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    hitLane(3);
+                  }}
+                >
+                  4
+                </button>
+              </div>
             </div>
           )}
 
@@ -699,24 +731,24 @@ export function StreetSax({
               </div>
               <div className="streetsax-complete-text">
                 {accuracy.miss === 0
-                  ? "Perfect Performance! You're a street legend! 🎷✨"
+                  ? "Perfect run, that's pretty impressive 🎷"
                   : score >= 3000
-                  ? "Amazing rhythm! The crowd loved it! 🎵"
+                  ? "Nice rhythm"
                   : score >= 2000
-                  ? "Great performance! Keep grooving! 🎶"
+                  ? "Not bad at all"
                   : score >= 1000
-                  ? "Nice job! You're finding your rhythm! 🎼"
-                  : "Keep practicing! The streets await! 🎺"}
+                  ? "Getting the hang of it"
+                  : "Keep working on it"}
               </div>
               <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
                 <button className="streetsax-btn primary" onClick={startGame}>
-                  Play again 🎷
+                  Try again 🎷
                 </button>
                 <button
                   className="streetsax-btn primary"
                   onClick={() => onDone(score)}
                 >
-                  Continue exploring →
+                  Keep exploring →
                 </button>
               </div>
             </div>
