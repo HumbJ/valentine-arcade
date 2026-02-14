@@ -258,7 +258,7 @@ export const DATE_NIGHTS: DateNight[] = [
   {
     id: "date_olliebirthday",
     title: "Ollie's 1st Birthday",
-    description: "Celebrating with Vanessa's best friend's family",
+    description: "Celebrating with my best friend's family",
     emoji: "🎈",
     deck: "date_olliebirthday",
     category: "special",

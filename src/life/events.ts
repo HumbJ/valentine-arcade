@@ -221,7 +221,7 @@ export const JULIAN_DAY_TRIP: LifeEvent = {
 export const JULIAN_CLOSING: LifeEvent = {
   id: "julian_closing",
   title: "On the Drive Home",
-  text: "The pie was worth the drive. The mine tour was... an experience. And those ciders? Let's just say we tried them so we never have to again. But honestly, any adventure with you is a good one.",
+  text: "The pie was worth the drive. The mine tour was... an experience. And those ciders? Let's just say we tried them so we never have to again. But honestly, any adventure together is a good one.",
   choices: [
     {
       id: "home",
@@ -235,7 +235,7 @@ export const COZY_NEXT_DAY: LifeEvent = {
   id: "cozy_next_day",
   title: "The Next Day",
   text:
-    "We talked long into the night—about everything and nothing—until the world got quiet. Now it's the next day, and I'm still smiling. What do you want to do?",
+    "We talked long into the night—about everything and nothing—until the world got quiet. Now it's the next day, and we're both still smiling. What do you want to do?",
   choices: [
     {
       id: "picnic",
@@ -357,7 +357,7 @@ export const JOSHUA_TREE_MEMORIES: LifeEvent = {
 export const JOSHUA_TREE_CLOSING: LifeEvent = {
   id: "joshua_tree_closing",
   title: "Leaving the Desert",
-  text: "The stars were incredible, the rocks were wild, and somehow you made the desert feel romantic. Next up: the big trees.",
+  text: "The stars were incredible, the rocks were wild, and somehow he made the desert feel romantic. Next up: the big trees.",
   choices: [
     {
       id: "next",
@@ -391,7 +391,7 @@ export const ROAD_TRIP_TO_SEQUOIA: LifeEvent = {
 export const SEQUOIA_ARRIVAL: LifeEvent = {
   id: "sequoia_arrival",
   title: "Sequoia National Park",
-  text: "Standing next to these ancient giants makes you feel so small—but in a good way. Some of these trees were saplings when Rome was an empire.",
+  text: "Standing next to these ancient giants makes me feel so small—but in a good way. Some of these trees were saplings when Rome was an empire.",
   choices: [
     {
       id: "explore",
@@ -410,7 +410,7 @@ export const SEQUOIA_ARRIVAL: LifeEvent = {
 export const SEQUOIA_CLOSING: LifeEvent = {
   id: "sequoia_closing",
   title: "Through the Trees",
-  text: "The scale of it all is humbling. And somehow, holding your hand while looking up at something that's been alive for millennia... it puts things in perspective.",
+  text: "The scale of it all is humbling. And somehow, holding his hand while looking up at something that's been alive for millennia... it puts things in perspective.",
   choices: [
     {
       id: "next",
@@ -1030,7 +1030,7 @@ export const SEATTLE2_ARRIVAL: LifeEvent = {
 export const SEATTLE2_FLOWERFIELD: LifeEvent = {
   id: "seattle2_flowerfield",
   title: "Flower Fields",
-  text: "Endless rows of tulips, every color imaginable. We walk between them, and it feels like stepping into a painting. The kind of beautiful that makes you stop and just breathe.",
+  text: "Endless rows of tulips, every color imaginable. We walk between them, and it feels like stepping into a painting. The kind of beautiful that makes me stop and just breathe.",
   choices: [
     {
       id: "continue",
@@ -1051,7 +1051,7 @@ export const SEATTLE2_FLOWERFIELD: LifeEvent = {
 export const SEATTLE2_FOOD: LifeEvent = {
   id: "seattle2_food",
   title: "Food",
-  text: "We try everything. New spots, old favorites, and the kind of meals that turn into stories. Every bite tastes a little better when you're here together.",
+  text: "We try everything. New spots, old favorites, and the kind of meals that turn into stories. Every bite tastes a little better when we're together.",
   choices: [
     {
       id: "continue",
@@ -1284,7 +1284,7 @@ export const NEWYORK_EXPLORE2: LifeEvent = {
 export const NEWYORK_FOOD: LifeEvent = {
   id: "newyork_food",
   title: "Food",
-  text: "Pizza slices bigger than your face, bagels that actually live up to the hype, food from every culture you can think of. New York tastes like everything.",
+  text: "Pizza slices bigger than my face, bagels that actually live up to the hype, food from every culture I can think of. New York tastes like everything.",
   choices: [
     {
       id: "continue",
@@ -1421,7 +1421,7 @@ const MOVIE_ROMANCE: LifeEvent = {
 const MOVIE_COMEDY: LifeEvent = {
   id: "movie_comedy",
   title: "Comedy Movie",
-  text: "Time for some laughs! Nothing beats those moments when you both crack up at the same joke.",
+  text: "Time for some laughs! Nothing beats those moments when we both crack up at the same joke.",
   choices: [
     {
       id: "laugh",
@@ -1708,7 +1708,7 @@ export const DATE_POKEMONDAYIN: LifeEvent = {
 export const DATE_ZOO1: LifeEvent = {
   id: "date_zoo1",
   title: "Zoo Adventure",
-  text: "Walking through the zoo, hand in hand, making up stories about the animals. Every exhibit becomes an adventure when you're here.",
+  text: "Walking through the zoo, hand in hand, making up stories about the animals. Every exhibit becomes an adventure when we're together.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1738,7 +1738,7 @@ export const DATE_AQUARIUM: LifeEvent = {
 export const DATE_SEAWORLD: LifeEvent = {
   id: "date_seaworld",
   title: "SeaWorld Day",
-  text: "Dolphins, sea lions, and that kid-like excitement in your eyes. These marine adventures always bring out the best smiles.",
+  text: "Dolphins, sea lions, and that kid-like excitement in his eyes. These marine adventures always bring out the best smiles.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1768,7 +1768,7 @@ export const DATE_DESSERT2: LifeEvent = {
 export const DATE_OMIKASE: LifeEvent = {
   id: "date_omikase",
   title: "Omakase Night",
-  text: "Trusting the chef, trying new flavors, and watching your reactions to each piece. Omakase nights are always special.",
+  text: "Trusting the chef, trying new flavors, and watching his reactions to each piece. Omakase nights are always special.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1813,7 +1813,7 @@ export const DATE_CHRISTMASGLOBE: LifeEvent = {
 export const DATE_HALLOWEEN: LifeEvent = {
   id: "date_halloween",
   title: "Halloween Night",
-  text: "Spooky season with you is the best season. Costumes, candy, and that playful energy that makes everything more fun.",
+  text: "Spooky season together is the best season. Costumes, candy, and that playful energy that makes everything more fun.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1828,7 +1828,7 @@ export const DATE_HALLOWEEN: LifeEvent = {
 export const DATE_PINNING: LifeEvent = {
   id: "date_pinning",
   title: "Pinning Ceremony",
-  text: "This was your moment, and I got to be there. Watching you achieve this, feeling proud, knowing we're building our future together.",
+  text: "This was my moment, and he got to be there. Achieving this milestone, feeling proud, knowing we're building our future together.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1918,7 +1918,7 @@ export const DATE_CONCERTJHENE: LifeEvent = {
 export const DATE_CONCERT1JONAS: LifeEvent = {
   id: "date_concert1jonas",
   title: "Jonas Brothers Concert",
-  text: "Jonas Brothers throwback! We're singing along to our childhood and it feels like being young again, but better because you're here.",
+  text: "Jonas Brothers throwback! We're singing along to our childhood and it feels like being young again, but better because we're together.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -1993,7 +1993,7 @@ export const DATE_VALENTINESDAY: LifeEvent = {
 export const DATE_JORDANBIRTHDAY: LifeEvent = {
   id: "date_jordanbirthday",
   title: "Jordan's Birthday",
-  text: "Another year, another celebration of you. Your birthday always feels special because you make every day special.",
+  text: "Another year, another celebration of him. His birthday always feels special because he makes every day special.",
   choices: [{
     id: "view",
     label: "Relive it 📸",
@@ -2316,7 +2316,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
   {
     id: "after_movie_mystery",
     title: "Mystery Solved",
-    text: "We called it halfway through. That look you gave me when we both figured it out at the same time? Perfect.",
+    text: "We called it halfway through. That look we shared when we both figured it out at the same time? Perfect.",
     choices: [
       {
         id: "continue",
@@ -2352,7 +2352,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
   {
     id: "after_movie_romance",
     title: "Warmth Lingers",
-    text: "Your head on my shoulder, that soft smile... somehow the movie felt like it was about us. I like when that happens.",
+    text: "My head on his shoulder, that soft smile... somehow the movie felt like it was about us. I like when that happens.",
     choices: [
       {
         id: "continue",
@@ -2366,7 +2366,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
   {
     id: "comfort_movie_comedy",
     title: "Comedy Movie",
-    text: "Time for some laughs! Nothing beats those moments when you both crack up at the same joke.",
+    text: "Time for some laughs! Nothing beats those moments when we both crack up at the same joke.",
     choices: [
       {
         id: "laugh",
@@ -2388,7 +2388,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
   {
     id: "after_movie_comedy",
     title: "Still Giggling",
-    text: "My cheeks hurt from smiling. Yours too. We keep quoting it back and forth, and honestly? This is the best part.",
+    text: "My cheeks hurt from smiling. His too. We keep quoting it back and forth, and honestly? This is the best part.",
     choices: [
       {
         id: "continue",
@@ -2424,7 +2424,7 @@ export const LIFE_EVENTS: LifeEvent[] = [
   {
     id: "after_movie_adventure",
     title: "Hearts Racing",
-    text: "That final battle had us both on the edge of our seats. You grabbed my hand during the tense part. I didn't let go.",
+    text: "That final battle had us both on the edge of our seats. I grabbed his hand during the tense part. He didn't let go.",
     choices: [
       {
         id: "continue",
