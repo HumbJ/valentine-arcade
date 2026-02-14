@@ -10,6 +10,7 @@ import { VideosPage } from "./pages/VideosPage";
 import { FoodRoulettePage } from "./pages/FoodRoulettePage";
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import { InstallPrompt } from "./components/InstallPrompt";
 
 
 function BottomNav() {
@@ -64,6 +65,7 @@ export default function App() {
         </Routes>
       </PageShell>
 
+        <InstallPrompt />
         <BottomNav />
       </div>
     </BrowserRouter>
