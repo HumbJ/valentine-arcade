@@ -122,7 +122,7 @@
   position: absolute;
   top: -100%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 4px;
   height: 200%;
   background: var(--hub-wood);
@@ -208,7 +208,7 @@
   position: absolute;
   bottom: -20px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   padding: 4px 10px;
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid var(--hub-pink);
@@ -225,7 +225,7 @@
 .hub-zone:hover .hub-zone-label,
 .hub-zone.hovered .hub-zone-label {
   opacity: 1;
-  transform: translate(-50%, 0) translateY(-4px);
+  transform: translateX(-50%) translateY(-4px);
 }
 
 .hub-zone-badge {
@@ -248,14 +248,14 @@
 .hub-tv {
   top: 22%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 90px;
   height: 70px;
 }
 
 .hub-tv:hover,
 .hub-tv.hovered {
-  transform: translate(-50%, 0) scale(1.05) translateY(-2px);
+  transform: translateX(-50%) scale(1.05) translateY(-2px);
 }
 
 .hub-tv-screen {
@@ -301,7 +301,7 @@
   position: absolute;
   bottom: 42%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 100px;
   height: 60px;
   background: var(--hub-wood-dark);
@@ -325,7 +325,7 @@
   position: absolute;
   bottom: 8px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 60px;
   height: 35px;
   display: flex;
@@ -371,7 +371,7 @@
   position: absolute;
   bottom: -20px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 200px;
   height: 100px;
   background: radial-gradient(ellipse at center, rgba(255, 150, 50, 0.15) 0%, transparent 70%);
@@ -391,14 +391,14 @@
 .hub-couch {
   bottom: 22%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 140px;
   height: 70px;
 }
 
 .hub-couch:hover,
 .hub-couch.hovered {
-  transform: translate(-50%, 0) scale(1.05) translateY(-2px);
+  transform: translateX(-50%) scale(1.05) translateY(-2px);
 }
 
 .hub-couch-base {
@@ -440,7 +440,7 @@
   position: absolute;
   bottom: 35px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   display: flex;
   gap: 8px;
 }
@@ -466,7 +466,7 @@
   position: absolute;
   top: -16px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 20px;
   height: 20px;
   background: var(--hub-peach);
@@ -485,18 +485,18 @@
   position: absolute;
   top: -30px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   font-size: 16px;
   animation: heartFloat 2s ease-in-out infinite;
 }
 
 @keyframes heartFloat {
   0%, 100% {
-    transform: translate(-50%, 0) translateY(0);
+    transform: translateX(-50%) translateY(0);
     opacity: 0.8;
   }
   50% {
-    transform: translate(-50%, 0) translateY(-8px);
+    transform: translateX(-50%) translateY(-8px);
     opacity: 1;
   }
 }
@@ -537,7 +537,7 @@
   position: absolute;
   top: -6px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 16px;
   height: 8px;
   border: 3px solid var(--hub-wood);
@@ -588,7 +588,7 @@
   position: absolute;
   bottom: 26px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   display: flex;
   gap: 4px;
   font-size: 14px;
@@ -622,7 +622,7 @@
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 30px;
   height: 25px;
   background: var(--hub-wood);
@@ -634,7 +634,7 @@
   position: absolute;
   bottom: 26px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 18px;
   height: 28px;
   background: #2a2a35;
@@ -682,7 +682,7 @@
   position: absolute;
   bottom: 8%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   width: 70%;
   height: 20%;
   background:
@@ -769,7 +769,7 @@
   position: absolute;
   bottom: 70px;
   left: 50%;
-  transform: translate(-50%, 0) translateY(20px);
+  transform: translateX(-50%) translateY(20px);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -788,7 +788,7 @@
 
 .hub-event-popup.show {
   opacity: 1;
-  transform: translate(-50%, 0) translateY(0);
+  transform: translateX(-50%) translateY(0);
   pointer-events: auto;
 }
 
@@ -846,7 +846,7 @@
   /* Touch devices - always show labels */
   .hub-zone-label {
     opacity: 1;
-    transform: translate(-50%, 0) translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
 
   /* Slightly smaller labels on mobile */
